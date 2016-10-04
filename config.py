@@ -25,28 +25,52 @@ class Config(dict):
         )
 
     def getIndexDir(self, dataname, datatype):
-        datadirfull = self.getDataDirFull(dataname, datatype)
-        return self["INDEXDIR_FORMAT"].format(datadirfull=datadirfull)
+        dir = self.getDataDirFull(dataname, datatype)
+        return self["INDEXDIR_FORMAT"].format(datadirfull=dir)
+
+    def getQueryDir(self, dataname, datatype):
+        dir = self.getDataDirFull(dataname, datatype)
+        return self["QDIR_FORMAT"].format(datadirfull=dir)
 
     def getBenchDir(self, dataname, datatype):
-        datadirfull = self.getDataDirFull(dataname, datatype)
-        return self["BENCHMARKDIR_FORMAT"].format(datadirfull=datadirfull)
+        dir = self.getDataDirFull(dataname, datatype)
+        return self["BENCHMARKDIR_FORMAT"].format(datadirfull=dir)
 
     def getBenchFilePath(self, dataname, fullname, datatype):
-        bdir = self.getBenchDir(dataname, datatype)
-        bname = self["BENCHMARK_NAME"].format(fullname=fullname,K=self["K"])
-        return "{bdir}/{bname}".format(bdir=bdir, bname=bname)
+        dir = self.getBenchDir(dataname, datatype)
+        name = self["BENCHMARK_NAME"].format(fullname=fullname,K=self["K"])
+        return "%s/%s" %(dir,name)
+
+    def getKDBenchFilePath(self, dataname, fullname, datatype):
+        dir = self.getBenchDir(dataname, datatype)
+        name = self["KD_BENCHMARK_NAME"].format(fullname=fullname,K=self["K"])
+        return "%s/%s" %(dir,name)
 
     def getLSHRFilePath(self, dataname, fullname, datatype):
-        bdir = self.getBenchDir(dataname, datatype)
+        dir = self.getBenchDir(dataname, datatype)
         name = self["LSHRFILE_NAME"].format(fullname=fullname,K=self["K"])
-        return "{bdir}/{name}".format(bdir=bdir, name=name)
+        return "%s/%s" %(dir,name)
 
     def getTopKFilePath(self, dataname, fullname, datatype):
-        datadirfull = self.getDataDirFull(dataname, datatype)
-        bdir = self["BENCHMARKDIR_FORMAT"].format(datadirfull=datadirfull)
-        bname = self["TOPK_NAME"].format(fullname=fullname,K=self["K"])
-        return "{bdir}/{bname}".format(bdir=bdir, bname=bname)
+        dir = self.getBenchDir(dataname, datatype)
+        name = self["TOPK_NAME"].format(fullname=fullname,K=self["K"])
+        return "%s/%s" %(dir,name)
+
+    def getQVecFile(self, fullname):
+        return self["QNAME"].format(fullname=fullname,Q=self["Q"],dataformat="vec")
+
+    def getQHDF5File(self, fullname):
+        return self["QNAME"].format(fullname=fullname,Q=self["Q"],dataformat="hdf5")
+
+    def getQVecFilePath(self, dataname, fullname, datatype):
+        dir = self.getQueryDir(dataname, datatype)
+        name = self.getQVecFile(fullname)
+        return "%s/%s" %(dir,name)
+
+    def getQHDF5FilePath(self, dataname, fullname, datatype):
+        dir = self.getQueryDir(dataname, datatype)
+        name = self.getQHDF5File(fullname)
+        return "%s/%s" %(dir,name)
 
     def getFullName(self, dataname):
         if isGauss(dataname):

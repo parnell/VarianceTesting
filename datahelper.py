@@ -29,7 +29,7 @@ class BaseEnum(IntEnum):
             for name, member in enumType.__members__.items():
                 if name == idx:
                     return member
-        raise Exception("Index " + str(idx)+" not found in "+ str(enumType) +" " + str(type(idx)))
+        raise ("Index " + str(idx)+" not found in "+ str(enumType) +" " + str(type(idx)))
 
 def isGauss(name):
     return "gauss" in name
@@ -55,6 +55,23 @@ class DataTypeEnum(BaseEnum):
                 return DataTypeEnum.vec
             raise Exception("data type not known")
 
+class File():
+    def __init__(self, filename):
+        self.filename = filename
+
+    @property
+    def stem(self):
+        return os.path.splitext(os.path.basename(self.filename))[0]
+
+    def getExtension(self):
+        return os.path.splitext(os.path.basename(self.filename))[1]
+
+    def getRawExtension(self):
+        return os.path.splitext(os.path.basename(self.filename))[1][1:]
+
+    def getBasename(self):
+        return os.path.basename(self.filename)
+
 class Data():
     def __init__(self, dataname, cfg):
         self.oname = os.path.abspath(dataname)
@@ -67,10 +84,16 @@ class Data():
 
 
     def createBinFile(self, overwrite=False):
-        v = self.oname
         n = self.binfilepath
         if overwrite or not os.path.exists(n):
-            progs.vec2bin(v,n)
+            progs.vec2bin(self.oname,n)
+
+    def createHDF5File(self, overwrite=False):
+        Data.vec2hdf5(self.oname, self.hdf5filepath, overwrite)
+
+    def vec2hdf5(src, dest, overwrite=False):
+        if overwrite or not os.path.exists(dest):
+            progs.vec2hdf5(src, dest, True)
 
     @property
     def type(self):
@@ -85,9 +108,12 @@ class Data():
         return self.cfg.getLSHRFilePath(self.dataname, self.fullname, self.type)
 
     @property
+    def kdbenchfilepath(self):
+        return self.cfg.getKDBenchFilePath(self.dataname, self.fullname, self.type)
+
+    @property
     def topkfilepath(self):
         return self.cfg.getTopKFilePath(self.dataname, self.fullname, self.type)
-
 
     @property
     def K(self):
@@ -122,12 +148,20 @@ class Data():
         return self.cfg.getIndexDir(self.dataname, self.type)
 
     @property
+    def querydir(self):
+        return self.cfg.getQueryDir(self.dataname, self.type)
+
+    @property
     def lshindexfilepath(self):
         return "%s/%s" %(self.indexdir, self.lshindexfile)
 
     @property
     def lshindexfile(self):
         return "%s.lsh" %self.fullname
+
+    @property
+    def hdf5file(self):
+        return "%s.hdf5" %self.fullname
 
     @property
     def binfile(self):
@@ -138,6 +172,18 @@ class Data():
         return "%s.vec" %self.fullname
 
     @property
+    def qhdf5file(self):
+        return "%s.hdf5" %self.fullname
+
+    @property
+    def qvecfile(self):
+        return self.cfg.getQVecFile(self.fullname) 
+
+    @property
+    def qhdf5file(self):
+        return self.cfg.getQHDF5File(self.fullname) 
+        
+    @property
     def binfilepath(self):
         return "%s/%s" %(self.datadirfull, self.binfile)
 
@@ -145,7 +191,24 @@ class Data():
     def vecfilepath(self):
         return "%s/%s" %(self.datadirfull, self.vecfile)
 
-    def mkdirs(self, *args):
+    @property
+    def hdf5filepath(self):
+        return "%s/%s" %(self.datadirfull, self.hdf5file)
+
+    @property
+    def qvecfilepath(self):
+        return "%s/%s" %(self.querydir, self.qvecfile)
+
+    @property
+    def qhdf5filepath(self):
+        return "%s/%s" %(self.querydir, self.qhdf5file)
+
+    def remove(*args):
+        for arg in args:
+            if os.path.exists(arg):
+                os.remove(arg)
+
+    def mkdirs(*args):
         for arg in args:
             if not os.path.exists(arg):
                 os.makedirs(arg)

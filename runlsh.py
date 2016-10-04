@@ -6,56 +6,79 @@ import os
 import datahelper as dh
 import programs as progs
 import config
+import analyzer as lyz
+import argparse
+import logging as log
 
-overwrite = False
-sys.argv = [ "runlsh.py",
-    "/Users/parnell/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec",
-    "/Users/parnell/data",
-    "3",
-    "10"]
-print(" ".join(sys.argv))
+def main(data, overwrite=False):
+    cfg = data.cfg
+  
+    dh.Data.mkdirs(data.benchdir, data.indexdir)
+    data.createBinFile()
+    data.createHDF5File()
 
-if len(sys.argv) < 4:
-    print("./prog <infile vec> <data directory> <outfile benchmark> <k> <Q>")
-    sys.exit(1)
+    # Usage: ./CreateLSHBenchmark <input infile> <benchmark outfile> <k> <# queries>
+    cmd = [cfg['createLSHBenchmark'], 
+        data.binfilepath,
+        data.topkfilepath, 
+        str(data.K), 
+        str(data.Q)
+        ]
 
-binfile = sys.argv[1]
-datadir = sys.argv[2]
-K = int(sys.argv[3])
-Q = int(sys.argv[4])
+    if overwrite or not os.path.exists(data.benchfilepath):
+        with open(data.benchfilepath, "w") as of:
+            pc = subprocess.run(cmd, stdout=of)
+            if pc.returncode != 0:
+                dh.Data.remove(data.benchfilepath)
 
-cfg = config.Config(datadir=datadir, K=K, Q=Q, nclus=1, var=0.1, size=10000, D=2)
-data = dh.Data(binfile, cfg)
+    # Usage: ./LSHBox <input infile> <index outfile> <benchmark infile> <k>
+    cmd = [cfg['lshbox'], 
+        data.binfilepath,
+        data.lshindexfilepath, 
+        data.topkfilepath,
+        str(data.K), 
+        data.qvecfilepath,
+        ]
 
-data.mkdirs(data.benchdir, data.indexdir)
-data.createBinFile()
+    if overwrite or not os.path.exists(data.lshrfilepath):
+        log.debug(" ".join(cmd))
+        with open(data.lshrfilepath, "w") as of:
+            pc = subprocess.run(cmd, stdout=of)
+            if pc.returncode != 0:
+                dh.Data.remove(data.lshrfilepath)
 
-# Usage: ./CreateLSHBenchmark <input infile> <benchmark outfile> <k> <# queries>
-cmd = [cfg['createLSHBenchmark'], 
-    data.binfilepath,
-    data.topkfilepath, 
-    str(data.K), 
-    str(data.Q)
-    ]
+    return data
 
-if overwrite or not os.path.exists(data.benchfilepath):
-    with open(data.benchfilepath, "w") as of:
-        retcode = subprocess.run(cmd, stdout=of)
+if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    overwrite = True
+    sys.argv = [ "runlsh.py",
+        "-i", "/Users/parnell/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec",
+        "--datadir", "/Users/parnell/data",
+        "-K3",
+        "-Q10"]
+    ap.add_argument("-i", "--input-filename", required=True)
+    ap.add_argument("--datadir", required=True)
+    ap.add_argument("-K", type=int, required=True)
+    ap.add_argument("-Q", "--query-size", type=int, required=True)
 
+    args = ap.parse_args()    
+    print(args)
 
-# Usage: ./LSHBox <input infile> <index outfile> <benchmark infile> <k>
-cmd = [cfg['lshbox'], 
-    data.binfilepath,
-    data.lshindexfilepath, 
-    data.topkfilepath,
-    str(data.K) 
-    ]
+    cfg = config.Config(
+        datadir=args.datadir,
+        K=args.K, 
+        Q=args.query_size, 
+        nclus=1, 
+        var=0.1, 
+        size=10000, 
+        D=2)
+    data = dh.Data(args.input_filename, cfg)
 
-if overwrite or not os.path.exists(data.lshrfilepath):
-    print(" ".join(cmd))
-    with open(data.lshrfilepath, "w") as of:
-        subprocess.run(cmd, stdout=of)
+    main(data, overwrite=overwrite)
 
-
-# for l in open(data.benchfile):
-#     print(l)
+    st1 = lyz.FileStatter(data.benchfilepath)
+    st2 = lyz.FileStatter(data.lshrfilepath)
+    # st1.print()
+    # st2.print()
+    print("avgcalcs", st2.get("avg")[0])    
