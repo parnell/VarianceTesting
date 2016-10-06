@@ -21,6 +21,12 @@ class Statter():
             self.parse()
         return self.kv[key]
 
+    def getf(self, key):
+        """
+        get first value from key
+        """
+        return self.get(key)[0]
+
     def print(self):
         if not self.isparsed: 
             self.parse()

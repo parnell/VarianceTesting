@@ -75,7 +75,7 @@ class File():
 class Data():
     def __init__(self, dataname, cfg):
         self.oname = os.path.abspath(dataname)
-        assert(os.path.exists(self.oname))
+        # assert(os.path.exists(self.oname))
         self.cfg = cfg
         n = getStem(dataname)
         self.dataname = n if "__" not in n else n.split("__")[0]
@@ -144,6 +144,14 @@ class Data():
         return self.cfg.getBenchDir(self.dataname, self.datatype)
 
     @property
+    def resultdir(self):
+        return self.cfg.getBenchDir(self.dataname, self.datatype)
+
+    @property
+    def confdir(self):
+        return self.cfg.getConfDir(self.dataname, self.datatype)
+
+    @property
     def indexdir(self):
         return self.cfg.getIndexDir(self.dataname, self.type)
 
@@ -182,6 +190,10 @@ class Data():
     @property
     def qhdf5file(self):
         return self.cfg.getQHDF5File(self.fullname) 
+
+    @property
+    def gaussconffile(self):
+        return self.cfg.getGaussConfFile(self.fullname) 
         
     @property
     def binfilepath(self):
@@ -202,6 +214,10 @@ class Data():
     @property
     def qhdf5filepath(self):
         return "%s/%s" %(self.querydir, self.qhdf5file)
+
+    @property
+    def gaussconffilepath(self):
+        return "%s/%s" %(self.confdir, self.gaussconffile)
 
     def remove(*args):
         for arg in args:

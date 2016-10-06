@@ -5,10 +5,12 @@ def isGauss(name):
     return "gauss" in name
 
 class Config(dict):
-    def __init__(self, datadir, *arg, **kw):
+    def __init__(self, datadir, confdir, resultdir, *arg, **kw):
         super(Config, self).__init__(*arg, **kw)
         self.loadFromModule(cfg)
         self["datadir"] = datadir
+        self["confdir"] = confdir
+        self["resultdir"] = resultdir
     
     def loadFromModule(self, module):
         for v in dir(module):
@@ -24,6 +26,22 @@ class Config(dict):
             dataname=dataname
         )
 
+    def getResultDirFull(self, dataname, datatype):
+        # "{resultdir}/{datatype}/{dataname}"
+        return self["RESULTDIRFULL_FORMAT"].format(
+            resultdir=self["resultdir"],
+            datatype=str(datatype),
+            dataname=dataname
+        )
+
+    def getConfDirFull(self, dataname, datatype):
+        # "{confdir}/{datatype}/{dataname}"
+        return self["CONFDIRFULL_FORMAT"].format(
+            confdir=self["confdir"],
+            datatype=str(datatype),
+            dataname=dataname
+        )
+
     def getIndexDir(self, dataname, datatype):
         dir = self.getDataDirFull(dataname, datatype)
         return self["INDEXDIR_FORMAT"].format(datadirfull=dir)
@@ -33,8 +51,12 @@ class Config(dict):
         return self["QDIR_FORMAT"].format(datadirfull=dir)
 
     def getBenchDir(self, dataname, datatype):
-        dir = self.getDataDirFull(dataname, datatype)
-        return self["BENCHMARKDIR_FORMAT"].format(datadirfull=dir)
+        dir = self.getResultDirFull(dataname, datatype)
+        return self["BENCHMARKDIR_FORMAT"].format(resultdirfull=dir)
+
+    def getConfDir(self, dataname, datatype):
+        dir = self.getConfDirFull(dataname, datatype)
+        return self["CONFDIR_FORMAT"].format(confdirfull=dir)
 
     def getBenchFilePath(self, dataname, fullname, datatype):
         dir = self.getBenchDir(dataname, datatype)
@@ -61,6 +83,9 @@ class Config(dict):
 
     def getQHDF5File(self, fullname):
         return self["QNAME"].format(fullname=fullname,Q=self["Q"],dataformat="hdf5")
+
+    def getGaussConfFile(self, fullname):
+        return self["GAUSSCONF_NAME"].format(fullname=fullname)
 
     def getQVecFilePath(self, dataname, fullname, datatype):
         dir = self.getQueryDir(dataname, datatype)

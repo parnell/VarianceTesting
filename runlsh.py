@@ -13,7 +13,8 @@ import logging as log
 def main(data, overwrite=False):
     cfg = data.cfg
   
-    dh.Data.mkdirs(data.benchdir, data.indexdir)
+    dh.Data.mkdirs(data.indexdir, data.querydir, 
+        data.resultdir, data.confdir)
     data.createBinFile()
     data.createHDF5File()
 
@@ -55,10 +56,14 @@ if __name__ == "__main__":
     sys.argv = [ "runlsh.py",
         "-i", "/Users/parnell/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec",
         "--datadir", "/Users/parnell/data",
+        "--confdir", "/Users/parnell/data/conf",
+        "--resultdir", "/Users/parnell/data/results",
         "-K3",
         "-Q10"]
     ap.add_argument("-i", "--input-filename", required=True)
     ap.add_argument("--datadir", required=True)
+    ap.add_argument("--confdir", required=True)
+    ap.add_argument("--resultdir", required=True)
     ap.add_argument("-K", type=int, required=True)
     ap.add_argument("-Q", "--query-size", type=int, required=True)
 
@@ -67,6 +72,8 @@ if __name__ == "__main__":
 
     cfg = config.Config(
         datadir=args.datadir,
+        confdir=args.confdir,
+        resultdir=args.resultdir,
         K=args.K, 
         Q=args.query_size, 
         nclus=1, 

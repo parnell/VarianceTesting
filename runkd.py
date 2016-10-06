@@ -42,9 +42,12 @@ if __name__ == "__main__":
     sys.argv = [ "VarianceTesting",
         "-K3",
         "-i","/Users/parnell/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec",
-        "--datadir=/Users/parnell/data",
+        "--datadir", "/Users/parnell/data",
+        "--confdir", "/Users/parnell/data/conf",
+        "--resultdir", "/Users/parnell/data/results",
         "--query-filename=fromtopk",
-        "-D2"
+        "-D2",
+        "-Q10"
         # "--input-filename="
         #"10"
         ]
@@ -55,7 +58,10 @@ if __name__ == "__main__":
     ap.add_argument("-D", "--dimensions", type=int, required=True)
     ap.add_argument("-q", "--query-filename", required=True)
     ap.add_argument("-i", "--input-filename", required=True)
-    ap.add_argument("--datadir")
+    ap.add_argument("--datadir", required=True)
+    ap.add_argument("--confdir", required=True)
+    ap.add_argument("--resultdir", required=True)
+    ap.add_argument("-Q", "--query-size", type=int, required=True)
 
 
     args = ap.parse_args()
@@ -72,8 +78,10 @@ if __name__ == "__main__":
     # Q = int(sys.argv[4])
 
     cfg = config.Config(datadir=args.datadir, 
+        confdir=args.confdir,
+        resultdir=args.resultdir,
         K=args.K, 
-        Q=query_size, 
+        Q=args.query_size, 
         nclus=1, 
         var=0.1, 
         size=10000, 
