@@ -3,6 +3,7 @@ lshbox = "LSHBox"
 vec2bin = "vec2bin"
 vec2hdf5 = "vec2hdf5"
 kdtree = "VarianceTesting"
+gaussora = "genGauss"
 
 DATADIRFULL_FORMAT = "{datadir}/{datatype}/{dataname}"
 RESULTDIRFULL_FORMAT = "{resultdir}/{datatype}/{dataname}"

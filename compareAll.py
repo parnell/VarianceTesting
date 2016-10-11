@@ -9,14 +9,14 @@ import argparse
 import runlsh
 import runkd
 
-
+home = os.path.expanduser("~")
 ap = argparse.ArgumentParser()
 overwrite = True
 sys.argv = [ "runlsh.py",
-    "-i", "/Users/parnell/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec",
-    "--datadir", "/Users/parnell/data",
-    "--confdir", "/Users/parnell/data/conf",
-    "--resultdir", "/Users/parnell/data/results",
+    "-i", "%s/r/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec" %home,
+    "--datadir", "%s/r/data" %home,
+    "--confdir", "%s/r/data/conf" %home,
+    "--resultdir", "%s/r/data/results" %home,
     "-K3",
     "--query-filename=fromtopk",
     "-Q10",
