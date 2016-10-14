@@ -53,11 +53,13 @@ def main(data, overwrite=False):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     overwrite = True
+    home = os.path.expanduser("~")
+
     sys.argv = [ "runlsh.py",
-        "-i", "/Users/parnell/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec",
-        "--datadir", "/Users/parnell/data",
-        "--confdir", "/Users/parnell/data/conf",
-        "--resultdir", "/Users/parnell/data/results",
+        "-i", "%s/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec",
+        "--datadir", "%s/data" %home,
+        "--confdir", "%s/data/conf" %home,
+        "--resultdir", "%s/data/results" %home,
         "-K3",
         "-Q10"]
     ap.add_argument("-i", "--input-filename", required=True)

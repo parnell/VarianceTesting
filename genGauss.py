@@ -14,6 +14,7 @@ import argparse
 import config
 import datahelper as dh
 import programs as prog
+
 overwrite = True
 #def usage(out):
 	#print("Usage: ./genGaussData.py <nclusters>
@@ -38,7 +39,7 @@ sys.argv = [ "VarianceTesting",
     ]
 
 
-print(" ".join(sys.argv))
+# print(" ".join(sys.argv))
 ap = argparse.ArgumentParser()
 
 ap.add_argument("--nclus", required=True)
@@ -65,8 +66,9 @@ cfg = config.Config(
     Q=args.query_size, 
     nclus=1, 
     var=0.1, 
-    size=10000, 
-    D=2)
+    S=10000, 
+    D=2,
+    F=0)
 data = dh.Data("gaussian", cfg)
 
 nclus = args.nclus    # numero de clusters
@@ -81,12 +83,20 @@ confDir = data.confdir
 dataDir = data.datadir
 queryPath = data.querydir
 
+
 prog.genGauss(
     nclus=args.nclus, 
     dim=args.dimensions,
     var=args.variance,
-    conffile=data.gaussconffilepath,
-    printcmd=True)
+    data=data,
+    overwrite=overwrite,
+    printcmd=True
+    )
+
+
+
+prog.vec2bin(data.vecfilepath, data.binfilepath, overwrite)
+prog.vec2hdf5(data.vecfilepath, data.hdf5filepath, overwrite)
 
 # confName = "gaussoraConfig_nclus=%d_dim=%d_var=%s.txt" %(nclus,dim,var)
 gcprog = "gaussoraConf.pl"

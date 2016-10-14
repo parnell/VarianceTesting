@@ -11,6 +11,9 @@ class Config(dict):
         self["datadir"] = datadir
         self["confdir"] = confdir
         self["resultdir"] = resultdir
+        assert(self["Q"] is not None)
+        assert(self["S"] is not None)
+        assert(self["F"] is not None)
     
     def loadFromModule(self, module):
         for v in dir(module):
@@ -79,10 +82,12 @@ class Config(dict):
         return "%s/%s" %(dir,name)
 
     def getQVecFile(self, fullname):
-        return self["QNAME"].format(fullname=fullname,Q=self["Q"],dataformat="vec")
+        return self["QNAME"].format(fullname=fullname,
+            Q=self["Q"],F=self["F"],dataformat="vec")
 
     def getQHDF5File(self, fullname):
-        return self["QNAME"].format(fullname=fullname,Q=self["Q"],dataformat="hdf5")
+        return self["QNAME"].format(fullname=fullname,
+            Q=self["Q"],F=self["F"],dataformat="hdf5")
 
     def getGaussConfFile(self, fullname):
         return self["GAUSSCONF_NAME"].format(fullname=fullname)
@@ -103,7 +108,7 @@ class Config(dict):
             return self["GAUSSDATA_NAME"].format(
                 name=dataname, 
                 dimensions=self["D"],
-                size=self["size"],
+                size=self["S"],
                 nclus=self["nclus"],
                 var=self["var"]
                 )
