@@ -3,7 +3,7 @@ lshbox = "LSHBox"
 vec2bin = "vec2bin"
 vec2hdf5 = "vec2hdf5"
 kdtree = "VarianceTesting"
-gaussoraconf = "gaussoraConf.pl" 
+gaussoraconf = "gaussoraConf.pl"
 gaussora = "gaussora"
 
 DATADIRFULL_FORMAT = "{datadir}/{datatype}/{dataname}"
@@ -26,4 +26,3 @@ BENCHMARK_NAME = "{fullname}_k={K}.bench.txt"
 KD_BENCHMARK_NAME = "{fullname}_k={K}.kd.bench.txt"
 LSHRFILE_NAME = "{fullname}_k={K}.rfile.txt"
 GAUSSCONF_NAME = "{fullname}.conf.txt"
-

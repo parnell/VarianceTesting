@@ -9,7 +9,12 @@ def run(cmd, stdout=sys.stdout, printcmd=False):
     if printcmd:
         print(" ".join(cmd)," > ",stdout.name, file=sys.stderr)
     processcomplete = subprocess.run(cmd, stdout=stdout)
-    processcomplete.check_returncode()
+    try:
+        processcomplete.check_returncode()
+    except subprocess.CalledProcessError as e:
+        print("Error running process"," ".join(cmd)," > ",stdout.name, file=sys.stderr)
+        raise e
+
 
 
 def vec2bin(vec, bin, overwrite=True, printcmd=False):
@@ -23,8 +28,8 @@ def vec2hdf5(vec, hdf5, overwrite=True, printcmd=False):
     cmd = [cfg.vec2hdf5, vec, hdf5, "data"]
     runordel(cmd, hdf5, overwrite=overwrite, printcmd=printcmd)
 
-def runordel(cmd, outfile, 
-    outtofile=False, 
+def runordel(cmd, outfile,
+    outtofile=False,
     overwrite=True,
     printcmd=False):
     if overwrite or not os.path.exists(outfile):
@@ -37,25 +42,24 @@ def runordel(cmd, outfile,
         except Exception as e:
             if os.path.exists(outfile): os.remove(outfile)
             raise e
-    
+
 def genGauss(nclus, dim, var, data, overwrite=True, printcmd=False):
     dh.Data.mkdirs(data.datadirfull, data.benchdir, data.indexdir)
-    
-    cmd = [cfg.gaussoraconf, 
-        nclus, 
-        dim, 
+
+    cmd = [cfg.gaussoraconf,
+        nclus,
+        dim,
         var]
-    runordel(cmd, data.gaussconffilepath, 
-        outtofile=True, 
-        overwrite=overwrite, 
+    runordel(cmd, data.gaussconffilepath,
+        outtofile=True,
+        overwrite=overwrite,
         printcmd=printcmd)
 
-    cmd = [cfg.gaussora, 
+    cmd = [cfg.gaussora,
         "-gauss", data.gaussconffilepath,
         "-n", data.S,
         "-q", "0"]
     runordel(cmd, data.vecfilepath,
         outtofile=True,
-        overwrite=overwrite, 
+        overwrite=overwrite,
         printcmd=printcmd)
-    
