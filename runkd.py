@@ -96,6 +96,6 @@ if __name__ == "__main__":
 
     st1 = lyz.FileStatter(data.kdbenchfilepath)
 
-    # st1.print()
+    st1.print()
 
-    log.info("avgcalcs", st1.get("avg")[0])
+    log.info("avgcalcs", st1.get("avg"))
