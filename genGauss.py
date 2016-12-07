@@ -3,8 +3,8 @@
 ###
 # Author: Lee Parnell Thompson
 # Version: 1.1
-# 
-# Disclaimer: I use these scripts for my own use, 
+#
+# Disclaimer: I use these scripts for my own use,
 #	so caveat progtor, let the programmer beware
 ###
 
@@ -14,37 +14,22 @@ import argparse
 import config
 import datahelper as dh
 import programs as prog
+import sysarg
 overwrite = True
 #def usage(out):
 	#print("Usage: ./genGaussData.py <nclusters>
-    # <dimensions> <variance> <size> 
+    # <dimensions> <variance> <size>
     #<indexName for hdf5> <numQueryFiles>
     # <sizeOfQueryFiles>", file=sys.stderr)
 home = os.path.expanduser("~")
-sys.argv = [ "VarianceTesting",
-    "-K3",
-    "--datadir", "%s/rdata" %home,
-    "--confdir", "%s/rdata/conf" %home,
-    "--resultdir", "%s/rdata/results" %home,
-    "--query-filename=fromtopk",
-    "-D2",
-    "--nclus=1",
-    "--variance=0.1",
-    "--fold=1",
-    "--data-size=10000",
-    "-Q10"
-    # "--input-filename="
-    #"10"
-    ]
 
-
-print(" ".join(sys.argv))
+# print(" ".join(sys.argv))
 ap = argparse.ArgumentParser()
 
 ap.add_argument("--nclus", required=True)
 ap.add_argument("--variance", required=True)
-ap.add_argument("--fold", required=True)
-ap.add_argument("--data-size", required=True)
+ap.add_argument('-F',"--fold", required=True)
+ap.add_argument('-S', "--size", required=True)
 ap.add_argument("-K", type=int, required=True)
 ap.add_argument("-D", "--dimensions", type=int, required=True)
 ap.add_argument("-Q", "--query-size", type=int, required=True)
@@ -54,26 +39,29 @@ ap.add_argument("--confdir", required=True)
 ap.add_argument("--resultdir", required=True)
 
 
-args = ap.parse_args()
+sys.argv = sysarg.args(sys.modules[__name__])
+
+args, unknown = ap.parse_known_args()
 print(args)
 
 cfg = config.Config(
     datadir=args.datadir,
     confdir=args.confdir,
     resultdir=args.resultdir,
-    K=args.K, 
-    Q=args.query_size, 
-    nclus=1, 
-    var=0.1, 
-    size=10000, 
-    D=2)
+    K=args.K,
+    Q=args.query_size,
+    nclus=1,
+    var=0.1,
+    S=10000,
+    D=2,
+    F=0)
 data = dh.Data("gaussian", cfg)
 
 nclus = args.nclus    # numero de clusters
 dim =   args.dimensions    # la dimension de los vectores
 var =   args.variance    # la varianza (devstd^2)
-size = args.data_size
-# hdf5IndexName = sys.argv[-3]
+size = args.size
+
 nQueryFiles = args.fold
 sizeQueryFiles = args.query_size
 
@@ -81,12 +69,18 @@ confDir = data.confdir
 dataDir = data.datadir
 queryPath = data.querydir
 
+
 prog.genGauss(
-    nclus=args.nclus, 
+    nclus=args.nclus,
     dim=args.dimensions,
     var=args.variance,
-    conffile=data.gaussconffilepath,
-    printcmd=True)
+    data=data,
+    overwrite=overwrite,
+    printcmd=True
+    )
+
+prog.vec2bin(data.vecfilepath, data.binfilepath, overwrite)
+prog.vec2hdf5(data.vecfilepath, data.hdf5filepath, overwrite)
 
 # confName = "gaussoraConfig_nclus=%d_dim=%d_var=%s.txt" %(nclus,dim,var)
 gcprog = "gaussoraConf.pl"
@@ -144,7 +138,7 @@ createQueryProy = "createQueries"
 #     qvec = "%s/%s.vec" %(queryPath,queryFileBase)
 #     qvec2 = "%s/%s.vect" %(queryPath,queryFileBase)
 #     h5vec = "%s/%s.hdf5" %(queryPath,queryFileBase)
-    
+
 #     cmdstr = "%s %s %s %s %s %s %d" %(createQueryProy, hdf5File, qvec, hdf5IndexName, sizeQueryFiles, "vec", i)
 #     print(cmdstr)
 #     retcode = call(cmdstr, shell=True)
@@ -152,7 +146,7 @@ createQueryProy = "createQueries"
 #     cmdstr = 'tail -n +2 "%s" > "%s"' %(qvec, qvec2)
 #     print(cmdstr)
 #     retcode = call(cmdstr, shell=True)
-    
+
 #     cmdstr = "%s %s %s %s %s %s %d" %(createQueryProy, hdf5File, h5vec, hdf5IndexName, sizeQueryFiles, "hdf5", i)
 #     print(cmdstr)
 #     retcode = call(cmdstr, shell=True)

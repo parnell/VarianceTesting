@@ -6,12 +6,23 @@ def isGauss(name):
 
 class Config(dict):
     def __init__(self, datadir, confdir, resultdir, *arg, **kw):
+        '''
+        S, size: datasize
+        Q, query-size: query size
+        F, fold: which fold are we using
+        '''
         super(Config, self).__init__(*arg, **kw)
         self.loadFromModule(cfg)
         self["datadir"] = datadir
         self["confdir"] = confdir
         self["resultdir"] = resultdir
-    
+        v = self.pop('size', None)
+        if v and 'S' not in self:
+            self['S'] = v
+        assert self["Q"] is not None
+        assert self["S"] is not None
+        assert self["F"] is not None
+
     def loadFromModule(self, module):
         for v in dir(module):
             if v.startswith('__'):
@@ -79,10 +90,12 @@ class Config(dict):
         return "%s/%s" %(dir,name)
 
     def getQVecFile(self, fullname):
-        return self["QNAME"].format(fullname=fullname,Q=self["Q"],dataformat="vec")
+        return self["QNAME"].format(fullname=fullname,
+            Q=self["Q"],F=self["F"],dataformat="vec")
 
     def getQHDF5File(self, fullname):
-        return self["QNAME"].format(fullname=fullname,Q=self["Q"],dataformat="hdf5")
+        return self["QNAME"].format(fullname=fullname,
+            Q=self["Q"],F=self["F"],dataformat="hdf5")
 
     def getGaussConfFile(self, fullname):
         return self["GAUSSCONF_NAME"].format(fullname=fullname)
@@ -101,11 +114,11 @@ class Config(dict):
         if isGauss(dataname):
             # "{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}"
             return self["GAUSSDATA_NAME"].format(
-                name=dataname, 
+                name=dataname,
                 dimensions=self["D"],
-                size=self["size"],
+                size=self["S"],
                 nclus=self["nclus"],
                 var=self["var"]
                 )
         else:
-            assert(0)            
+            assert(0)

@@ -124,6 +124,10 @@ class Data():
         return self.cfg["Q"]
 
     @property
+    def S(self):
+        return self.cfg["S"]
+
+    @property
     def var(self):
         return self.cfg["var"]
 
