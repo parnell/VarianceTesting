@@ -19,6 +19,7 @@ class BaseEnum(IntEnum):
     def __str__(self):
         return os.path.splitext(os.path.basename(Enum.__str__(self)))[1][1:]
 
+    @staticmethod
     def fromValue(idx, enumType):
         if isinstance(idx, bytes):
             idx = idx.decode('utf-8')
@@ -29,7 +30,7 @@ class BaseEnum(IntEnum):
             for name, member in enumType.__members__.items():
                 if name == idx:
                     return member
-        raise ("Index " + str(idx)+" not found in "+ str(enumType) +" " + str(type(idx)))
+        raise "Index " + str(idx)+" not found in "+ str(enumType) +" " + str(type(idx))
 
 def isGauss(name):
     return "gauss" in name
@@ -40,6 +41,7 @@ class DataFormatEnum(BaseEnum):
     vec = 2
     vect = 3
 
+    @staticmethod
     def format(name):
         return DataFormatEnum.fromValue(getRawExtension(name), DataFormatEnum)
 
@@ -47,11 +49,12 @@ class DataTypeEnum(BaseEnum):
     vec = 0
     graph = 1
 
+    @staticmethod
     def type(name):
         try:
             return DataTypeEnum.fromValue(getRawExtension(name),DataTypeEnum)
-        except Exception as e:
-            if "gauss" in name: 
+        except:
+            if "gauss" in name:
                 return DataTypeEnum.vec
             raise Exception("data type not known")
 
@@ -73,35 +76,37 @@ class File():
         return os.path.basename(self.filename)
 
 class Data():
-    def __init__(self, dataname, cfg):
-        self.oname = os.path.abspath(dataname)
+    def __init__(self, cfg):
+        self.dataname = cfg['shortname']
+        self.type = DataTypeEnum.type(self.dataname)
+        self.fullname = cfg.getFullName(self.dataname)
+        # self.oname = os.path.abspath(dataname)
         # assert(os.path.exists(self.oname))
         self.cfg = cfg
-        n = getStem(dataname)
+        n = getStem(self.vecfilepath)
         self.dataname = n if "__" not in n else n.split("__")[0]
-        self.fullname = cfg.getFullName(self.dataname)
-        self.datatype = DataTypeEnum.type(self.oname)
 
 
     def createBinFile(self, overwrite=False):
         n = self.binfilepath
         if overwrite or not os.path.exists(n):
-            progs.vec2bin(self.oname,n)
+            progs.vec2bin(self.vecfilepath,n)
 
     def createHDF5File(self, overwrite=False):
-        Data.vec2hdf5(self.oname, self.hdf5filepath, overwrite)
+        Data.vec2hdf5(self.vecfilepath, self.hdf5filepath, overwrite)
 
+    @staticmethod
     def vec2hdf5(src, dest, overwrite=False):
         if overwrite or not os.path.exists(dest):
             progs.vec2hdf5(src, dest, True)
 
-    @property
-    def type(self):
-        return DataTypeEnum.type(self.oname)
+    # @property
+    # def type(self):
+    #     return DataTypeEnum.type(self.oname)
 
     @property
-    def benchfilepath(self):
-        return self.cfg.getBenchFilePath(self.dataname, self.fullname, self.type)
+    def lshbenchfilepath(self):
+        return self.cfg.getLSHBenchFilePath(self.dataname, self.fullname, self.type)
 
     @property
     def lshrfilepath(self):
@@ -117,23 +122,23 @@ class Data():
 
     @property
     def K(self):
-        return self.cfg["K"]
+        return self.cfg.K
 
     @property
     def Q(self):
-        return self.cfg["Q"]
+        return self.cfg.Q
 
     @property
     def S(self):
-        return self.cfg["S"]
+        return self.cfg.S
 
     @property
     def var(self):
-        return self.cfg["var"]
+        return self.cfg.variance
 
-    @property
-    def format(self):
-        return DataFormatEnum.format(self.oname)
+    # @property
+    # def format(self):
+    #     return DataFormatEnum.format(self.oname)
 
     @property
     def datadir(self):
@@ -141,19 +146,19 @@ class Data():
 
     @property
     def datadirfull(self):
-        return self.cfg.getDataDirFull(self.dataname, self.datatype)
+        return self.cfg.getDataDirFull(self.dataname, self.type)
 
     @property
     def benchdir(self):
-        return self.cfg.getBenchDir(self.dataname, self.datatype)
+        return self.cfg.getBenchDir(self.dataname, self.type)
 
     @property
     def resultdir(self):
-        return self.cfg.getBenchDir(self.dataname, self.datatype)
+        return self.cfg.getBenchDir(self.dataname, self.type)
 
     @property
     def confdir(self):
-        return self.cfg.getConfDir(self.dataname, self.datatype)
+        return self.cfg.getConfDir(self.dataname, self.type)
 
     @property
     def indexdir(self):
@@ -184,21 +189,25 @@ class Data():
         return "%s.vec" %self.fullname
 
     @property
+    def vectfile(self):
+        return "%s.vect" %self.fullname
+
+    @property
     def qhdf5file(self):
-        return "%s.hdf5" %self.fullname
+        return self.cfg.getQHDF5File(self.fullname)
 
     @property
     def qvecfile(self):
-        return self.cfg.getQVecFile(self.fullname) 
+        return self.cfg.getQVecFile(self.fullname)
 
     @property
-    def qhdf5file(self):
-        return self.cfg.getQHDF5File(self.fullname) 
+    def qbinfile(self):
+        return self.cfg.getQBinFile(self.fullname)
 
     @property
     def gaussconffile(self):
-        return self.cfg.getGaussConfFile(self.fullname) 
-        
+        return self.cfg.getGaussConfFile(self.fullname)
+
     @property
     def binfilepath(self):
         return "%s/%s" %(self.datadirfull, self.binfile)
@@ -206,6 +215,10 @@ class Data():
     @property
     def vecfilepath(self):
         return "%s/%s" %(self.datadirfull, self.vecfile)
+
+    @property
+    def vectfilepath(self):
+        return "%s/%s" %(self.datadirfull, self.vectfile)
 
     @property
     def hdf5filepath(self):
@@ -216,6 +229,10 @@ class Data():
         return "%s/%s" %(self.querydir, self.qvecfile)
 
     @property
+    def qbinfilepath(self):
+        return "%s/%s" %(self.querydir, self.qbinfile)
+
+    @property
     def qhdf5filepath(self):
         return "%s/%s" %(self.querydir, self.qhdf5file)
 
@@ -223,11 +240,13 @@ class Data():
     def gaussconffilepath(self):
         return "%s/%s" %(self.confdir, self.gaussconffile)
 
+    @staticmethod
     def remove(*args):
         for arg in args:
             if os.path.exists(arg):
                 os.remove(arg)
 
+    @staticmethod
     def mkdirs(*args):
         for arg in args:
             if not os.path.exists(arg):

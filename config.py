@@ -5,7 +5,7 @@ def isGauss(name):
     return "gauss" in name
 
 class Config(dict):
-    def __init__(self, datadir, confdir, resultdir, *arg, **kw):
+    def __init__(self, *arg, **kw):
         '''
         S, size: datasize
         Q, query-size: query size
@@ -13,15 +13,14 @@ class Config(dict):
         '''
         super(Config, self).__init__(*arg, **kw)
         self.loadFromModule(cfg)
-        self["datadir"] = datadir
-        self["confdir"] = confdir
-        self["resultdir"] = resultdir
-        v = self.pop('size', None)
-        if v and 'S' not in self:
-            self['S'] = v
-        assert self["Q"] is not None
-        assert self["S"] is not None
-        assert self["F"] is not None
+        # self["datadir"] = datadir
+        # self["confdir"] = confdir
+        # self["resultdir"] = resultdir
+
+        assert self.Q is not None
+        assert self.S is not None
+        assert self.F is not None
+
 
     def loadFromModule(self, module):
         for v in dir(module):
@@ -69,9 +68,9 @@ class Config(dict):
         dir = self.getConfDirFull(dataname, datatype)
         return self["CONFDIR_FORMAT"].format(confdirfull=dir)
 
-    def getBenchFilePath(self, dataname, fullname, datatype):
+    def getLSHBenchFilePath(self, dataname, fullname, datatype):
         dir = self.getBenchDir(dataname, datatype)
-        name = self["BENCHMARK_NAME"].format(fullname=fullname,K=self["K"])
+        name = self["LSH_BENCHMARK_NAME"].format(fullname=fullname,K=self["K"])
         return "%s/%s" %(dir,name)
 
     def getKDBenchFilePath(self, dataname, fullname, datatype):
@@ -89,13 +88,19 @@ class Config(dict):
         name = self["TOPK_NAME"].format(fullname=fullname,K=self["K"])
         return "%s/%s" %(dir,name)
 
+
+    def _getQFile(self, fullname, ftype):
+        return self["QNAME"].format(
+            fullname=fullname, Q=self.Q,fold=self.F,dataformat=ftype)
+
     def getQVecFile(self, fullname):
-        return self["QNAME"].format(fullname=fullname,
-            Q=self["Q"],F=self["F"],dataformat="vec")
+        return self._getQFile(fullname, 'vec')
+
+    def getQBinFile(self, fullname):
+        return self._getQFile(fullname, 'bin')
 
     def getQHDF5File(self, fullname):
-        return self["QNAME"].format(fullname=fullname,
-            Q=self["Q"],F=self["F"],dataformat="hdf5")
+        return self._getQFile(fullname, 'hdf5')
 
     def getGaussConfFile(self, fullname):
         return self["GAUSSCONF_NAME"].format(fullname=fullname)
@@ -103,6 +108,11 @@ class Config(dict):
     def getQVecFilePath(self, dataname, fullname, datatype):
         dir = self.getQueryDir(dataname, datatype)
         name = self.getQVecFile(fullname)
+        return "%s/%s" %(dir,name)
+
+    def getQBinFilePath(self, dataname, fullname, datatype):
+        dir = self.getQueryDir(dataname, datatype)
+        name = self.getQBinFile(fullname)
         return "%s/%s" %(dir,name)
 
     def getQHDF5FilePath(self, dataname, fullname, datatype):
@@ -115,10 +125,37 @@ class Config(dict):
             # "{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}"
             return self["GAUSSDATA_NAME"].format(
                 name=dataname,
-                dimensions=self["D"],
-                size=self["S"],
+                dimensions=self.D,
+                size=self.S,
                 nclus=self["nclus"],
-                var=self["var"]
+                var=self["variance"]
                 )
         else:
-            assert(0)
+            assert 0
+
+    @property
+    def nclus(self): return self['nclus']
+
+    @property
+    def variance(self): return self['variance']
+
+    @property
+    def Q(self): return self['query_size']
+
+    @property
+    def D(self): return self['dimensions']
+
+    @property
+    def F(self): return self['fold']
+
+    @property
+    def S(self): return self['size']
+
+    @property
+    def K(self): return self['K']
+
+    @property
+    def dim(self): return self['dimensions']
+
+    @property
+    def synthetic(self): return self['synthetic']

@@ -54,7 +54,7 @@ print("@@@@ Running KD @@@@")
 runkd.main(data, overwrite)
 
 # N0692-ZY350-78988-0XAK6-992NN
-ls = lyz.FileStatter(data.benchfilepath)
+ls = lyz.FileStatter(data.lshbenchfilepath)
 lsh = lyz.FileStatter(data.lshrfilepath)
 kd = lyz.FileStatter(data.kdbenchfilepath)
 ls.print()

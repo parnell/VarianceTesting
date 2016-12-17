@@ -1,37 +1,27 @@
 import subprocess
-import configuration as cfg
 import os
 import sys
 import datahelper as dh
+import configuration as config
+from timer import timeit
+from logger import printl, printe
 
 def run(cmd, stdout=sys.stdout, printcmd=False):
     cmd = [str(x) for x in cmd]
     if printcmd:
-        print(" ".join(cmd)," > ",stdout.name, file=sys.stderr)
+        printl('\n$>'," ".join(cmd)," > ",stdout.name,'\n')
     processcomplete = subprocess.run(cmd, stdout=stdout)
     try:
         processcomplete.check_returncode()
     except subprocess.CalledProcessError as e:
-        print("Error running process"," ".join(cmd)," > ",stdout.name, file=sys.stderr)
+        printe("Error running process"," ".join(cmd)," > ",stdout.name)
         raise e
 
-
-
-def vec2bin(vec, bin, overwrite=True, printcmd=False):
-    cmd = [cfg.vec2bin, vec, bin]
-    runordel(cmd, bin, overwrite=overwrite, printcmd=printcmd)
-
-def vec2vect(vec, bin, overwrite=True,printcmd=False):
-    pass
-
-def vec2hdf5(vec, hdf5, overwrite=True, printcmd=False):
-    cmd = [cfg.vec2hdf5, vec, hdf5, "data"]
-    runordel(cmd, hdf5, overwrite=overwrite, printcmd=printcmd)
-
-def runordel(cmd, outfile,
-    outtofile=False,
-    overwrite=True,
-    printcmd=False):
+def runordel(   cmd,
+                outfile,
+                outtofile=False,
+                overwrite=True,
+                printcmd=False):
     if overwrite or not os.path.exists(outfile):
         try:
             if outtofile:
@@ -40,26 +30,99 @@ def runordel(cmd, outfile,
             else:
                 run(cmd, printcmd=printcmd)
         except Exception as e:
-            if os.path.exists(outfile): os.remove(outfile)
+            if os.path.exists(outfile):
+                os.remove(outfile)
             raise e
 
-def genGauss(nclus, dim, var, data, overwrite=True, printcmd=False):
-    dh.Data.mkdirs(data.datadirfull, data.benchdir, data.indexdir)
+def vec2bin(data, overwrite=True, printcmd=False):
+    _vec2bin(data.vecfilepath, data.binfilepath, overwrite, printcmd)
 
-    cmd = [cfg.gaussoraconf,
-        nclus,
-        dim,
-        var]
-    runordel(cmd, data.gaussconffilepath,
+@timeit
+def _vec2bin(vecfile, binfile, overwrite=True, printcmd=False):
+    cmd = [config.vec2bin, vecfile, binfile]
+    runordel(cmd, binfile, overwrite=overwrite, printcmd=printcmd)
+
+def vec2vect(data, overwrite=True, printcmd=False):
+    _vec2vect(data.vecfilepath, data.vectfilepath, overwrite, printcmd)
+
+@timeit
+def _vec2vect(vecfile, vectfile, overwrite=True, printcmd=False):
+    cmd = [config.vec2vect, vecfile, vectfile]
+    runordel(cmd, vectfile, overwrite=overwrite, printcmd=printcmd)
+
+def vec2hdf5(data, overwrite=True, printcmd=False):
+    _vec2hdf5(data.vecfilepath, data.hdf5filepath, overwrite, printcmd)
+
+@timeit
+def _vec2hdf5(vec, hdf5, overwrite=True, printcmd=False):
+    cmd = [config.vec2hdf5, vec, hdf5, "data"]
+    runordel(cmd, hdf5, overwrite=overwrite, printcmd=printcmd)
+
+@timeit
+def _runlsh(
+        binfilepath,
+        lshindexfilepath,
+        topkfilepath,
+        qvecfilepath,
+        k,
+        lshrfilepath,
+        overwrite=True, printcmd=False):
+    cmd = [ config.lshbox,
+            binfilepath,
+            lshindexfilepath,
+            topkfilepath,
+            str(k),
+            qvecfilepath,
+          ]
+    runordel(cmd, lshrfilepath,
+             outtofile=True, overwrite=overwrite, printcmd=printcmd)
+
+def runlsh(data, overwrite=True, printcmd=False):
+    # Usage: ./LSHBox <input infile> <index outfile> <benchmark infile> <k>
+    return _runlsh(
+        data.binfilepath,
+        data.lshindexfilepath,
+        data.topkfilepath,
+        data.qvecfilepath,
+        str(data.K),
+        data.lshrfilepath,
+        overwrite, printcmd
+        )
+
+def genGauss(data, overwrite=True, printcmd=False):
+    cfg = data.cfg
+    _genGauss(
+        cfg.nclus,
+        cfg.dim,
+        cfg.variance,
+        data,
+        overwrite,
+        printcmd
+    )
+
+@timeit
+def _genGauss(nclus, dim, var, data, overwrite=True, printcmd=False):
+    dh.Data.mkdirs(
+        data.confdir,
+        data.datadirfull,
+        data.benchdir,
+        data.indexdir)
+
+    cmd = [ config.gaussoraconf,
+            nclus,
+            dim,
+            var]
+    runordel(
+        cmd, data.gaussconffilepath,
         outtofile=True,
         overwrite=overwrite,
         printcmd=printcmd)
 
-    cmd = [cfg.gaussora,
-        "-gauss", data.gaussconffilepath,
-        "-n", data.S,
-        "-q", "0"]
-    runordel(cmd, data.vecfilepath,
-        outtofile=True,
-        overwrite=overwrite,
-        printcmd=printcmd)
+    cmd = [ config.gaussora,
+            "-gauss", data.gaussconffilepath,
+            "-n", data.S,
+            "-q", "0"]
+    runordel(   cmd, data.vecfilepath,
+                outtofile=True,
+                overwrite=overwrite,
+                printcmd=printcmd)

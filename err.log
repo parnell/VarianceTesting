@@ -1,0 +1,6 @@
+2016-12-16 18:02:15,904 - INFO : func<'_genGauss'> took: 0.0001 sec
+2016-12-16 18:02:15,904 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2016-12-16 18:02:15,904 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2016-12-16 18:02:15,904 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2016-12-16 18:02:15,905 - INFO : func<'runbench'> took: 0.0002 sec
+2016-12-16 18:02:15,905 - INFO : func<'_runlsh'> took: 0.0000 sec
