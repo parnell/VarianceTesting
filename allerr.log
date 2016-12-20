@@ -714,3 +714,11 @@ $> VarianceTesting -i/Users/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=1000
 2016-12-19 21:38:01,070 - INFO : avgtime	0.078269	0.0286042s.	0.2726
 2016-12-19 21:38:01,071 - INFO : avgcalcs	378002	1626.0
 2016-12-19 21:38:01,071 - INFO : -#--------------------------------------#-
+2016-12-19 23:11:13,946 - INFO : func<'_genGauss'> took: 0.0002 sec
+2016-12-19 23:11:13,946 - INFO : func<'_vec2bin'> took: 0.0001 sec
+2016-12-19 23:11:13,947 - INFO : func<'_vec2hdf5'> took: 0.0001 sec
+2016-12-19 23:11:13,947 - INFO : func<'_vec2vect'> took: 0.0001 sec
+2016-12-19 23:11:13,948 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2016-12-19 23:11:13,948 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2016-12-19 23:11:13,948 - INFO : func<'runlshbench'> took: 0.0002 sec
+2016-12-19 23:11:13,949 - INFO : func<'_runlsh'> took: 0.0001 sec

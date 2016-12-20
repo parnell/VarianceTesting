@@ -20,6 +20,7 @@ sh = logging.StreamHandler(sys.stdout)
 sh.setLevel(logging.INFO)
 sh.setFormatter(formatter)
 log.addHandler(sh)
+dlog.addHandler(sh)
 
 sh = logging.StreamHandler(open(logdir+'/err.log','w'))
 sh.setLevel(logging.INFO)
