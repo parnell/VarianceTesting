@@ -11,7 +11,7 @@ import sysarg
 import genGauss
 from programs import runordel, runlsh, vec2bin, vec2hdf5
 from timer import timeit
-
+from logger import printl
 
 @timeit
 def runlshbench(data, overwrite=False):
@@ -57,6 +57,6 @@ if __name__ == "__main__":
 
     st1 = lyz.FileStatter(rundata.lshbenchfilepath)
     st2 = lyz.FileStatter(rundata.lshrfilepath)
-    # st1.print()
-    # st2.print()
-    print("avgcalcs", st2.getf("avg"))
+    st1.print()
+    st2.print()
+    printl("avgcalcs", st2.getf("avg"))
