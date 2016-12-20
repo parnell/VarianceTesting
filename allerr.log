@@ -714,3 +714,37 @@ $> VarianceTesting -i/Users/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=1000
 2016-12-19 21:38:01,070 - INFO : avgtime	0.078269	0.0286042s.	0.2726
 2016-12-19 21:38:01,071 - INFO : avgcalcs	378002	1626.0
 2016-12-19 21:38:01,071 - INFO : -#--------------------------------------#-
+2016-12-19 23:12:28,082 - INFO : 
+$> gaussoraConf.pl 1 5 0.1  >  /home1/01208/parnell/data/rdata/conf/vec/gaussian/conf/gaussian__d=5_s=100000_nclus=1_var=0.1.conf.txt 
+
+2016-12-19 23:12:28,137 - INFO : 
+$> gaussora -gauss /home1/01208/parnell/data/rdata/conf/vec/gaussian/conf/gaussian__d=5_s=100000_nclus=1_var=0.1.conf.txt -n 100000 -q 0  >  /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.vec 
+
+2016-12-19 23:12:28,382 - INFO : func<'_genGauss'> took: 0.3235 sec
+2016-12-19 23:12:28,386 - INFO : 
+$> vec2bin /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.vec /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2016-12-19 23:12:28,425 - ERROR : Error running process vec2bin /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.vec /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.bin  >  <stdout>
+2016-12-20 00:14:38,208 - INFO : func<'_genGauss'> took: 0.0027 sec
+2016-12-20 00:14:38,209 - INFO : 
+$> vec2bin /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.vec /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2016-12-20 00:14:38,478 - INFO : func<'_vec2bin'> took: 0.2687 sec
+2016-12-20 00:14:38,479 - INFO : 
+$> vec2hdf5 /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.vec /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2016-12-20 00:14:38,678 - INFO : func<'_vec2hdf5'> took: 0.1991 sec
+2016-12-20 00:14:38,679 - INFO : 
+$> vec2vect /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.vec /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.vect  >  <stdout> 
+
+2016-12-20 00:14:38,717 - INFO : func<'_vec2vect'> took: 0.0392 sec
+2016-12-20 00:14:38,720 - INFO : func<'_vec2bin'> took: 0.0003 sec
+2016-12-20 00:14:38,721 - INFO : func<'_vec2hdf5'> took: 0.0001 sec
+2016-12-20 00:14:38,723 - INFO : 
+$> CreateLSHBenchmark /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.bin /home1/01208/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.topk.txt 3 10  >  /home1/01208/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.lsh.bench.txt 
+
+2016-12-20 00:14:38,881 - INFO : func<'runlshbench'> took: 0.1596 sec
+2016-12-20 00:14:38,883 - INFO : 
+$> LSHBox /home1/01208/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.bin /home1/01208/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=5_s=100000_nclus=1_var=0.1.lsh /home1/01208/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.topk.txt 3 /home1/01208/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=5_s=100000_nclus=1_var=0.1_qs=10_f=0.vec  >  /home1/01208/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.rfile.txt 
+
+2016-12-20 00:14:39,650 - INFO : func<'_runlsh'> took: 0.7673 sec
