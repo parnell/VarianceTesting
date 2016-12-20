@@ -4,16 +4,18 @@ import subprocess
 import sys
 import os
 import datahelper as dh
-from programs import runordel
+from programs import runordel, vec2hdf5, _vec2hdf5
 import config
 import sysarg
 import analyzer as lyz
 import genGauss
 
+def fullprocess(data, overwrite=False):
+    gendata(data, overwrite)
+    process(data, overwrite)
+
 def process(data, overwrite=False):
     cfg = data.cfg
-    dh.Data.mkdirs(data.benchdir, data.indexdir)
-    data.createHDF5File()
 
     #VarianceTesting -q/filename/ -k3 -d5 -i/data/gaussian_1_5_0.1_1000000.hdf5 -ngauss -f1
     cmd = [
@@ -27,30 +29,25 @@ def process(data, overwrite=False):
              outtofile=True, overwrite=overwrite,
              printcmd=True)
 
+def gendata(data,overwrite=False):
+    dh.Data.mkdirs(data.benchdir, data.indexdir)
+    vec2hdf5(data, overwrite=overwrite)
+    if data.cfg.synthetic:
+        genGauss.process(data)
+
+    _vec2hdf5(data.qvecfilepath, data.qhdf5filepath, overwrite=overwrite)
+
 
 if __name__ == "__main__":
     overwrite = True
 
     sys.argv = sysarg.args(__file__)
-    ap = sysarg.getArgParse(
-        sys.argv, needsquerydata=True)
-
-    args, unknown = ap.parse_known_args()
+    args, unknown = sysarg.getParsed(sys.argv, True)
     print(args)
     cfg = config.Config(vars(args))
     data = dh.Data(cfg)
-
-    if cfg.synthetic:
-        genGauss.process(data)
-
-    if args.query_filename == "fromtopk":
-        dh.Data.vec2hdf5(data.qvecfilepath, data.qhdf5filepath, overwrite=overwrite)
-        args.query_filename = data.qhdf5filepath
-
-    process(data)
-
+    fullprocess(data, overwrite)
     st1 = lyz.FileStatter(data.kdbenchfilepath)
 
-    st1.print()
 
-    print("avgcalcs", st1.get("avg"))
+    print("avgcalcs", st1.getf("avg"))

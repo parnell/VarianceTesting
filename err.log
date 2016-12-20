@@ -1,6 +1,34 @@
-2016-12-16 18:02:15,904 - INFO : func<'_genGauss'> took: 0.0001 sec
-2016-12-16 18:02:15,904 - INFO : func<'_vec2bin'> took: 0.0000 sec
-2016-12-16 18:02:15,904 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
-2016-12-16 18:02:15,904 - INFO : func<'_vec2vect'> took: 0.0000 sec
-2016-12-16 18:02:15,905 - INFO : func<'runbench'> took: 0.0002 sec
-2016-12-16 18:02:15,905 - INFO : func<'_runlsh'> took: 0.0000 sec
+2016-12-19 21:37:58,829 - INFO : -#--------------------------------------#-
+2016-12-19 21:37:58,829 - INFO : {'vec2vect': 'vec2vect', 'VECDATA_NAME': '{name}__d={dimensions}_s={size}', 'kdtree': 'VarianceTesting', 'DATADIRFULL_FORMAT': '{datadir}/{datatype}/{dataname}', 'LSHRFILE_NAME': '{fullname}_k={K}.rfile.txt', 'QDIR_FORMAT': '{datadirfull}/query', 'QNAME': 'query_{fullname}_qs={Q}_f={fold}.{dataformat}', 'gaussoraconf': 'gaussoraConf.pl', 'lshbox': 'LSHBox', 'gaussora': 'gaussora', 'vec2bin': 'vec2bin', 'num_folds': '10', 'resultdir': '/Users/parnell/data/rdata/results', 'CONFDIRFULL_FORMAT': '{confdir}/{datatype}/{dataname}', 'GAUSSCONF_NAME': '{fullname}.conf.txt', 'K': 3, 'createLSHBenchmark': 'CreateLSHBenchmark', 'datadir': '/Users/parnell/data/rdata', 'GAUSSDATA_NAME': '{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}', 'synthetic': True, 'query_filename': 'fromtopk', 'fold': '0', 'vec2hdf5': 'vec2hdf5', 'TOPK_NAME': '{fullname}_k={K}.topk.txt', 'variance': '0.1', 'size': '100000', 'LSH_BENCHMARK_NAME': '{fullname}_k={K}.lsh.bench.txt', 'INDEXDIR_FORMAT': '{datadirfull}/indexes', 'confdir': '/Users/parnell/data/rdata/conf', 'dimensions': 5, 'nclus': '1', 'RESULTDIRFULL_FORMAT': '{resultdir}/{datatype}/{dataname}', 'BENCHMARKDIR_FORMAT': '{resultdirfull}/benchmarks', 'CONFDIR_FORMAT': '{confdirfull}/conf', 'query_size': 10, 'shortname': 'gaussian', 'KD_BENCHMARK_NAME': '{fullname}_k={K}.kd.bench.txt'}
+2016-12-19 21:37:58,830 - INFO : func<'_genGauss'> took: 0.0002 sec
+2016-12-19 21:37:58,830 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2016-12-19 21:37:58,830 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2016-12-19 21:37:58,830 - INFO : func<'_vec2vect'> took: 0.0001 sec
+2016-12-19 21:37:58,831 - INFO : @@@@ Running LSH @@@@
+2016-12-19 21:37:59,321 - INFO : func<'_vec2bin'> took: 0.4897 sec
+2016-12-19 21:37:59,765 - INFO : func<'_vec2hdf5'> took: 0.4432 sec
+2016-12-19 21:37:59,765 - INFO : 
+$> CreateLSHBenchmark /Users/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.bin /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.topk.txt 3 10  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.lsh.bench.txt 
+
+2016-12-19 21:37:59,857 - INFO : func<'runlshbench'> took: 0.0913 sec
+2016-12-19 21:37:59,857 - INFO : 
+$> LSHBox /Users/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.bin /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=5_s=100000_nclus=1_var=0.1.lsh /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.topk.txt 3 /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=5_s=100000_nclus=1_var=0.1_qs=10_f=0.vec  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.rfile.txt 
+
+2016-12-19 21:38:00,448 - INFO : func<'_runlsh'> took: 0.5904 sec
+2016-12-19 21:38:00,448 - INFO : @@@@ Running KD @@@@
+2016-12-19 21:38:00,892 - INFO : func<'_vec2hdf5'> took: 0.4430 sec
+2016-12-19 21:38:00,892 - INFO : func<'_genGauss'> took: 0.0002 sec
+2016-12-19 21:38:00,892 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2016-12-19 21:38:00,892 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2016-12-19 21:38:00,893 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2016-12-19 21:38:00,902 - INFO : func<'_vec2hdf5'> took: 0.0087 sec
+2016-12-19 21:38:00,903 - INFO : 
+$> VarianceTesting -i/Users/parnell/data/rdata/vec/gaussian/gaussian__d=5_s=100000_nclus=1_var=0.1.hdf5 -ndata -k3 -q/Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=5_s=100000_nclus=1_var=0.1_qs=10_f=0.hdf5  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=5_s=100000_nclus=1_var=0.1_k=3.kd.bench.txt 
+
+2016-12-19 21:38:01,057 - INFO : ############
+2016-12-19 21:38:01,059 - INFO : ############
+2016-12-19 21:38:01,070 - INFO : avgcalcs LSH KD
+2016-12-19 21:38:01,070 - INFO : acalcswithdev	378002 +/- 74139.1	1626.0
+2016-12-19 21:38:01,070 - INFO : avgtime	0.078269	0.0286042s.	0.2726
+2016-12-19 21:38:01,071 - INFO : avgcalcs	378002	1626.0
+2016-12-19 21:38:01,071 - INFO : -#--------------------------------------#-

@@ -100,10 +100,7 @@ def process(data, overwrite=False):
 
 if __name__ == "__main__":
     sys.argv = sysarg.args(__file__)
-    ap = sysarg.getArgParse(sys.argv)
-
-
-    args, unknown = ap.parse_known_args()
+    args, unknown = sysarg.getParsed(sys.argv)
 
     cfg = config.Config(vars(args))
     data = dh.Data(cfg)

@@ -9,7 +9,7 @@ import config
 import analyzer as lyz
 import sysarg
 import genGauss
-from programs import runordel, runlsh
+from programs import runordel, runlsh, vec2bin, vec2hdf5
 from timer import timeit
 
 
@@ -29,8 +29,8 @@ def runlshbench(data, overwrite=False):
 def process(data, overwrite=False):
     dh.Data.mkdirs(data.indexdir, data.querydir,
                    data.resultdir, data.confdir)
-    data.createBinFile()
-    data.createHDF5File()
+    vec2bin(data, overwrite)
+    vec2hdf5(data, overwrite)
 
     runlshbench(data, overwrite)
     runlsh(data, overwrite, True)

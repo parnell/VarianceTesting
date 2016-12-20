@@ -87,22 +87,13 @@ class Data():
         self.dataname = n if "__" not in n else n.split("__")[0]
 
 
-    def createBinFile(self, overwrite=False):
-        n = self.binfilepath
-        if overwrite or not os.path.exists(n):
-            progs.vec2bin(self.vecfilepath,n)
+    # def createBinFile(self, overwrite=False):
+    #     n = self.binfilepath
+    #     if overwrite or not os.path.exists(n):
+    #         progs.vec2bin(self.vecfilepath,n)
 
-    def createHDF5File(self, overwrite=False):
-        Data.vec2hdf5(self.vecfilepath, self.hdf5filepath, overwrite)
-
-    @staticmethod
-    def vec2hdf5(src, dest, overwrite=False):
-        if overwrite or not os.path.exists(dest):
-            progs.vec2hdf5(src, dest, True)
-
-    # @property
-    # def type(self):
-    #     return DataTypeEnum.type(self.oname)
+    # def createHDF5File(self, overwrite=False):
+    #     Data.vec2hdf5(self.vecfilepath, self.hdf5filepath, overwrite)
 
     @property
     def lshbenchfilepath(self):

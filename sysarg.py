@@ -15,7 +15,7 @@ def args(modulename):
         # "-i", "%s/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec" %home,
         "--query-filename=fromtopk",
         "-K3",
-        "-D2",
+        "-D5",
         "--nclus=1",
         "--variance=0.1",
         '-S100000',
@@ -46,4 +46,9 @@ def getArgParse(args, needsquerydata=False):
     ap.add_argument("--resultdir", required=True)
 
     return ap
+
+def getParsed(args, needsquerydata=False):
+    ap = getArgParse(args, needsquerydata=needsquerydata)
+    return ap.parse_known_args()
+
 
