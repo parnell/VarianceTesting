@@ -3,7 +3,7 @@ import sys
 import os
 
 logdir = './'
-DL = 1
+DL = 3
 
 if not os.path.exists(logdir):
     os.mkdir(logdir)
@@ -20,7 +20,6 @@ sh = logging.StreamHandler(sys.stdout)
 sh.setLevel(logging.INFO)
 sh.setFormatter(formatter)
 log.addHandler(sh)
-dlog.addHandler(sh)
 
 sh = logging.StreamHandler(open(logdir+'/err.log','w'))
 sh.setLevel(logging.INFO)

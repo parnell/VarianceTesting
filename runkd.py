@@ -9,6 +9,7 @@ import config
 import sysarg
 import analyzer as lyz
 import genGauss
+from logger import printl
 
 def fullprocess(data, overwrite=False):
     gendata(data, overwrite)
@@ -50,4 +51,4 @@ if __name__ == "__main__":
     st1 = lyz.FileStatter(data.kdbenchfilepath)
 
 
-    print("avgcalcs", st1.getf("avg"))
+    printl("avgcalcs", st1.getf("avg"))
