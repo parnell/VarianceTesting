@@ -2,7 +2,7 @@ import logging
 import sys
 import os
 
-logdir = './'
+logdir = '/home1/01208/parnell/logs'
 DL = 1
 
 if not os.path.exists(logdir):
@@ -20,7 +20,6 @@ sh = logging.StreamHandler(sys.stdout)
 sh.setLevel(logging.INFO)
 sh.setFormatter(formatter)
 log.addHandler(sh)
-dlog.addHandler(sh)
 
 sh = logging.StreamHandler(open(logdir+'/err.log','w'))
 sh.setLevel(logging.INFO)
