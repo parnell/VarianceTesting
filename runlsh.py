@@ -57,6 +57,6 @@ if __name__ == "__main__":
 
     st1 = lyz.FileStatter(rundata.lshbenchfilepath)
     st2 = lyz.FileStatter(rundata.lshrfilepath)
-    # st1.print()
-    # st2.print()
+    st1.print()
+    st2.print()
     printl("avgcalcs", st2.getf("avg"))
