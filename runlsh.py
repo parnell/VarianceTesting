@@ -40,8 +40,8 @@ def process(data, overwrite=False):
 if __name__ == "__main__":
     overwrite = False
     home = os.path.expanduser("~")
-
-    sys.argv = sysarg.args(__file__)
+    if len(sys.argv)==1:
+        sys.argv = sysarg.args(__file__)
     ap = sysarg.getArgParse(
         sys.argv, needsquerydata=True)
 

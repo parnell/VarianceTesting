@@ -10,7 +10,10 @@ import runkd
 import genGauss
 from logger import printl
 overwrite = True
-sys.argv = sysarg.args(__file__)
+
+if len(sys.argv)==1:
+    sys.argv = sysarg.args(__file__)
+
 args, unknown = sysarg.getParsed(sys.argv, True)
 
 cfg = config.Config(vars(args))

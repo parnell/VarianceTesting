@@ -2,7 +2,7 @@ import logging
 import sys
 import os
 
-logdir = '/home1/01208/parnell/logs'
+logdir = os.path.expanduser("~") + '/logs'
 DL = 1
 
 if not os.path.exists(logdir):

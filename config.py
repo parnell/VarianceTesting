@@ -1,5 +1,4 @@
 import configuration as cfg
-import os
 
 def isGauss(name):
     return "gauss" in name
@@ -13,9 +12,6 @@ class Config(dict):
         '''
         super(Config, self).__init__(*arg, **kw)
         self.loadFromModule(cfg)
-        # self["datadir"] = datadir
-        # self["confdir"] = confdir
-        # self["resultdir"] = resultdir
 
         assert self.Q is not None
         assert self.S is not None

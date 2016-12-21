@@ -99,7 +99,9 @@ def process(data, overwrite=False):
     #     retcode = call(cmdstr, shell=True)
 
 if __name__ == "__main__":
-    sys.argv = sysarg.args(__file__)
+    if len(sys.argv)==1:
+        sys.argv = sysarg.args(__file__)
+
     args, unknown = sysarg.getParsed(sys.argv)
 
     cfg = config.Config(vars(args))

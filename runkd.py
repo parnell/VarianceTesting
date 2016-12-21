@@ -41,8 +41,9 @@ def gendata(data,overwrite=False):
 
 if __name__ == "__main__":
     overwrite = True
+    if len(sys.argv)==1:
+        sys.argv = sysarg.args(__file__)
 
-    sys.argv = sysarg.args(__file__)
     args, unknown = sysarg.getParsed(sys.argv, True)
     print(args)
     cfg = config.Config(vars(args))
