@@ -27,3 +27,5 @@ LSH_BENCHMARK_NAME = "{fullname}_k={K}.lsh.bench.txt"
 KD_BENCHMARK_NAME = "{fullname}_k={K}.kd.bench.txt"
 LSHRFILE_NAME = "{fullname}_k={K}.rfile.txt"
 GAUSSCONF_NAME = "{fullname}.conf.txt"
+
+LOG_NAME = '{fullname}_qs={Q}_f={fold}_k={K}.log'

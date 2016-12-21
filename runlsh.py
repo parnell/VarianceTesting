@@ -11,7 +11,7 @@ import sysarg
 import genGauss
 from programs import runordel, runlsh, vec2bin, vec2hdf5
 from timer import timeit
-from logger import printl
+from logger import printl, addLogFile
 
 @timeit
 def runlshbench(data, overwrite=False):
@@ -49,6 +49,7 @@ if __name__ == "__main__":
 
     runcfg = config.Config(vars(args))
     rundata = dh.Data(runcfg)
+    addLogFile(rundata.logfile)
 
     if runcfg.synthetic:
         genGauss.process(rundata)

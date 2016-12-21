@@ -2,6 +2,17 @@ import logging
 import sys
 import os
 
+addedfiles = set()
+
+def addLogFile(file):
+    if file in addedfiles:
+        return
+    addedfiles.add(file)
+    sh = logging.StreamHandler(open(logdir+'/'+file,'w'))
+    sh.setLevel(logging.INFO)
+    sh.setFormatter(formatter)
+    dlog.addHandler(sh)
+
 logdir = os.path.expanduser("~") + '/logs'
 DL = 1
 

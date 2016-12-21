@@ -9,7 +9,7 @@ import config
 import sysarg
 import analyzer as lyz
 import genGauss
-from logger import printl
+from logger import printl, addLogFile
 
 def fullprocess(data, overwrite=False):
     gendata(data, overwrite)
@@ -48,6 +48,8 @@ if __name__ == "__main__":
     print(args)
     cfg = config.Config(vars(args))
     data = dh.Data(cfg)
+    addLogFile(data.logfile)
+
     fullprocess(data, overwrite)
     st1 = lyz.FileStatter(data.kdbenchfilepath)
 

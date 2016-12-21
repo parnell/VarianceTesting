@@ -8,7 +8,7 @@ import analyzer as lyz
 import runlsh
 import runkd
 import genGauss
-from logger import printl
+from logger import printl, addLogFile
 overwrite = True
 
 if len(sys.argv)==1:
@@ -18,6 +18,8 @@ args, unknown = sysarg.getParsed(sys.argv, True)
 
 cfg = config.Config(vars(args))
 data = dh.Data(cfg)
+addLogFile(data.logfile)
+
 printl('-#--------------------------------------#-')
 printl(cfg)
 genGauss.process(data)

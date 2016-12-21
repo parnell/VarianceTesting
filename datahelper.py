@@ -112,6 +112,10 @@ class Data():
         return self.cfg.getTopKFilePath(self.dataname, self.fullname, self.type)
 
     @property
+    def logfile(self):
+        return self.cfg.getLogFile(self.dataname, self.fullname)
+
+    @property
     def K(self):
         return self.cfg.K
 

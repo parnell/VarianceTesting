@@ -9,12 +9,12 @@
 ###
 
 import sys
-import os
-import argparse
 import config
 import datahelper as dh
 import programs as prog
 import sysarg
+from logger import addLogFile
+
 overwrite = True
 #def usage(out):
 	#print("Usage: ./genGaussData.py <nclusters>
@@ -106,4 +106,6 @@ if __name__ == "__main__":
 
     cfg = config.Config(vars(args))
     data = dh.Data(cfg)
+    addLogFile(data.logfile)
+
     process(data)

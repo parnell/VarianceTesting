@@ -84,6 +84,17 @@ class Config(dict):
         name = self["TOPK_NAME"].format(fullname=fullname,K=self["K"])
         return "%s/%s" %(dir,name)
 
+    def getLogFile(self, dataname, fullname):
+        if isGauss(dataname):
+            # "{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}"
+            return self["LOG_NAME"].format(
+                fullname=fullname,
+                Q=self.Q,
+                fold=self.F,
+                K=self.K
+                )
+        else:
+            assert 0
 
     def _getQFile(self, fullname, ftype):
         return self["QNAME"].format(
