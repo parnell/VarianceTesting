@@ -45,6 +45,10 @@ class Statter():
         self.delimiter = None
         self.ddelimiter = None
         self.remove = None
+        ## only use the first value
+        ## useful for removing units etc. Example: 45 (seconds),becomes 45
+        self.firstvalue = False
+        self.trimkeywhitespace = True
         self.setDelimiter(',\t')
 
 
@@ -68,16 +72,27 @@ class Statter():
         '''
         pass
 
-    def get(self, key):
+    def get(self, key, method=None):
         if not self.isparsed:
             self.parse()
+        if method is not None:
+            return method(self.kv[key])
         return self.kv[key]
 
-    def getf(self, key):
+    def getf(self, key, typ = None):
         """
         get first value from key
         """
-        return self.get(key)[0]
+        v = self.get(key)[0]
+        return v if typ is None else typ(v)
+
+    def getfv(self, key, typ = None):
+        """
+        get first value from key, from first split
+        """
+        v = self.get(key)[0].split(' ')[0]
+        return v if typ is None else typ(v)
+
 
     def setExclude(self, line):
         self.exclude_kvs = []
@@ -124,6 +139,15 @@ class Statter():
         s = '{} :\tn={}\t'+s.format(*fmtarray)
         return s
 
+    @staticmethod
+    def mean(v):
+        return v.mean() if numpy and not isinstance(v,list) else statistics.mean(v)
+
+    @staticmethod
+    def var(v):
+        try: return statistics.stdev(v) if len(v) > 1 and sum(v) != 0 else math.nan
+        except: return math.nan
+
     def print(self, ikeys=None, icols=None, iranges=None):
         if not self.isparsed:
             self.parse()
@@ -149,9 +173,8 @@ class Statter():
                 if n == 0:
                     print(k,":",v)
                     continue
-                mean = v.mean() if numpy and not isinstance(v,list) else statistics.mean(v)
-                try:    var = statistics.stdev(v) if len(v) > 1 and sum(v) != 0 else math.nan
-                except: var = math.nan
+                mean = Statter.mean(v)
+                var = Statter.var(v)
                 a = [n, sum(v), mean, min(v), max(v), var]
                 # if currency:
                 #     a = [ locale.currency(val, grouping=True) for val in v]
@@ -257,10 +280,14 @@ class Statter():
             for __, k, v in matches:
                 if self.remove is not None:
                     v = self.remove.sub('',v)
+                if self.trimkeywhitespace and ' ' in k:
+                    k = k.strip()
                 if self.exclude_kvs and self._exclude(k,v):
                     return None
                 if not shouldInclude and self.include_kvs and self._include(k,v):
                     shouldInclude = True
+                if self.firstvalue and ' ' in v:
+                    v = v.split(' ')[0]
                 if k not in kvs:
                     kvs[k] = [v]
                 else:
@@ -317,15 +344,25 @@ class Statter():
         self.isparsed = True
 
 class FileStatter(Statter):
-    def __init__(self, filename):
+    def __init__(self, *filenames):
         super(FileStatter, self).__init__()
-        self.filename = filename
-        if not os.path.exists(self.filename):
-            raise FileNotFoundError(filename)
+        self.filenames = []
+        for t in filenames:
+            if isinstance(t, list):
+                for fn in t:
+                    if not os.path.exists(fn):
+                        raise FileNotFoundError(fn)
+                    self.filenames.append(fn)
+            else:
+                if not os.path.exists(t):
+                    raise FileNotFoundError(t)
+                self.filenames.append(t)
+
 
     def next(self):
-        for line in open(self.filename):
-            yield line
+        for fn in self.filenames:
+            for line in open(fn):
+                yield line
 
 class StrStatter(Statter):
     def __init__(self, val):
@@ -369,9 +406,11 @@ class IOStatter(Statter):
     def next(self):
         for line in self.stream:
             yield line
-# # s = 'Race ID	Session ID	Total Races\n1\t2\t3'
+# s = 'Race ID	Session ID	Total Races\n1\t2\t3'
+# s = 'time=45.36 (s)'
 # st = StrStatter(s)
-# st.colheaders = True
+# st.firstvalue = True
+# # st.colheaders = True
 # st.print()
 
 if __name__ == "__main__":

@@ -18,14 +18,19 @@ BENCHMARKDIR_FORMAT = "{resultdirfull}/benchmarks"
 CONFDIR_FORMAT = "{confdirfull}/conf"
 
 
-VECDATA_NAME = "{name}__d={dimensions}_s={size}"
-GAUSSDATA_NAME = "{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}"
+# VECDATA_NAME = "{name}__d={dimensions}_s={size}"
+VECDATA_NAME = "{name}"
+GAUSSDATA_NAME = \
+    "{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}"
+GAUSSLSHDATA_NAME = \
+    '{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}'\
+    '_lM={lshM}_lL={lshL}_lS={lshS}_lI={lshI}_lN={lshN}'
 
 QNAME = "query_{fullname}_qs={Q}_f={fold}.{dataformat}"
-TOPK_NAME = "{fullname}_k={K}.topk.txt"
-LSH_BENCHMARK_NAME = "{fullname}_k={K}.lsh.bench.txt"
-KD_BENCHMARK_NAME = "{fullname}_k={K}.kd.bench.txt"
-LSHRFILE_NAME = "{fullname}_k={K}.rfile.txt"
+TOPK_NAME = "{fullname}_k={K}_qs={Q}_f={fold}.topk.txt"
+LSH_BENCHMARK_NAME = "{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.lsh.bench.txt"
+KD_BENCHMARK_NAME = "{fullname}_k={K}_qs={Q}_f={fold}.kd.bench.txt"
+LSHRFILE_NAME = "{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.rfile.txt"
 GAUSSCONF_NAME = "{fullname}.conf.txt"
 
 LOG_NAME = '{fullname}_qs={Q}_f={fold}_k={K}.log'
