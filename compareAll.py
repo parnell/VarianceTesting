@@ -46,6 +46,7 @@ def printStats(data):
     allv = [kd]
     allv.extend(lshstats.values())
 
+    printl('-#--------------------------------------#-')
     final = []
     # kd.print()
     final.append(('name', ['KD', *lshstats.keys()]))
