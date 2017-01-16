@@ -3,7 +3,6 @@ import numpy as np
 import sysarg
 import datahelper as dh
 import config
-import analyzer as lyz
 import runlsh
 import runkd
 import genGauss
