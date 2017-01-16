@@ -1,7 +1,10 @@
 import sys
-import numpy as np
-import sysarg
 import traceback
+import sysarg
+from functools import partial
+
+from mapper import pmap
+import numpy as np
 import datahelper as dh
 import config
 import runlsh
@@ -11,7 +14,7 @@ from logger import printl, addLogFile, stacktracem
 from statter import LSHStatter, KDStatter, NOStatter
 np.set_printoptions(precision=4)
 
-overwrite = True
+overwrite = False
 
 def runLSH(data):
     ### Running LSH
@@ -67,6 +70,22 @@ def printStats(data):
     printl('-#--------------------------------------#-')
     return final
 
+def process(SD, data):
+    cfg = data.cfg
+    cfg.S = SD[0]
+    cfg.D = SD[1]
+    data = dh.Data(cfg)
+    addLogFile(data.logfile)
+
+    if cfg['synthetic']:
+        genGauss.process(data)
+
+    data = runLSH(data)
+    runKD(data)
+
+    f = printStats(data)
+    return f
+
 if __name__ == "__main__":
     if len(sys.argv)==1:
         sys.argv = sysarg.args(__file__)
@@ -78,31 +97,24 @@ if __name__ == "__main__":
     printl('-#--------------------------------------#-')
     printl(cfg)
     final = []
-    for S in [10000]:
-        for D in [10]:
-            cfg.S = S
-            cfg.D = D
-            data = dh.Data(cfg)
-            addLogFile(data.logfile)
+    if 'srange' in cfg: Ss = [int(x) for x in cfg['srange'].split(',')]
+    else : Ss = [cfg.S]
+    if 'drange' in cfg: Ds = [int(x) for x in cfg['drange'].split(',')]
+    else : Ds = [cfg.D]
+    SD = []
+    for S in Ss:
+        for D in Ds:
+            SD.append((S,D))
 
-            if cfg['synthetic']:
-                genGauss.process(data)
+    data = dh.Data(cfg)
+    results = pmap(
+        partial(process, data=data), SD, True
+    )
 
-            data = runLSH(data)
-            runKD(data)
-
-            f = printStats(data)
-            final.append(f)
-
-    for finalstats in final:
+    for finalstats in results:
         for name, stats in finalstats:
             printl(name, *stats)
 
-    for finalstats in final:
+    for finalstats in results:
         for name, stats in finalstats:
             print(name+"\t"+"\t".join([str(s) for s in stats]))
-
-
-
-# 2017-01-14 23:35:27,306 - INFO : avgcalcs KD KDBQ ITQ DBQ PSD SH
-# 2017-01-14 23:35:27,322 - INFO : acalcswithdev 1631.97 96978.8 3178.11 58525.1 7896.36 11752.179688

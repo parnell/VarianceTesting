@@ -39,11 +39,13 @@ def args(modulename):
         '--shortname=gaussian',
         # "-i", "%s/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec" %home,
         "--query-filename=fromtopk",
-        "-K3",
+        "-K5",
         "-D10",
         "--nclus=1",
         "--variance=0.1",
         '-S10000',
+        '--srange=2000,5000',
+        '--drange=10',
         '-F0',
         '--nfolds=1',
         "-Q100",
@@ -52,7 +54,7 @@ def args(modulename):
         '--lshL=5',
         '--lshS=100',
         '--lshI=50',
-        '--lshN=6',
+        '--lshN=8',
         '--lshT=1',
         '--lshtype=SH',
         ]
@@ -64,6 +66,8 @@ def getArgParse(args, needsquerydata=False):
         ap.add_argument("--nclus", type=int, required=True)
         ap.add_argument("--variance", type=float, required=True)
         ap.add_argument('-S', "--size", type=int, required=True)
+        ap.add_argument('--srange')
+        ap.add_argument('--drange')
         ap.add_argument("-D", "--dimensions", type=int, required=True)
         ap.add_argument('--shortname', required=True)
         ap.add_argument('--synthetic',action='store_true',required=True)

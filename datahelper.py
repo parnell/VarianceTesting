@@ -279,10 +279,16 @@ class Data():
     def remove(*args):
         for arg in args:
             if os.path.exists(arg):
-                os.remove(arg)
+                try:
+                    os.remove(arg)
+                except:
+                    pass
 
     @staticmethod
     def mkdirs(*args):
         for arg in args:
             if not os.path.exists(arg):
-                os.makedirs(arg)
+                try:
+                    os.makedirs(arg)
+                except:
+                    pass
