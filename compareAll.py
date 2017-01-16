@@ -19,7 +19,7 @@ def runLSH(data):
         printl("------- Running LSH {} -------".format(lshtype))
         cfg['lshtype'] = lshtype
         try:
-            data = runlsh.fullprocess(data, overwrite)
+            data = runlsh.fullprocess(data, overwrite,overwrite,overwrite)
         except Exception as e:
             printl("Error running ", lshtype, " ", str(e))
     return data
@@ -31,10 +31,11 @@ def runKD(data):
 def printStats(data):
     lshstats = {}
     for lshtype in dh.LSHTypeEnum.getValidTypes():
-        cfg['lshtype'] = lshtype
+        data.cfg['lshtype'] = lshtype
+        nd = dh.Data(data.cfg)
         # ls = lyz.FileStatter(data.lshbenchfilepath)
         try:
-            lshfs = LSHStatter(data.lshrfilepath)
+            lshfs = LSHStatter(nd.getFoldedFiles('lshrfilepath'))
             lshstats[lshtype] = lshfs
         except:
             lshstats[lshtype] = NOStatter()
@@ -68,7 +69,7 @@ if __name__ == "__main__":
         sys.argv = sysarg.args(__file__)
 
     args, unknown = sysarg.getParsed(sys.argv, True)
-
+    print(args)
     cfg = config.Config(vars(args))
 
     printl('-#--------------------------------------#-')
@@ -93,7 +94,11 @@ if __name__ == "__main__":
     for finalstats in final:
         for name, stats in finalstats:
             printl(name, *stats)
+
+    for finalstats in final:
+        for name, stats in finalstats:
             print(name+"\t"+"\t".join([str(s) for s in stats]))
+
 
 
 # 2017-01-14 23:35:27,306 - INFO : avgcalcs KD KDBQ ITQ DBQ PSD SH

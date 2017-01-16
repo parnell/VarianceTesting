@@ -77,6 +77,7 @@ def getArgParse(args, needsquerydata=False):
         ap.add_argument('-F',"--fold", type=int, required=True)
         ap.add_argument("--nfolds", type=int, required=True)
         ap.add_argument("-K", type=int, required=True)
+        ap.add_argument("--querying", action='store_true', required=True)
     if '--haslsh' in args:
         ap.add_argument('--lshtype', required=True)
         ap.add_argument('--lshM', type=int, required=True)
