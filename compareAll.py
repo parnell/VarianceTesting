@@ -2,6 +2,7 @@ import sys
 import traceback
 import sysarg
 from functools import partial
+from formdecorator import FailFree
 
 from mapper import pmap
 import numpy as np
@@ -16,6 +17,7 @@ np.set_printoptions(precision=4)
 
 overwrite = False
 
+@FailFree
 def runLSH(data):
     ### Running LSH
     printl("@@@@@@@@ Running LSH @@@@@@@@")
@@ -30,6 +32,7 @@ def runLSH(data):
             printl("Error running ", lshtype, " ", str(e))
     return data
 
+@FailFree
 def runKD(data):
     printl("@@@@ Running KD @@@@")
     runkd.fullprocess(data, overwrite)
@@ -70,6 +73,7 @@ def printStats(data):
     printl('-#--------------------------------------#-')
     return final
 
+@FailFree
 def process(SD, data):
     cfg = data.cfg
     cfg.S = SD[0]
@@ -111,10 +115,14 @@ if __name__ == "__main__":
         partial(process, data=data), SD, True
     )
 
-    for finalstats in results:
-        for name, stats in finalstats:
+    for r in results:
+        if r is None or isinstance(r, Exception):
+            continue
+        for name, stats in r:
             printl(name, *stats)
 
-    for finalstats in results:
-        for name, stats in finalstats:
+    for r in results:
+        if r is None or isinstance(r, Exception):
+            continue
+        for name, stats in r:
             print(name+"\t"+"\t".join([str(s) for s in stats]))
