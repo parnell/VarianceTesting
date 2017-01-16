@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 import sysarg
+import traceback
 import datahelper as dh
 import config
 import runlsh
@@ -21,6 +22,7 @@ def runLSH(data):
         try:
             data = runlsh.fullprocess(data, overwrite,overwrite,overwrite)
         except Exception as e:
+            traceback.print_exc()
             stacktracem("LSH Problem")
             printl("Error running ", lshtype, " ", str(e))
     return data
