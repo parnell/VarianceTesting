@@ -69,8 +69,8 @@ if __name__ == "__main__":
 
     printl('-#--------------------------------------#-')
     printl(cfg)
-    for S in [10000]:
-        for D in [10,20,30,40,50,100]:
+    for S in [5000]:
+        for D in [10,20]:
             cfg.S = S
             cfg.D = D
             data = dh.Data(cfg)
