@@ -42,20 +42,23 @@ def printStats(data):
         # printl("############ " , lshtype,  lshfs.getf('avg') )
         # lshfs.print()
         # printl("############")
-
     kd = KDStatter(data.kdbenchfilepath)
+    allv = [kd]
+    allv.extend(lshstats.values())
+
+    final = []
     # kd.print()
-    printl("avgcalcs", 'KD', *lshstats.keys())
-    a = [ stats.average for stats in lshstats.values()]
-    a.append(kd.average)
-    a = np.array(a)
-    printl("acalcswithdev",*a)
-    # printl("avgtime\t{}\t{}\t{}".format(
-    #     ls.getf("totaltime"),
-    #     lsh.getf("meanquerytime"),
-    #     kd.getf("avgquerytime")
-    # ))
-    # printl("avgcalcs\t{}\t{}".format( lsh.getf("avg").split(' ')[0], kd.getf("avg")))
+    final.append(('name', ['KD', *lshstats.keys()]))
+    final.append(('cost',[ stats.cost for stats in allv]))
+    final.append(('average',[ stats.average for stats in allv]))
+    final.append(('precision',[ stats.precision for stats in allv]))
+    final.append(('recall',[ stats.recall for stats in allv]))
+    final.append(('querytime',[ stats.querytime for stats in allv]))
+
+    for name, stats in final:
+        printl(name, *stats)
+        print(name+"\t"+"\t".join([str(s) for s in stats]))
+
     printl('-#--------------------------------------#-')
 
 
@@ -70,7 +73,7 @@ if __name__ == "__main__":
     printl('-#--------------------------------------#-')
     printl(cfg)
     for S in [10000]:
-        for D in [10,20,30,40,50,100]:
+        for D in [10]:
             cfg.S = S
             cfg.D = D
             data = dh.Data(cfg)
