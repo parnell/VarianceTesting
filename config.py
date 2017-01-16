@@ -115,6 +115,21 @@ class Config(dict):
         else:
             assert 0
 
+
+    # def getFinalResultFile(self, dataname, fullname):
+    #     dir = self.getBenchDir(dataname, datatype)
+    #     if isGauss(dataname):
+    #         # "{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}"
+    #         name = self["FINAL_RESULT_NAME"].format(
+    #             fullname=fullname,
+    #             Q=self.Q,
+    #             fold=self.F,
+    #             K=self.K
+    #             )
+    #         return "%s/%s" %(dir,name)
+    #     else:
+    #         assert 0
+
     def _getQFile(self, fullname, ftype):
         return self["QNAME"].format(
             fullname=fullname, Q=self.Q,fold=self.F,dataformat=ftype)

@@ -47,7 +47,7 @@ def printStats(data):
     allv.extend(lshstats.values())
 
     printl('-#--------------------------------------#-')
-    final = []
+    final = [('params', [data.lshrfilepath])]
     # kd.print()
     final.append(('name', ['KD', *lshstats.keys()]))
     final.append(('cost',[ stats.cost for stats in allv]))
@@ -61,7 +61,7 @@ def printStats(data):
         print(name+"\t"+"\t".join([str(s) for s in stats]))
 
     printl('-#--------------------------------------#-')
-
+    return final
 
 if __name__ == "__main__":
     if len(sys.argv)==1:
@@ -86,7 +86,14 @@ if __name__ == "__main__":
             data = runLSH(data)
             runKD(data)
 
-            printStats(data)
+            f = printStats(data)
+            final.append(f)
+
+    for finalstats in final:
+        for name, stats in finalstats:
+            printl(name, *stats)
+            print(name+"\t"+"\t".join([str(s) for s in stats]))
+
 
 # 2017-01-14 23:35:27,306 - INFO : avgcalcs KD KDBQ ITQ DBQ PSD SH
 # 2017-01-14 23:35:27,322 - INFO : acalcswithdev 1631.97 96978.8 3178.11 58525.1 7896.36 11752.179688

@@ -34,3 +34,4 @@ LSHRFILE_NAME = "{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.rfile.txt"
 GAUSSCONF_NAME = "{fullname}.conf.txt"
 
 LOG_NAME = '{fullname}_qs={Q}_f={fold}_k={K}.log'
+FINAL_RESULT_NAME = 'results.{fullname}_qs={Q}_f={fold}_k={K}.txt'
