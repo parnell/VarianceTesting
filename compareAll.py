@@ -76,8 +76,9 @@ def printStats(data):
 @FailFree
 def process(SD, data):
     cfg = data.cfg
-    cfg.S = SD[0]
-    cfg.D = SD[1]
+    cfg.K = SD[0]
+    cfg.S = SD[1]
+    cfg.D = SD[2]
     data = dh.Data(cfg)
     addLogFile(data.logfile)
 
@@ -101,14 +102,23 @@ if __name__ == "__main__":
     printl('-#--------------------------------------#-')
     printl(cfg)
     final = []
-    if 'srange' in cfg: Ss = [int(x) for x in cfg['srange'].split(',')]
-    else : Ss = [cfg.S]
-    if 'drange' in cfg: Ds = [int(x) for x in cfg['drange'].split(',')]
-    else : Ds = [cfg.D]
+    if 'srange' in cfg and cfg['srange']:
+        Ss = [int(x) for x in cfg['srange'].split(',')]
+    else :
+        Ss = [cfg.S]
+    if 'drange' in cfg and cfg['drange']:
+        Ds = [int(x) for x in cfg['drange'].split(',')]
+    else :
+        Ds = [cfg.D]
+    if 'krange' in cfg and cfg['krange']:
+        Ks = [int(x) for x in cfg['krange'].split(',')]
+    else :
+        Ks = [cfg.K]
     SD = []
-    for S in Ss:
-        for D in Ds:
-            SD.append((S,D))
+    for K in Ks:
+        for S in Ss:
+            for D in Ds:
+                SD.append((K,S,D))
 
     data = dh.Data(cfg)
     results = pmap(

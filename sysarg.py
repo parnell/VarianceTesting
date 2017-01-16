@@ -46,6 +46,7 @@ def args(modulename):
         '-S10000',
         '--srange=2000,5000',
         '--drange=10',
+        # '--krange=1,2,3,5,10,25,50',
         '-F0',
         '--nfolds=1',
         "-Q100",
@@ -68,6 +69,7 @@ def getArgParse(args, needsquerydata=False):
         ap.add_argument('-S', "--size", type=int, required=True)
         ap.add_argument('--srange')
         ap.add_argument('--drange')
+        ap.add_argument('--krange')
         ap.add_argument("-D", "--dimensions", type=int, required=True)
         ap.add_argument('--shortname', required=True)
         ap.add_argument('--synthetic',action='store_true',required=True)
