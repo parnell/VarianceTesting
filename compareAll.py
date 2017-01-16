@@ -11,7 +11,7 @@ from logger import printl, addLogFile, stacktracem
 from statter import LSHStatter, KDStatter, NOStatter
 np.set_printoptions(precision=4)
 
-overwrite = True
+overwrite = False
 
 def runLSH(data):
     ### Running LSH
