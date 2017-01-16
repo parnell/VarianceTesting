@@ -4,8 +4,19 @@ from analyzer import Statter
 class NOStatter():
 
     @property
-    def average(self):
-        return -1
+    def average(self): return -1
+
+    @property
+    def cost(self): return -1
+
+    @property
+    def recall(self): return -1
+
+    @property
+    def precision(self): return -1
+
+    @property
+    def querytime(self): return -1
 
 class LSHStatter(analyzer.FileStatter):
     def __init__(self, filename):
