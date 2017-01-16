@@ -87,7 +87,7 @@ def findbest(
         cfg['lshM'] = int(M)
         for L in [4,8,16]:
             cfg['lshL'] = int(L)
-            for N in [6,8]:
+            for N in [6]:
                 cfg['lshN'] = int(N)
                 for i in range(cfg['nfolds']):
                     cfg.F = i

@@ -44,13 +44,9 @@ def args(modulename):
         "-D10",
         "--nclus=1",
         "--variance=0.1",
-<<<<<<< HEAD
-        '-S1000',
-=======
         '-S10000',
         '--srange=2000,5000',
         '--drange=10',
->>>>>>> 3e719aadd05da44f28e4b63a1f6cd802fe74f808
         '-F0',
         '--nfolds=1',
         "-Q100",
