@@ -14,8 +14,7 @@ import datahelper as dh
 import programs as prog
 import sysarg
 from logger import addLogFile
-
-overwrite = True
+# overwrite = True
 #def usage(out):
 	#print("Usage: ./genGaussData.py <nclusters>
     # <dimensions> <variance> <size>
@@ -28,6 +27,12 @@ def process(data, overwrite=False):
     prog.vec2bin(data, overwrite,printcmd=True)
     prog.vec2hdf5(data, overwrite,printcmd=True)
     prog.vec2vect(data, overwrite, printcmd=True)
+    oldfold = data.cfg.F
+    for i in range(data.cfg['nfolds']):
+        from runlsh import runlshbench
+        data.cfg.F = i
+        runlshbench(data, overwrite)
+    data.cfg.F = oldfold
 
     # confName = "gaussoraConfig_nclus=%d_dim=%d_var=%s.txt" %(nclus,dim,var)
     gcprog = "gaussoraConf.pl"
@@ -108,4 +113,4 @@ if __name__ == "__main__":
     data = dh.Data(cfg)
     addLogFile(data.logfile)
 
-    process(data)
+    process(data, False)

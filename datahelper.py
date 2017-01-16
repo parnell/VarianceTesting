@@ -1,7 +1,5 @@
 from enum import Enum, IntEnum
 import os
-import subprocess
-import programs as progs
 
 def getStem(filename):
     return os.path.splitext(os.path.basename(filename))[0]
@@ -45,6 +43,31 @@ class DataFormatEnum(BaseEnum):
     def format(name):
         return DataFormatEnum.fromValue(getRawExtension(name), DataFormatEnum)
 
+class LSHTypeEnum(BaseEnum):
+    KDBQ = 0
+    ITQ = 1,
+    DBQ = 2,
+    PSD = 3,
+    RBS = 4,
+    RHP = 5,
+    SH = 6,
+    TH = 7
+
+    @staticmethod
+    def fromValue(idx):
+        return BaseEnum.fromValue(idx, LSHTypeEnum)
+
+    @staticmethod
+    def getValidTypes():
+        return [
+            LSHTypeEnum.KDBQ,
+            LSHTypeEnum.ITQ,
+            LSHTypeEnum.DBQ,
+            LSHTypeEnum.PSD,
+            LSHTypeEnum.SH
+            ]
+
+
 class DataTypeEnum(BaseEnum):
     vec = 0
     graph = 1
@@ -77,14 +100,17 @@ class File():
 
 class Data():
     def __init__(self, cfg):
+        self.cfg = cfg
         self.dataname = cfg['shortname']
+
         self.type = DataTypeEnum.type(self.dataname)
         self.fullname = cfg.getFullName(self.dataname)
+
         # self.oname = os.path.abspath(dataname)
         # assert(os.path.exists(self.oname))
-        self.cfg = cfg
         n = getStem(self.vecfilepath)
         self.dataname = n if "__" not in n else n.split("__")[0]
+        self.lshfullname = self.cfg.getLSHFullName(self.dataname)
 
 
     # def createBinFile(self, overwrite=False):
@@ -96,12 +122,26 @@ class Data():
     #     Data.vec2hdf5(self.vecfilepath, self.hdf5filepath, overwrite)
 
     @property
+    def lshbestfilepath(self):
+        return self.cfg.getLSHBenchFilePath(self.dataname, self.lshfullname, self.type)
+
+    @property
     def lshbenchfilepath(self):
-        return self.cfg.getLSHBenchFilePath(self.dataname, self.fullname, self.type)
+        return self.cfg.getLSHBenchFilePath(self.dataname, self.lshfullname, self.type)
 
     @property
     def lshrfilepath(self):
-        return self.cfg.getLSHRFilePath(self.dataname, self.fullname, self.type)
+        return self.cfg.getLSHRFilePath(self.dataname, self.lshfullname, self.type)
+
+    def getFoldedFiles(self, path):
+        oldF = self.cfg.F
+        res = []
+        for i in range(self.cfg['nfolds']):
+            self.cfg.F = i
+            s = self.__getattribute__(path)
+            res.append(s)
+        self.cfg.F = oldF
+        return res
 
     @property
     def kdbenchfilepath(self):
@@ -169,7 +209,7 @@ class Data():
 
     @property
     def lshindexfile(self):
-        return "%s.lsh" %self.fullname
+        return "%s_t=%s.lsh" %(self.lshfullname, self.cfg['lshtype'].name)
 
     @property
     def hdf5file(self):

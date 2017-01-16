@@ -1,48 +1,108 @@
 import sys
-import os
-
+import numpy as np
 import sysarg
+import traceback
 import datahelper as dh
 import config
-import analyzer as lyz
 import runlsh
 import runkd
 import genGauss
-from logger import printl, addLogFile
+from logger import printl, addLogFile, stacktracem
+from statter import LSHStatter, KDStatter, NOStatter
+np.set_printoptions(precision=4)
+
 overwrite = True
 
-if len(sys.argv)==1:
-    sys.argv = sysarg.args(__file__)
+def runLSH(data):
+    ### Running LSH
+    printl("@@@@@@@@ Running LSH @@@@@@@@")
+    for lshtype in dh.LSHTypeEnum.getValidTypes():
+        printl("------- Running LSH {} -------".format(lshtype))
+        data.cfg['lshtype'] = lshtype
+        try:
+            data = runlsh.fullprocess(data, overwrite,overwrite,overwrite)
+        except Exception as e:
+            traceback.print_exc()
+            stacktracem("LSH Problem")
+            printl("Error running ", lshtype, " ", str(e))
+    return data
 
-args, unknown = sysarg.getParsed(sys.argv, True)
+def runKD(data):
+    printl("@@@@ Running KD @@@@")
+    runkd.fullprocess(data, overwrite)
 
-cfg = config.Config(vars(args))
-data = dh.Data(cfg)
-addLogFile(data.logfile)
+def printStats(data):
+    lshstats = {}
+    for lshtype in dh.LSHTypeEnum.getValidTypes():
+        data.cfg['lshtype'] = lshtype
+        nd = dh.Data(data.cfg)
+        # ls = lyz.FileStatter(data.lshbenchfilepath)
+        try:
+            lshfs = LSHStatter(nd.getFoldedFiles('lshrfilepath'))
+            lshstats[lshtype] = lshfs
+        except:
+            lshstats[lshtype] = NOStatter()
+        # ls.print()
+        # printl("############ " , lshtype,  lshfs.getf('avg') )
+        # lshfs.print()
+        # printl("############")
+    kd = KDStatter(data.kdbenchfilepath)
+    allv = [kd]
+    allv.extend(lshstats.values())
 
-printl('-#--------------------------------------#-')
-printl(cfg)
-genGauss.process(data)
-printl("@@@@ Running LSH @@@@")
-runlsh.process(data, overwrite)
-printl("@@@@ Running KD @@@@")
-runkd.fullprocess(data, overwrite)
+    printl('-#--------------------------------------#-')
+    final = [('params', [data.lshrfilepath])]
+    # kd.print()
+    final.append(('name', ['KD', *lshstats.keys()]))
+    final.append(('cost',[ stats.cost for stats in allv]))
+    final.append(('average',[ stats.average for stats in allv]))
+    final.append(('precision',[ stats.precision for stats in allv]))
+    final.append(('recall',[ stats.recall for stats in allv]))
+    final.append(('querytime',[ stats.querytime for stats in allv]))
 
-# N0692-ZY350-78988-0XAK6-992NN
-ls = lyz.FileStatter(data.lshbenchfilepath)
-lsh = lyz.FileStatter(data.lshrfilepath)
-kd = lyz.FileStatter(data.kdbenchfilepath)
-ls.print()
-printl("############")
-lsh.print()
-printl("############")
-kd.print()
-printl("avgcalcs", 'LSH', 'KD')
-printl("acalcswithdev\t{}\t{}".format( lsh.getf("avg"), kd.getf("avg")))
-printl("avgtime\t{}\t{}\t{}".format(
-    ls.getf("totaltime"),
-    lsh.getf("meanquerytime"),
-    kd.getf("avgquerytime")
-))
-printl("avgcalcs\t{}\t{}".format( lsh.getf("avg").split(' ')[0], kd.getf("avg")))
-printl('-#--------------------------------------#-')
+    for name, stats in final:
+        printl(name, *stats)
+        print(name+"\t"+"\t".join([str(s) for s in stats]))
+
+    printl('-#--------------------------------------#-')
+    return final
+
+if __name__ == "__main__":
+    if len(sys.argv)==1:
+        sys.argv = sysarg.args(__file__)
+
+    args, unknown = sysarg.getParsed(sys.argv, True)
+    print(args)
+    cfg = config.Config(vars(args))
+
+    printl('-#--------------------------------------#-')
+    printl(cfg)
+    final = []
+    for S in [10000]:
+        for D in [10]:
+            cfg.S = S
+            cfg.D = D
+            data = dh.Data(cfg)
+            addLogFile(data.logfile)
+
+            if cfg['synthetic']:
+                genGauss.process(data)
+
+            data = runLSH(data)
+            runKD(data)
+
+            f = printStats(data)
+            final.append(f)
+
+    for finalstats in final:
+        for name, stats in finalstats:
+            printl(name, *stats)
+
+    for finalstats in final:
+        for name, stats in finalstats:
+            print(name+"\t"+"\t".join([str(s) for s in stats]))
+
+
+
+# 2017-01-14 23:35:27,306 - INFO : avgcalcs KD KDBQ ITQ DBQ PSD SH
+# 2017-01-14 23:35:27,322 - INFO : acalcswithdev 1631.97 96978.8 3178.11 58525.1 7896.36 11752.179688

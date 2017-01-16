@@ -1,7 +1,9 @@
 import configuration as cfg
+from datahelper import LSHTypeEnum
 
 def isGauss(name):
     return "gauss" in name
+
 
 class Config(dict):
     def __init__(self, *arg, **kw):
@@ -12,11 +14,10 @@ class Config(dict):
         '''
         super(Config, self).__init__(*arg, **kw)
         self.loadFromModule(cfg)
-
+        self['lshtype'] = LSHTypeEnum.fromValue(self['lshtype'])
         assert self.Q is not None
         assert self.S is not None
         assert self.F is not None
-
 
     def loadFromModule(self, module):
         for v in dir(module):
@@ -66,22 +67,40 @@ class Config(dict):
 
     def getLSHBenchFilePath(self, dataname, fullname, datatype):
         dir = self.getBenchDir(dataname, datatype)
-        name = self["LSH_BENCHMARK_NAME"].format(fullname=fullname,K=self["K"])
+        name = self["LSH_BENCHMARK_NAME"].format(
+            fullname=fullname,
+            K=self["K"],
+            lshtype=self['lshtype'].name,
+            Q=self.Q,
+            fold=self.F)
         return "%s/%s" %(dir,name)
 
     def getKDBenchFilePath(self, dataname, fullname, datatype):
         dir = self.getBenchDir(dataname, datatype)
-        name = self["KD_BENCHMARK_NAME"].format(fullname=fullname,K=self["K"])
+        name = self["KD_BENCHMARK_NAME"].format(
+            fullname=fullname,
+            K=self["K"],
+            Q=self.Q,
+            fold=self.F)
         return "%s/%s" %(dir,name)
 
     def getLSHRFilePath(self, dataname, fullname, datatype):
         dir = self.getBenchDir(dataname, datatype)
-        name = self["LSHRFILE_NAME"].format(fullname=fullname,K=self["K"])
+        name = self["LSHRFILE_NAME"].format(
+            fullname=fullname,
+            K=self["K"],
+            lshtype=self['lshtype'].name,
+            Q=self.Q,
+            fold=self.F)
         return "%s/%s" %(dir,name)
 
     def getTopKFilePath(self, dataname, fullname, datatype):
         dir = self.getBenchDir(dataname, datatype)
-        name = self["TOPK_NAME"].format(fullname=fullname,K=self["K"])
+        name = self["TOPK_NAME"].format(
+            fullname=fullname,
+            K=self["K"],
+            Q=self.Q,
+            fold=self.F)
         return "%s/%s" %(dir,name)
 
     def getLogFile(self, dataname, fullname):
@@ -95,6 +114,21 @@ class Config(dict):
                 )
         else:
             assert 0
+
+
+    # def getFinalResultFile(self, dataname, fullname):
+    #     dir = self.getBenchDir(dataname, datatype)
+    #     if isGauss(dataname):
+    #         # "{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}"
+    #         name = self["FINAL_RESULT_NAME"].format(
+    #             fullname=fullname,
+    #             Q=self.Q,
+    #             fold=self.F,
+    #             K=self.K
+    #             )
+    #         return "%s/%s" %(dir,name)
+    #     else:
+    #         assert 0
 
     def _getQFile(self, fullname, ftype):
         return self["QNAME"].format(
@@ -138,6 +172,24 @@ class Config(dict):
                 var=self["variance"]
                 )
         else:
+            return self["GAUSSDATA_NAME"].format(name=dataname)
+
+    def getLSHFullName(self, dataname):
+        if isGauss(dataname):
+            return self["GAUSSLSHDATA_NAME"].format(
+                name=dataname,
+                dimensions=self.D,
+                size=self.S,
+                nclus=self["nclus"],
+                var=self["variance"],
+                lshtype=self['lshtype'].name,
+                lshM=self['lshM'],
+                lshL=self['lshL'],
+                lshS=self['lshS'],
+                lshI=self['lshI'],
+                lshN=self['lshN']
+                )
+        else:
             assert 0
 
     @property
@@ -152,11 +204,20 @@ class Config(dict):
     @property
     def D(self): return self['dimensions']
 
+    @D.setter
+    def D(self, v): self['dimensions'] = v
+
     @property
     def F(self): return self['fold']
 
+    @F.setter
+    def F(self, v): self['fold'] = v
+
     @property
     def S(self): return self['size']
+
+    @S.setter
+    def S(self, v): self['size'] = v
 
     @property
     def K(self): return self['K']
@@ -166,3 +227,4 @@ class Config(dict):
 
     @property
     def synthetic(self): return self['synthetic']
+

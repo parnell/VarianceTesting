@@ -63,16 +63,27 @@ def _runlsh(
         binfilepath,
         lshindexfilepath,
         topkfilepath,
-        qvecfilepath,
         k,
+        lshtype,
         lshrfilepath,
-        overwrite=True, printcmd=False):
+        M=521,# Hash table size
+        L = 5, #Number of hash tables
+        S = 100, #Size of vectors in train
+        I = 50, #Training iterations
+        N = 4, #Binary code bytes
+        overwrite=True,
+        printcmd=False):
     cmd = [ config.lshbox,
-            binfilepath,
-            lshindexfilepath,
-            topkfilepath,
-            str(k),
-            qvecfilepath,
+            '-i', binfilepath,
+            '-x', lshindexfilepath,
+            '-b', topkfilepath,
+            '-K', str(k),
+            '-t', lshtype.value,
+            '-M', M,
+            '-L', L,
+            '-S', S,
+            '-I', I,
+            '-N', N
           ]
     runordel(cmd, lshrfilepath,
              outtofile=True, overwrite=overwrite, printcmd=printcmd)
@@ -83,10 +94,15 @@ def runlsh(data, overwrite=True, printcmd=False):
         data.binfilepath,
         data.lshindexfilepath,
         data.topkfilepath,
-        data.qvecfilepath,
         str(data.K),
+        data.cfg['lshtype'],
         data.lshrfilepath,
-        overwrite, printcmd
+        data.cfg['lshM'],
+        data.cfg['lshL'],
+        data.cfg['lshS'],
+        data.cfg['lshI'],
+        data.cfg['lshN'],
+        overwrite=overwrite, printcmd=printcmd
         )
 
 def genGauss(data, overwrite=True, printcmd=False):
