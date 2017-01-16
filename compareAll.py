@@ -18,7 +18,7 @@ def runLSH(data):
     printl("@@@@@@@@ Running LSH @@@@@@@@")
     for lshtype in dh.LSHTypeEnum.getValidTypes():
         printl("------- Running LSH {} -------".format(lshtype))
-        cfg['lshtype'] = lshtype
+        data.cfg['lshtype'] = lshtype
         try:
             data = runlsh.fullprocess(data, overwrite,overwrite,overwrite)
         except Exception as e:

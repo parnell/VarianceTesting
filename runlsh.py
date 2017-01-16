@@ -90,7 +90,7 @@ def findbest(
             rundata = dh.Data(cfg)
             for i in range(cfg['nfolds']):
                 rundata.cfg.F = i
-                process(
+                rundata = process(
                     rundata,
                     overwritedata=overwritedata,
                     overwritebench=overwritebench,
