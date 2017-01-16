@@ -43,7 +43,7 @@ def args(modulename):
         "-D10",
         "--nclus=1",
         "--variance=0.1",
-        '-S100000',
+        '-S10000',
         '-F0',
         '--nfolds=1',
         "-Q100",

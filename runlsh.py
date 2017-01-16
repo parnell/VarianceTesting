@@ -148,14 +148,15 @@ if __name__ == "__main__":
     # newcfg = findbest(rundata)
     # rundata = dh.Data(newcfg)
     # print("Best M, L " , newcfg['lshM'], newcfg['lshL'])
-    fullprocess(
+    rundata = fullprocess(
         rundata,
         overwritedata=overwritedata,
         overwritebench=overwritebench,
         overwrite=overwrite)
 
     printl('config', 'avgcalcs', 'meanquerytime', 'precision', 'recall', 'cost')
-    st2 = LSHStatter(rundata.getFoldedFiles('lshrfilepath'))
+    files = rundata.getFoldedFiles('lshrfilepath')
+    st2 = LSHStatter(files)
     printl(
         rundata.lshfullname,
         st2.average,
