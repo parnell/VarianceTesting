@@ -4,6 +4,8 @@ import sys
 import os
 import math
 import copy
+import traceback
+
 
 import datahelper as dh
 import config
@@ -102,24 +104,28 @@ def findbest(
                      'recall','cost', 'weightedpoints']
                 final.append(a)
                 printl(*a)
-            st2 = LSHStatter(rundata.getFoldedFiles('lshrfilepath'))
-            prec = st2.get('PRECISION', Statter.mean)
-            recall = st2.get('RECALL',Statter.mean)
-            cost = st2.get('COST',Statter.mean)
-            weightedcost = (prec+recall+(1-cost))/3
-            a = [
-                rundata.lshfullname,
-                st2.average,
-                st2.get('meanquerytime', Statter.mean),
-                prec,
-                recall,
-                cost,
-                weightedcost]
-            final.append(a)
-            printl(*a)
-            if weightedcost > bestcost:
-                bestcost = weightedcost
-                bestcfg = copy.deepcopy(cfg)
+            try:
+                st2 = LSHStatter(rundata.getFoldedFiles('lshrfilepath'))
+                prec = st2.get('PRECISION', Statter.mean)
+                recall = st2.get('RECALL',Statter.mean)
+                cost = st2.get('COST',Statter.mean)
+                weightedcost = (prec+recall+(1-cost))/3
+                a = [
+                    rundata.lshfullname,
+                    st2.average,
+                    st2.get('meanquerytime', Statter.mean),
+                    prec,
+                    recall,
+                    cost,
+                    weightedcost]
+                final.append(a)
+                printl(*a)
+                if weightedcost > bestcost:
+                    bestcost = weightedcost
+                    bestcfg = copy.deepcopy(cfg)
+            except:
+                traceback.print_exc()
+
 
     for line in final:
         print("\t".join([ str(s) for s in line]))
