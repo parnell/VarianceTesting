@@ -68,11 +68,12 @@ if __name__ == "__main__":
         sys.argv = sysarg.args(__file__)
 
     args, unknown = sysarg.getParsed(sys.argv, True)
-
+    print(args)
     cfg = config.Config(vars(args))
 
     printl('-#--------------------------------------#-')
     printl(cfg)
+    final = []
     for S in [5000]:
         for D in [10,20]:
             cfg.S = S
