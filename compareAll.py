@@ -75,7 +75,7 @@ if __name__ == "__main__":
     printl('-#--------------------------------------#-')
     printl(cfg)
     final = []
-    for S in [5000]:
+    for S in [10000]:
         for D in [10,20]:
             cfg.S = S
             cfg.D = D
