@@ -87,44 +87,46 @@ def findbest(
         cfg['lshM'] = int(M)
         for L in [4,8,16]:
             cfg['lshL'] = int(L)
-            rundata = dh.Data(cfg)
-            for i in range(cfg['nfolds']):
-                rundata.cfg.F = i
-                rundata = process(
-                    rundata,
-                    overwritedata=overwritedata,
-                    overwritebench=overwritebench,
-                    overwrite=overwrite)
+            for N in [6,8]:
+                cfg['lshN'] = int(N)
+                for i in range(cfg['nfolds']):
+                    cfg.F = i
+                    rundata = dh.Data(cfg)
+                    rundata = process(
+                        rundata,
+                        overwritedata=overwritedata,
+                        overwritebench=overwritebench,
+                        overwrite=overwrite)
 
-            # st = FileStatter(rundata.getFoldedFiles('lshrfilepath'))
-            # st.print()
-            if len(final) == 0:
-                a = ['config', 'avgcalcs',
-                     'meanquerytime', 'precision',
-                     'recall','cost', 'weightedpoints']
-                final.append(a)
-                printl(*a)
-            try:
-                st2 = LSHStatter(rundata.getFoldedFiles('lshrfilepath'))
-                prec = st2.get('PRECISION', Statter.mean)
-                recall = st2.get('RECALL',Statter.mean)
-                cost = st2.get('COST',Statter.mean)
-                weightedcost = (prec+recall+(1-cost))/3
-                a = [
-                    rundata.lshfullname,
-                    st2.average,
-                    st2.get('meanquerytime', Statter.mean),
-                    prec,
-                    recall,
-                    cost,
-                    weightedcost]
-                final.append(a)
-                printl(*a)
-                if weightedcost > bestcost:
-                    bestcost = weightedcost
-                    bestcfg = copy.deepcopy(cfg)
-            except:
-                traceback.print_exc()
+                # st = FileStatter(rundata.getFoldedFiles('lshrfilepath'))
+                # st.print()
+                if len(final) == 0:
+                    a = ['config', 'avgcalcs',
+                         'meanquerytime', 'precision',
+                         'recall','cost', 'weightedpoints']
+                    final.append(a)
+                    printl(*a)
+                try:
+                    st2 = LSHStatter(rundata.getFoldedFiles('lshrfilepath'))
+                    prec = st2.get('PRECISION', Statter.mean)
+                    recall = st2.get('RECALL',Statter.mean)
+                    cost = st2.get('COST',Statter.mean)
+                    weightedcost = (prec+recall+(1-cost))/3
+                    a = [
+                        rundata.lshfullname,
+                        st2.average,
+                        st2.get('meanquerytime', Statter.mean),
+                        prec,
+                        recall,
+                        cost,
+                        weightedcost]
+                    final.append(a)
+                    printl(*a)
+                    if weightedcost > bestcost:
+                        bestcost = weightedcost
+                        bestcfg = copy.deepcopy(cfg)
+                except:
+                    traceback.print_exc()
 
 
     for line in final:
