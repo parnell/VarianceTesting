@@ -56,7 +56,7 @@ def printStats(data):
     allv = [kd]
     allv.extend(lshstats.values())
 
-    printl('-#--------------------------------------#-')
+    printl('FinalStatCreated')
     final = [('params', [data.lshrfilepath])]
     # kd.print()
     final.append(('name', ['KD', *lshstats.keys()]))
@@ -125,11 +125,14 @@ if __name__ == "__main__":
         partial(process, data=data), SD, True
     )
 
+    printl('FinishedStats')
+
     for r in results:
         if r is None or isinstance(r, Exception):
             continue
         for name, stats in r:
             printl(name, *stats)
+
 
     for r in results:
         if r is None or isinstance(r, Exception):
