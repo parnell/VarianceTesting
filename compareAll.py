@@ -11,7 +11,7 @@ import config
 import runlsh
 import runkd
 import genGauss
-from logger import printl, addLogFile, stacktracem
+from logger import printl, addLogFile, stacktrace
 from statter import LSHStatter, KDStatter, NOStatter
 np.set_printoptions(precision=4)
 
@@ -28,7 +28,7 @@ def runLSH(data):
             data = runlsh.fullprocess(data, overwrite,overwrite,overwrite)
         except Exception as e:
             traceback.print_exc()
-            stacktracem("LSH Problem")
+            stacktrace("LSH Problem")
             printl("Error running ", lshtype, " ", str(e))
     return data
 
@@ -56,7 +56,7 @@ def printStats(data):
     allv = [kd]
     allv.extend(lshstats.values())
 
-    printl('-#--------------------------------------#-')
+    printl('FinalStatCreated')
     final = [('params', [data.lshrfilepath])]
     # kd.print()
     final.append(('name', ['KD', *lshstats.keys()]))
@@ -125,11 +125,14 @@ if __name__ == "__main__":
         partial(process, data=data), SD, True
     )
 
+    printl('FinishedStats')
+
     for r in results:
         if r is None or isinstance(r, Exception):
             continue
         for name, stats in r:
             printl(name, *stats)
+
 
     for r in results:
         if r is None or isinstance(r, Exception):
