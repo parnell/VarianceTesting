@@ -222,6 +222,10 @@ class Config(dict):
     @property
     def K(self): return self['K']
 
+    @K.setter
+    def K(self, v): self['K'] = v
+
+
     @property
     def dim(self): return self['dimensions']
 
