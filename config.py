@@ -182,6 +182,7 @@ class Config(dict):
                 size=self.S,
                 nclus=self["nclus"],
                 var=self["variance"],
+                lshtype=self['lshtype'],
                 lshM=self['lshM'],
                 lshL=self['lshL'],
                 lshS=self['lshS'],

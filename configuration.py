@@ -24,7 +24,7 @@ GAUSSDATA_NAME = \
     "{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}"
 GAUSSLSHDATA_NAME = \
     '{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}'\
-    '_lM={lshM}_lL={lshL}_lS={lshS}_lI={lshI}_lN={lshN}'
+    '_t={lshtype}_lM={lshM}_lL={lshL}_lS={lshS}_lI={lshI}_lN={lshN}'
 
 QNAME = "query_{fullname}_qs={Q}_f={fold}.{dataformat}"
 TOPK_NAME = "{fullname}_k={K}_qs={Q}_f={fold}.topk.txt"
