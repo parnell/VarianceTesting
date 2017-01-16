@@ -63,8 +63,10 @@ def printd(*args):
 def printe(*args):
     dlog.error(__fmt(*args))
 
-def stacktrace():
-    stacktracem("")
-
-def stacktracem(msg, *args):
-    dlog.exception(msg, *args)
+def stacktrace(msg, *args, **kwargs):
+    try:
+        msg += '(%r, %r)' %(args, kwargs)
+        dlog.exception(msg, *args)
+    except:
+        printe('Error formatting stack msg')
+        dlog.exception(msg)

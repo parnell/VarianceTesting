@@ -11,7 +11,7 @@ import config
 import runlsh
 import runkd
 import genGauss
-from logger import printl, addLogFile, stacktracem
+from logger import printl, addLogFile, stacktrace
 from statter import LSHStatter, KDStatter, NOStatter
 np.set_printoptions(precision=4)
 
@@ -28,7 +28,7 @@ def runLSH(data):
             data = runlsh.fullprocess(data, overwrite,overwrite,overwrite)
         except Exception as e:
             traceback.print_exc()
-            stacktracem("LSH Problem")
+            stacktrace("LSH Problem")
             printl("Error running ", lshtype, " ", str(e))
     return data
 

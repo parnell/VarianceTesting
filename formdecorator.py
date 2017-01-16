@@ -49,11 +49,6 @@ def FailFree(func):
                     else:
                         nargs.append(x)
             stacktrace("\n%s in %s" %(e.__class__.__name__,str(func.__name__)), *nargs,**kwargs)
-            if 'java.' in e.__class__.__name__:
-                ### jpype java objects aren't can't be pickled
-                ### this breaks multiprocessing
-                ### wrap the message and return it
-                return FFException(Exception(e.__class__.__name__), *args, **kwargs)
             return FFException(e, *args, **kwargs)
         except:
             stacktrace("Error of some sort")
