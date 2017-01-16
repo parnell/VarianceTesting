@@ -19,15 +19,16 @@ def runLSH(data):
         printl("------- Running LSH {} -------".format(lshtype))
         cfg['lshtype'] = lshtype
         try:
-            runlsh.fullprocess(data, overwrite)
+            data = runlsh.fullprocess(data, overwrite)
         except Exception as e:
             printl("Error running ", lshtype, " ", str(e))
+    return data
 
 def runKD(data):
     printl("@@@@ Running KD @@@@")
     runkd.fullprocess(data, overwrite)
 
-def printStats():
+def printStats(data):
     lshstats = {}
     for lshtype in dh.LSHTypeEnum.getValidTypes():
         cfg['lshtype'] = lshtype
@@ -68,8 +69,8 @@ if __name__ == "__main__":
 
     printl('-#--------------------------------------#-')
     printl(cfg)
-    for S in [1000]:
-        for D in [10,20,30,40,50,100,200]:
+    for S in [10000]:
+        for D in [10,20,30,40,50,100]:
             cfg.S = S
             cfg.D = D
             data = dh.Data(cfg)
@@ -78,10 +79,10 @@ if __name__ == "__main__":
             if cfg['synthetic']:
                 genGauss.process(data)
 
-            # runLSH(data)
-            # runKD(data)
+            data = runLSH(data)
+            runKD(data)
 
-            printStats()
+            printStats(data)
 
 # 2017-01-14 23:35:27,306 - INFO : avgcalcs KD KDBQ ITQ DBQ PSD SH
 # 2017-01-14 23:35:27,322 - INFO : acalcswithdev 1631.97 96978.8 3178.11 58525.1 7896.36 11752.179688
