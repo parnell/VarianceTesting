@@ -58,13 +58,9 @@ def args(modulename):
         '--lshI=50',
         '--lshN=8',
         '--lshT=1',
-<<<<<<< HEAD
-        '--lshtype=KDBQ',
-=======
         '--lshtype=SH',
         '--hasms',
         '--mstype=mvp'
->>>>>>> daf617bdad0faa75ecdf149a365ab77b91420ceb
         ]
     return a
 
