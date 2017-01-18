@@ -40,11 +40,11 @@ def args(modulename):
         '--shortname=gaussian',
         # "-i", "%s/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec" %home,
         "--query-filename=fromtopk",
-        "-K5",
+        "-K3",
         "-D10",
         "--nclus=1",
         "--variance=0.1",
-        '-S10000',
+        '-S1000000',
         '--srange=2000,5000',
         '--drange=10',
         # '--krange=1,2,3,5,10,25,50',
@@ -58,7 +58,7 @@ def args(modulename):
         '--lshI=50',
         '--lshN=8',
         '--lshT=1',
-        '--lshtype=SH',
+        '--lshtype=KDBQ',
         ]
     return a
 

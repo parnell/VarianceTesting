@@ -83,9 +83,9 @@ def findbest(
     bestcfg = copy.deepcopy(data.cfg)
     cfg['nfolds'] = 1
     bestcost = 0
-    for M in [sq*2, sq, sq/2, sq/4, sq/8]:
+    for M in [sq/8]:
         cfg['lshM'] = int(M)
-        for L in [4,8,16]:
+        for L in [4]:
             cfg['lshL'] = int(L)
             for N in [6]:
                 cfg['lshN'] = int(N)
