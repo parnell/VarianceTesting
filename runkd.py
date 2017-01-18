@@ -11,10 +11,15 @@ import analyzer as lyz
 import genGauss
 from logger import printl, addLogFile
 import copy
+from statter import KDStatter
+import sprinter
 
-def fullprocess(data, overwrite=False):
-    gendata(data, overwrite)
-    process(data, overwrite)
+def fullprocess(data, overwritedata=False, overwritebench=False):
+    gendata(data, overwritedata)
+    process(data, overwritebench)
+    st = KDStatter(data.getFoldedFiles('kdbenchfilepath'),data)
+    sprinter.printstats(st)
+    return st
 
 def process(data, overwrite=False):
     cfg = data.cfg
@@ -31,17 +36,19 @@ def process(data, overwrite=False):
              outtofile=True, overwrite=overwrite,
              printcmd=True)
 
-def gendata(data,overwrite=False):
-    dh.Data.mkdirs(data.benchdir, data.indexdir)
+def gendata(data, overwrite=False):
+    dh.Data.mkdirs(data.benchdir,data.confdir, data.indexdir, data.querydir)
     vec2hdf5(data, overwrite=overwrite)
     if data.cfg.synthetic:
-        genGauss.process(data)
+        genGauss.process(data, overwrite)
 
-    _vec2hdf5(data.qvecfilepath, data.qhdf5filepath, overwrite=overwrite)
-
+    _vec2hdf5(
+        data.qvecfilepath, data.qhdf5filepath,
+        overwrite=overwrite, printcmd=True)
 
 if __name__ == "__main__":
-    overwrite = True
+    overwrited = True
+    overwritei = True
     if len(sys.argv)==1:
         sys.argv = sysarg.args(__file__)
 
@@ -52,6 +59,4 @@ if __name__ == "__main__":
     data = dh.Data(cfg)
     addLogFile(data.logfile)
 
-    fullprocess(data, overwrite)
-    st1 = lyz.FileStatter(data.kdbenchfilepath)
-    printl("avgcalcs", st1.getf("avg"))
+    fullprocess(data, overwrited, overwritei)

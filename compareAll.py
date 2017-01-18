@@ -1,80 +1,82 @@
 import sys
 import traceback
-import sysarg
 from functools import partial
-from formdecorator import FailFree
+import copy
 
+import sysarg
+from formdecorator import FailFree
 from mapper import pmap
 import numpy as np
 import datahelper as dh
 import config
 import runlsh
 import runkd
+import runsisap
 import genGauss
 from logger import printl, addLogFile, stacktrace
-from statter import LSHStatter, KDStatter, NOStatter
+from sprinter import printstats
+
 np.set_printoptions(precision=4)
 
-overwrite = False
+overwritedata = False
+overwriteindex = False
+overwritebench = False
 
 @FailFree
 def runLSH(data):
     ### Running LSH
+    statters = []
     printl("@@@@@@@@ Running LSH @@@@@@@@")
     for lshtype in dh.LSHTypeEnum.getValidTypes():
-        printl("------- Running LSH {} -------".format(lshtype))
+        printl("------- Running LSH {} -------".format(lshtype.name))
         data.cfg['lshtype'] = lshtype
+        nd = dh.Data(data.cfg)
         try:
-            data = runlsh.fullprocess(data, overwrite,overwrite,overwrite)
+            data, st = runlsh.fullprocess(
+                nd,
+                overwritedata,
+                overwriteindex,
+                overwritebench)
+            statters.append(st)
+
         except Exception as e:
             traceback.print_exc()
             stacktrace("LSH Problem")
             printl("Error running ", lshtype, " ", str(e))
-    return data
+    return data, statters
+
+@FailFree
+def runSisap(data):
+    ### Running LSH
+    statters = []
+    printl("@@@@@@@@ Running SISAP @@@@@@@@")
+    for mstype in dh.MSTypeEnum.getValidTypes():
+        printl("------- Running Sisap {} -------".format(mstype.name))
+        data.cfg['mstype'] = mstype
+        nd = dh.Data(data.cfg)
+        try:
+            st =runsisap.fullprocess(
+                nd,
+                overwritedata,
+                overwriteindex,
+                overwritebench)
+            statters.append(st)
+        except Exception as e:
+            traceback.print_exc()
+            stacktrace("Sisap Problem")
+            printl("Error running ", mstype, " ", str(e))
+    return statters
 
 @FailFree
 def runKD(data):
     printl("@@@@ Running KD @@@@")
-    runkd.fullprocess(data, overwrite)
-
-def printStats(data):
-    lshstats = {}
-    for lshtype in dh.LSHTypeEnum.getValidTypes():
-        data.cfg['lshtype'] = lshtype
-        nd = dh.Data(data.cfg)
-        # ls = lyz.FileStatter(data.lshbenchfilepath)
-        try:
-            lshfs = LSHStatter(nd.getFoldedFiles('lshrfilepath'))
-            lshstats[lshtype] = lshfs
-        except:
-            lshstats[lshtype] = NOStatter()
-        # ls.print()
-        # printl("############ " , lshtype,  lshfs.getf('avg') )
-        # lshfs.print()
-        # printl("############")
-    kd = KDStatter(data.kdbenchfilepath)
-    allv = [kd]
-    allv.extend(lshstats.values())
-
-    printl('FinalStatCreated')
-    final = [('params', [data.lshrfilepath])]
-    # kd.print()
-    final.append(('name', ['KD', *lshstats.keys()]))
-    final.append(('cost',[ stats.cost for stats in allv]))
-    final.append(('average',[ stats.average for stats in allv]))
-    final.append(('precision',[ stats.precision for stats in allv]))
-    final.append(('recall',[ stats.recall for stats in allv]))
-    final.append(('querytime',[ stats.querytime for stats in allv]))
-
-    for name, stats in final:
-        printl(name, *stats)
-        print(name+"\t"+"\t".join([str(s) for s in stats]))
-
-    printl('-#--------------------------------------#-')
-    return final
+    return [runkd.fullprocess(
+        data,
+        overwritedata,
+        overwritebench)]
 
 @FailFree
-def process(SD, data):
+def gendata(SD, data):
     cfg = data.cfg
     cfg.K = SD[0]
     cfg.S = SD[1]
@@ -85,11 +87,22 @@ def process(SD, data):
     if cfg['synthetic']:
         genGauss.process(data)
 
-    data = runLSH(data)
-    runKD(data)
+@FailFree
+def process(SD, data):
+    cfg = data.cfg
+    cfg.K = SD[0]
+    cfg.S = SD[1]
+    cfg.D = SD[2]
+    data = dh.Data(cfg)
 
-    f = printStats(data)
-    return f
+    data, ss = runLSH(data)
+    if cfg.D < 30:
+        ss1 = runKD(data)
+    ss2 =runSisap(data)
+    statters = []
+    for ss in [ss, ss1, ss2]:
+        statters.extend(ss)
+    return statters
 
 if __name__ == "__main__":
     if len(sys.argv)==1:
@@ -121,8 +134,14 @@ if __name__ == "__main__":
                 SD.append((K,S,D))
 
     data = dh.Data(cfg)
+    dh.Data.mkdirs(data.benchdir, data.confdir, data.indexdir, data.querydir)
+
+    pmap(
+        partial(gendata, data=data), SD, True
+    )
+
     results = pmap(
-        partial(process, data=data), SD, True
+        partial(process, data=data), SD, False
     )
 
     printl('FinishedStats')
@@ -130,12 +149,4 @@ if __name__ == "__main__":
     for r in results:
         if r is None or isinstance(r, Exception):
             continue
-        for name, stats in r:
-            printl(name, *stats)
-
-
-    for r in results:
-        if r is None or isinstance(r, Exception):
-            continue
-        for name, stats in r:
-            print(name+"\t"+"\t".join([str(s) for s in stats]))
+        printstats(r)

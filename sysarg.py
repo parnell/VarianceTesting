@@ -50,7 +50,7 @@ def args(modulename):
         # '--krange=1,2,3,5,10,25,50',
         '-F0',
         '--nfolds=1',
-        "-Q100",
+        "-Q10",
         '--haslsh',
         '--lshM=512',
         '--lshL=5',
@@ -58,7 +58,13 @@ def args(modulename):
         '--lshI=50',
         '--lshN=8',
         '--lshT=1',
+<<<<<<< HEAD
         '--lshtype=KDBQ',
+=======
+        '--lshtype=SH',
+        '--hasms',
+        '--mstype=mvp'
+>>>>>>> daf617bdad0faa75ecdf149a365ab77b91420ceb
         ]
     return a
 
@@ -85,6 +91,11 @@ def getArgParse(args, needsquerydata=False):
         ap.add_argument("--nfolds", type=int, required=True)
         ap.add_argument("-K", type=int, required=True)
         ap.add_argument("--querying", action='store_true', required=True)
+
+    if '--hasms' in args:
+        ap.add_argument('--hasms',action='store_true')
+        ap.add_argument('--mstype', required=True)
+
     if '--haslsh' in args:
         ap.add_argument('--lshtype', required=True)
         ap.add_argument('--lshM', type=int, required=True)

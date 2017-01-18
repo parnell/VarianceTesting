@@ -51,12 +51,11 @@ class Statter():
         self.trimkeywhitespace = True
         self.setDelimiter(',\t')
 
-
-    def setDelimiter(self, d):
+    def setDelimiter(self, d, kvsep='='):
         wsns = r'\n\r\f\v' if '\t' in d else r'\s' ## whitespace (but with space)
         wsb = r'[ \n\r\f\v]' if '\t' in d else r'\s' ## whitespace in brackes
-        exp = r"({}*([^{}{}=]+){}*={}*([^{}{}]*))".format(
-            wsb,wsns,d,wsb,wsb,wsns,d)
+        exp = r"({}*([^{}{}{}]+){}*{}{}*([^{}{}]*))".format(
+            wsb,wsns,d,kvsep,wsb,kvsep,wsb,wsns,d)
         # print(exp)
         self.PT_S = re.compile(exp)
         self.PT_E = re.compile(r"{}*([^{}{}]+){}*".format(
@@ -416,6 +415,7 @@ class IOStatter(Statter):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("-d",'--delimiter', default=None)
+    ap.add_argument("-s",'--key-value-separator', default="=")
     ap.add_argument('--currency',action='store_true', default=False)
     ap.add_argument('-k', default=None, help='print only the specified keys')
     ap.add_argument('-f', default=None, help='print only the specified columns')
@@ -440,7 +440,7 @@ if __name__ == "__main__":
         if args.delimiter is None:
             stats.setDelimiter('\t')
     if args.delimiter is not None:
-        stats.setDelimiter(args.delimiter)
+        stats.setDelimiter(args.delimiter, args.key_value_separator)
 
     stats.tail = args.tail
     stats.head = args.head

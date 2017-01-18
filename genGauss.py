@@ -29,9 +29,11 @@ def process(data, overwrite=False):
     prog.vec2vect(data, overwrite, printcmd=True)
     oldfold = data.cfg.F
     for i in range(data.cfg['nfolds']):
-        from runlsh import runlshbench
+        from runlsh import runkbench
         data.cfg.F = i
-        runlshbench(data, overwrite)
+        nd = dh.Data(data.cfg)
+        runkbench(nd, overwrite)
+
     data.cfg.F = oldfold
 
     # confName = "gaussoraConfig_nclus=%d_dim=%d_var=%s.txt" %(nclus,dim,var)

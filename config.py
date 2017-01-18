@@ -1,5 +1,5 @@
 import configuration as cfg
-from datahelper import LSHTypeEnum
+from datahelper import LSHTypeEnum, MSTypeEnum
 
 def isGauss(name):
     return "gauss" in name
@@ -14,7 +14,14 @@ class Config(dict):
         '''
         super(Config, self).__init__(*arg, **kw)
         self.loadFromModule(cfg)
-        self['lshtype'] = LSHTypeEnum.fromValue(self['lshtype'])
+        try:
+            self['lshtype'] = LSHTypeEnum.fromValue(self['lshtype'])
+        except:
+            pass
+        try:
+            self['mstype'] = MSTypeEnum.fromValue(self['mstype'])
+        except:
+            pass
         assert self.Q is not None
         assert self.S is not None
         assert self.F is not None
@@ -75,6 +82,15 @@ class Config(dict):
             fold=self.F)
         return "%s/%s" %(dir,name)
 
+    def getKBenchFilePath(self, dataname, fullname, datatype):
+        dir = self.getBenchDir(dataname, datatype)
+        name = self["K_BENCHMARK_NAME"].format(
+            fullname=fullname,
+            K=self["K"],
+            Q=self.Q,
+            fold=self.F)
+        return "%s/%s" %(dir,name)
+
     def getKDBenchFilePath(self, dataname, fullname, datatype):
         dir = self.getBenchDir(dataname, datatype)
         name = self["KD_BENCHMARK_NAME"].format(
@@ -82,6 +98,16 @@ class Config(dict):
             K=self["K"],
             Q=self.Q,
             fold=self.F)
+        return "%s/%s" %(dir,name)
+
+    def getMSBenchFilePath(self, dataname, fullname, datatype):
+        dir = self.getBenchDir(dataname, datatype)
+        name = self["MS_BENCHMARK_NAME"].format(
+            fullname=fullname,
+            K=self["K"],
+            Q=self.Q,
+            fold=self.F,
+            mstype=self['mstype'].name)
         return "%s/%s" %(dir,name)
 
     def getLSHRFilePath(self, dataname, fullname, datatype):
@@ -136,6 +162,9 @@ class Config(dict):
 
     def getQVecFile(self, fullname):
         return self._getQFile(fullname, 'vec')
+
+    def getQMSVecFile(self, fullname):
+        return self._getQFile(fullname, 'msvec')
 
     def getQBinFile(self, fullname):
         return self._getQFile(fullname, 'bin')
@@ -192,6 +221,18 @@ class Config(dict):
         else:
             assert 0
 
+    def getMSFullName(self, dataname):
+        if isGauss(dataname):
+            return self["GAUSSMSDATA_NAME"].format(
+                name=dataname,
+                dimensions=self.D,
+                size=self.S,
+                nclus=self["nclus"],
+                var=self["variance"],
+                mstype=self['mstype'].name
+                )
+        else:
+            assert 0
     @property
     def nclus(self): return self['nclus']
 

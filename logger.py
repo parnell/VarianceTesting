@@ -46,7 +46,7 @@ dlog.addHandler(sh)
 def __fmt(*args):
     if issubclass(type(args), list) \
             or issubclass(type(args), tuple):
-        return " ".join([str(x) for x in args])
+        return ' '.join([str(x) for x in args])
     else:
         return args
 
