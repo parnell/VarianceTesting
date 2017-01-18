@@ -43,14 +43,40 @@ class DataFormatEnum(BaseEnum):
     def format(name):
         return DataFormatEnum.fromValue(getRawExtension(name), DataFormatEnum)
 
+class MSTypeEnum(BaseEnum):
+    mvp = 0
+    pivots = 1
+    sat = 2
+    lcluster = 3
+    ght = 4
+    aesa = 5
+    iaesa = 6
+    bkt = 7
+    dyn = 8
+    fqh = 9
+    fqt = 10
+
+    @staticmethod
+    def fromValue(idx):
+        return BaseEnum.fromValue(idx, MSTypeEnum)
+
+    @staticmethod
+    def getValidTypes():
+        return [
+            MSTypeEnum.mvp,
+            MSTypeEnum.lcluster,
+            MSTypeEnum.sat,
+            MSTypeEnum.iaesa,
+            ]
+
 class LSHTypeEnum(BaseEnum):
     KDBQ = 0
-    ITQ = 1,
-    DBQ = 2,
-    PSD = 3,
-    RBS = 4,
-    RHP = 5,
-    SH = 6,
+    ITQ = 1
+    DBQ = 2
+    PSD = 3
+    RBS = 4
+    RHP = 5
+    SH = 6
     TH = 7
 
     @staticmethod
@@ -111,6 +137,7 @@ class Data():
         n = getStem(self.vecfilepath)
         self.dataname = n if "__" not in n else n.split("__")[0]
         self.lshfullname = self.cfg.getLSHFullName(self.dataname)
+        self.msfullname = self.cfg.getMSFullName(self.dataname)
 
 
     # def createBinFile(self, overwrite=False):
@@ -130,6 +157,10 @@ class Data():
         return self.cfg.getLSHBenchFilePath(self.dataname, self.lshfullname, self.type)
 
     @property
+    def kbenchfilepath(self):
+        return self.cfg.getKBenchFilePath(self.dataname, self.fullname, self.type)
+
+    @property
     def lshrfilepath(self):
         return self.cfg.getLSHRFilePath(self.dataname, self.lshfullname, self.type)
 
@@ -146,6 +177,10 @@ class Data():
     @property
     def kdbenchfilepath(self):
         return self.cfg.getKDBenchFilePath(self.dataname, self.fullname, self.type)
+
+    @property
+    def msbenchfilepath(self):
+        return self.cfg.getMSBenchFilePath(self.dataname, self.fullname, self.type)
 
     @property
     def topkfilepath(self):
@@ -212,12 +247,32 @@ class Data():
         return "%s_t=%s.lsh" %(self.lshfullname, self.cfg['lshtype'].name)
 
     @property
+    def msindexfilepath(self):
+        return "%s/%s" %(self.indexdir, self.msindexfile)
+
+    @property
+    def msbuildbenchfilepath(self):
+        return "%s/%s" %(self.benchdir, self.msbuildbenchfile)
+
+    @property
+    def msindexfile(self):
+        return "%s.idx.ms" %(self.msfullname)
+
+    @property
+    def msbuildbenchfile(self):
+        return "%s.build.bench.txt" %(self.msfullname)
+
+    @property
     def hdf5file(self):
         return "%s.hdf5" %self.fullname
 
     @property
     def binfile(self):
         return "%s.bin" %self.fullname
+
+    @property
+    def msbinfile(self):
+        return "%s.ms.bin" %self.fullname
 
     @property
     def vecfile(self):
@@ -236,6 +291,10 @@ class Data():
         return self.cfg.getQVecFile(self.fullname)
 
     @property
+    def qmsvecfile(self):
+        return self.cfg.getQMSVecFile(self.fullname)
+
+    @property
     def qbinfile(self):
         return self.cfg.getQBinFile(self.fullname)
 
@@ -246,6 +305,10 @@ class Data():
     @property
     def binfilepath(self):
         return "%s/%s" %(self.datadirfull, self.binfile)
+
+    @property
+    def msbinfilepath(self):
+        return "%s/%s" %(self.datadirfull, self.msbinfile)
 
     @property
     def vecfilepath(self):
@@ -262,6 +325,10 @@ class Data():
     @property
     def qvecfilepath(self):
         return "%s/%s" %(self.querydir, self.qvecfile)
+
+    @property
+    def qmsvecfilepath(self):
+        return "%s/%s" %(self.querydir, self.qmsvecfile)
 
     @property
     def qbinfilepath(self):

@@ -6,6 +6,7 @@ vec2hdf5 = "vec2hdf5"
 kdtree = "VarianceTesting"
 gaussoraconf = "gaussoraConf.pl"
 gaussora = "gaussora"
+vec2msbin = "convertcoords"
 
 DATADIRFULL_FORMAT = "{datadir}/{datatype}/{dataname}"
 RESULTDIRFULL_FORMAT = "{resultdir}/{datatype}/{dataname}"
@@ -25,11 +26,16 @@ GAUSSDATA_NAME = \
 GAUSSLSHDATA_NAME = \
     '{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}'\
     '_t={lshtype}_lM={lshM}_lL={lshL}_lS={lshS}_lI={lshI}_lN={lshN}'
+GAUSSMSDATA_NAME = \
+    '{name}__d={dimensions}_s={size}_u={nclus}_v={var}'\
+    '_t={mstype}'
 
 QNAME = "query_{fullname}_qs={Q}_f={fold}.{dataformat}"
 TOPK_NAME = "{fullname}_k={K}_qs={Q}_f={fold}.topk.txt"
+K_BENCHMARK_NAME = "{fullname}_k={K}_qs={Q}_f={fold}.k.bench.txt"
 LSH_BENCHMARK_NAME = "{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.lsh.bench.txt"
 KD_BENCHMARK_NAME = "{fullname}_k={K}_qs={Q}_f={fold}.kd.bench.txt"
+MS_BENCHMARK_NAME = "{fullname}_t={mstype}_k={K}_qs={Q}_f={fold}.ms.bench.txt"
 LSHRFILE_NAME = "{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.rfile.txt"
 GAUSSCONF_NAME = "{fullname}.conf.txt"
 
