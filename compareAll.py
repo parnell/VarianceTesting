@@ -96,7 +96,8 @@ def process(SD, data):
     data = dh.Data(cfg)
 
     data, ss = runLSH(data)
-    ss1 = runKD(data)
+    if cfg.D < 30:
+        ss1 = runKD(data)
     ss2 =runSisap(data)
     statters = []
     for ss in [ss, ss1, ss2]:
