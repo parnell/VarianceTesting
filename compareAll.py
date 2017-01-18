@@ -135,14 +135,14 @@ if __name__ == "__main__":
 
     data = dh.Data(cfg)
     dh.Data.mkdirs(data.benchdir, data.confdir, data.indexdir, data.querydir)
+    print(cfg['parallel'])
+    # pmap(
+    #     partial(gendata, data=data), SD, True
+    # )
 
-    pmap(
-        partial(gendata, data=data), SD, True
-    )
-
-    results = pmap(
-        partial(process, data=data), SD, False
-    )
+    # results = pmap(
+    #     partial(process, data=data), SD, False
+    # )
 
     printl('FinishedStats')
 
