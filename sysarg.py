@@ -60,7 +60,8 @@ def args(modulename):
         '--lshT=1',
         '--lshtype=SH',
         '--hasms',
-        '--mstype=mvp'
+        '--mstype=mvp',
+        '--parallel'
         ]
     return a
 
@@ -102,6 +103,7 @@ def getArgParse(args, needsquerydata=False):
     ap.add_argument("--datadir", required=True)
     ap.add_argument("--confdir", required=True)
     ap.add_argument("--resultdir", required=True)
+    ap.add_argument("--parallel", action='store_true')
 
     return ap
 
