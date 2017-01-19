@@ -77,17 +77,18 @@ def process(data, overwriteindex=False, overwritebench=False):
 
 
 if __name__ == "__main__":
-    overwriteindex = False
-    overwritedata = False
-    overwritebench = False
     if len(sys.argv)==1:
         sys.argv = sysarg.args(__file__)
     ap = sysarg.getArgParse(
         sys.argv, needsquerydata=True)
     args, unknown = ap.parse_known_args()
+    overwriteindex = '--overwriteindex' in sys.argv
+    overwritedata = '--overwritedata' in sys.argv
+    overwritebench = '--overwritebench' in sys.argv
 
     runcfg = config.Config(vars(args))
     rundata = dh.Data(runcfg)
+
 
     fullprocess(
         rundata,
