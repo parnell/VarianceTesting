@@ -6,7 +6,6 @@ home = os.getenv('SCRATCH')
 def args(modulename):
     a = [
         str(modulename),
-        '--overwriteindex',
         '--haskd',
         '--haslsh',
         '--hasms',
