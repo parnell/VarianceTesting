@@ -77,9 +77,9 @@ def process(data, overwriteindex=False, overwritebench=False):
 
 
 if __name__ == "__main__":
-    overwriteindex = True
-    overwritedata = True
-    overwritebench = True
+    overwriteindex = False
+    overwritedata = False
+    overwritebench = False
     if len(sys.argv)==1:
         sys.argv = sysarg.args(__file__)
     ap = sysarg.getArgParse(
