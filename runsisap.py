@@ -37,7 +37,10 @@ def process(data, overwriteindex=False, overwritebench=False):
 
     ### annoyingly it seems the build has a filename limit
     ### make a temp file then rename
-    __, of = tempfile.mkstemp(dir='./')
+    data.mkdirs('tempidx')
+    __, of = tempfile.mkstemp(
+        dir='./tempidx',
+        prefix='{}_{}'.format(data.cfg.S, data.cfg.D))
     cmd = [ bprog,
             data.msbinfilepath,
             "0",

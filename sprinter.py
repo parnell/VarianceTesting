@@ -40,7 +40,7 @@ def printstats(stats):
         if 'synthetic' in s.data.cfg:
             c = s.data.cfg
             a = [   'statline',
-                    c.D, c.S, c.K, c['variance'], c['nclus'],s.name,
+                    c.D, c.S, c.K, c['variance'], c['nclus'], s.name,
                     s.cost, s.querytime, s.average, s.precision, s.recall]
             final.append(a)
         else:

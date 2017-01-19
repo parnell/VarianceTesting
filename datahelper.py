@@ -136,17 +136,14 @@ class Data():
         # assert(os.path.exists(self.oname))
         n = getStem(self.vecfilepath)
         self.dataname = n if "__" not in n else n.split("__")[0]
-        self.lshfullname = self.cfg.getLSHFullName(self.dataname)
-        self.msfullname = self.cfg.getMSFullName(self.dataname)
 
+    @property
+    def msfullname(self):
+        return self.cfg.getMSFullName(self.dataname)
 
-    # def createBinFile(self, overwrite=False):
-    #     n = self.binfilepath
-    #     if overwrite or not os.path.exists(n):
-    #         progs.vec2bin(self.vecfilepath,n)
-
-    # def createHDF5File(self, overwrite=False):
-    #     Data.vec2hdf5(self.vecfilepath, self.hdf5filepath, overwrite)
+    @property
+    def lshfullname(self):
+        return self.cfg.getLSHFullName(self.dataname)
 
     @property
     def lshbestfilepath(self):

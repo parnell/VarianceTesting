@@ -94,13 +94,18 @@ def process(SD, data):
     cfg.S = SD[1]
     cfg.D = SD[2]
     data = dh.Data(cfg)
-
-    data, ss = runLSH(data)
-    if cfg.D < 30:
-        ss1 = runKD(data)
-    ss2 =runSisap(data)
+    sts = []
+    if 'haslsh' in cfg:
+        data, ss = runLSH(data)
+        sts.append(ss)
+    if cfg.D <= 100 and 'haskd' in cfg:
+        sts.append(runKD(data))
+    if 'hasms' in cfg:
+        sts.append(runSisap(data))
     statters = []
-    for ss in [ss, ss1, ss2]:
+    for ss in sts:
+        if ss is None or isinstance(ss, Exception):
+            continue
         statters.extend(ss)
     return statters
 
@@ -144,7 +149,6 @@ if __name__ == "__main__":
     )
 
     printl('FinishedStats')
-
     for r in results:
         if r is None or isinstance(r, Exception):
             continue

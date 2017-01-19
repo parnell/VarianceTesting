@@ -24,8 +24,10 @@ from logger import addLogFile
 def process(data, overwrite=False):
 
     prog.genGauss(data,overwrite=overwrite,printcmd=True)
-    prog.vec2bin(data, overwrite,printcmd=True)
-    prog.vec2hdf5(data, overwrite,printcmd=True)
+    if 'haslsh' in data.cfg:
+        prog.vec2bin(data, overwrite,printcmd=True)
+    if 'haskd' in data.cfg:
+        prog.vec2hdf5(data, overwrite,printcmd=True)
     prog.vec2vect(data, overwrite, printcmd=True)
     oldfold = data.cfg.F
     for i in range(data.cfg['nfolds']):

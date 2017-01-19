@@ -48,6 +48,9 @@ def FailFree(func):
                         nargs.append(x.__class__)
                     else:
                         nargs.append(x)
+            print('nargs=', nargs)
+            print('kwargs=', kwargs)
+            print(e.__class__.__name__,str(func.__name__))
             stacktrace("\n%s in %s" %(e.__class__.__name__,str(func.__name__)), *nargs,**kwargs)
             return FFException(e, *args, **kwargs)
         except:

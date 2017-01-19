@@ -2,35 +2,14 @@ import os
 import argparse
 
 home = os.path.expanduser("~")
-# def args(modulename):
-#     a = [
-#         str(modulename),
-#         "--datadir", "%s/data/rdata" %home,
-#         "--confdir", "%s/data/rdata/conf" %home,
-#         "--resultdir", "%s/data/rdata/results" %home,
-#         '--odata',"%s/data/rdata/audio.vec" %home,
-#         '--querying',
-#         '--shortname=audio',
-#         # "-i", "%s/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec" %home,
-#         "--query-filename=fromtopk",
-#         "-K3",
-#         '-F0',
-#         '--nfolds=1',
-#         "-Q100",
-#         '--haslsh',
-#         '--lshM=512',
-#         '--lshL=5',
-#         '--lshS=100',
-#         '--lshI=50',
-#         '--lshN=6',
-#         '--lshT=1',
-#         '--lshtype=SH',
-#         ]
-#     return a
 
 def args(modulename):
     a = [
         str(modulename),
+        '--haskd',
+        '--haslsh',
+        '--hasms',
+        '--parallel',
         "--datadir", "%s/data/rdata" %home,
         "--confdir", "%s/data/rdata/conf" %home,
         "--resultdir", "%s/data/rdata/results" %home,
@@ -44,13 +23,12 @@ def args(modulename):
         "--nclus=1",
         "--variance=0.1",
         '-S10000',
-        '--srange=2000,4000,10000',
-        '--drange=10,15',
+        '--srange=2000',
+        '--drange=10',
         # '--krange=1,2,3,5,10,25,50',
         '-F0',
         '--nfolds=1',
         "-Q10",
-        '--haslsh',
         '--lshM=512',
         '--lshL=5',
         '--lshS=100',
@@ -58,9 +36,7 @@ def args(modulename):
         '--lshN=8',
         '--lshT=1',
         '--lshtype=SH',
-        '--hasms',
-        '--mstype=mvp',
-        '--parallel'
+        '--mstype=mvp'
         ]
     return a
 
@@ -88,11 +64,15 @@ def getArgParse(args, needsquerydata=False):
         ap.add_argument("-K", type=int, required=True)
         ap.add_argument("--querying", action='store_true', required=True)
 
+    if '--haskd' in args:
+        ap.add_argument('--haskd',action='store_true')
+
     if '--hasms' in args:
         ap.add_argument('--hasms',action='store_true')
         ap.add_argument('--mstype', required=True)
 
     if '--haslsh' in args:
+        ap.add_argument('--haslsh',action='store_true')
         ap.add_argument('--lshtype', required=True)
         ap.add_argument('--lshM', type=int, required=True)
         ap.add_argument('--lshL', type=int, required=True)
