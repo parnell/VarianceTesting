@@ -87,10 +87,14 @@ def timeit(func):
         ts = time.time()
         result = func(*args, **kw)
         te = time.time()
-
-        printl('func<%r> took: %2.4f sec' %(func.__name__, te-ts))
-        # print('func<%r> args:[%r, %r] took: %2.4f sec' % \
-        #   (func.__name__, args, kw, te-ts), flush=True)
+        if len(args) > 0 and 'Data' == args[0].__class__.__name__:
+            printl('func<%r %s %s> took: %2.4f sec' %(
+                func.__name__,
+                args[0].cfg.S,
+                args[0].cfg.D,
+                te-ts))
+        else:
+            printl('func<%r> took: %2.4f sec' %(func.__name__, te-ts))
         return result
 
     return wrapper

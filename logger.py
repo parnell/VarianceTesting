@@ -19,8 +19,8 @@ DL = 1
 if not os.path.exists(logdir):
     os.mkdir(logdir)
 
-log = logging.getLogger("mainLogger")
-log.setLevel(logging.INFO)
+# log = logging.getLogger("mainLogger")
+# log.setLevel(logging.INFO)
 
 dlog = logging.getLogger("logLogger")
 dlog.setLevel(logging.INFO)
@@ -30,7 +30,7 @@ formatter = logging.Formatter('%(asctime)s - %(levelname)s : %(message)s')
 sh = logging.StreamHandler(sys.stdout)
 sh.setLevel(logging.INFO)
 sh.setFormatter(formatter)
-log.addHandler(sh)
+dlog.addHandler(sh)
 
 sh = logging.StreamHandler(open(logdir+'/err.log','w'))
 sh.setLevel(logging.INFO)
@@ -51,13 +51,9 @@ def __fmt(*args):
         return args
 
 def printl(*args):
-    if DL > 0:
-        log.info(__fmt(*args))
     dlog.info(__fmt(*args))
 
 def printd(*args):
-    if DL > 1:
-        log.info(__fmt(*args))
     dlog.info(__fmt(*args))
 
 def printe(*args):
@@ -66,7 +62,7 @@ def printe(*args):
 def stacktrace(msg, *args, **kwargs):
     try:
         msg += '(%r, %r)' %(args, kwargs)
-        dlog.exception(msg, *args)
+        dlog.exception(msg)
     except:
         printe('Error formatting stack msg')
         dlog.exception(msg)
