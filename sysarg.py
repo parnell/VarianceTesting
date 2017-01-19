@@ -6,7 +6,6 @@ home = os.path.expanduser("~")
 def args(modulename):
     a = [
         str(modulename),
-        '--overwriteindex',
         '--haskd',
         '--haslsh',
         '--hasms',

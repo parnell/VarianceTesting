@@ -4,7 +4,8 @@ import tempfile
 
 import datahelper as dh
 import genGauss
-from programs import vec2msbin, runordel, run
+from logger import printl
+from programs import vec2msbin, runordel
 import sysarg
 import config
 from subprocess import call
@@ -35,27 +36,28 @@ def process(data, overwriteindex=False, overwritebench=False):
     bprog = "build-%s-vectors"  %indextype #specify the prog to use
     qprog = "query-%s-vectors"  %indextype #specify the query prog to use
 
-    ### annoyingly it seems the build has a filename limit
-    ### make a temp file then rename
-    __, of = tempfile.mkstemp(
-        dir=data.datadir,
-        prefix='{}_{}'.format(data.cfg.S, data.cfg.D))
-    cmd = [ bprog,
-            data.msbinfilepath,
-            "0",
-            of,
-            '3', # bucket size
-            "3",
-            "6"]
+    if overwriteindex or not os.path.exists(data.msindexfilepath):
+        ### annoyingly it seems the build has a filename limit
+        ### make a temp file then rename
+        __, of = tempfile.mkstemp(
+            dir=data.datadir,
+            prefix='tt{}_{}_'.format(data.cfg.S, data.cfg.D))
+        cmd = [ bprog,
+                data.msbinfilepath,
+                "0",
+                of,
+                '3', # bucket size
+                "3",
+                "6"]
 
-    ran = runordel(
-        cmd,
-        data.msbuildbenchfilepath,
-        outtofile=data.msbuildbenchfilepath,
-        overwrite=overwriteindex,
-        printcmd=True)
-    if ran:
-        data.remove(data.msindexfilepath)
+        runordel(
+            cmd,
+            data.msbuildbenchfilepath,
+            outtofile=data.msbuildbenchfilepath,
+            overwrite=overwriteindex,
+            printcmd=True)
+        printl('renaming idx\n$> mv {} {}'.format(
+            of,data.msindexfilepath))
         os.rename(of, data.msindexfilepath)
 
     cmd = [ qprog,
@@ -69,11 +71,6 @@ def process(data, overwriteindex=False, overwritebench=False):
             data.msbenchfilepath)
         print(cmdstr)
         call(cmdstr, shell=True)
-
-        # run(cmd,
-        #     stdin=open(data.qmsvecfilepath),
-        #     stderr=open(data.msbenchfilepath,'w'),
-        #     printcmd=True)
 
 
 if __name__ == "__main__":
