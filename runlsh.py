@@ -120,11 +120,11 @@ def findbest(
 
 
 if __name__ == "__main__":
-    overwritei = True
-    overwrited = False
-    overwriteb = True
     if len(sys.argv)==1:
         sys.argv = sysarg.args(__file__)
+    overwritei = '--overwriteindex' in sys.argv
+    overwrited = '--overwritedata' in sys.argv
+    overwriteb = '--overwritebench' in sys.argv
     ap = sysarg.getArgParse(
         sys.argv, needsquerydata=True)
     args, unknown = ap.parse_known_args()

@@ -1,7 +1,6 @@
 import sys
 import traceback
 from functools import partial
-import copy
 
 import sysarg
 from formdecorator import FailFree
@@ -18,12 +17,13 @@ from sprinter import printstats
 
 np.set_printoptions(precision=4)
 
-overwritedata = False
-overwriteindex = False
-overwritebench = False
-
 @FailFree
-def runLSH(data):
+def runLSH(
+        data,
+        overwritedata=False,
+        overwriteindex=False,
+        overwritebench=False):
+
     ### Running LSH
     statters = []
     printl("@@@@@@@@ Running LSH @@@@@@@@")
@@ -46,8 +46,12 @@ def runLSH(data):
     return data, statters
 
 @FailFree
-def runSisap(data):
-    ### Running LSH
+def runSisap(
+        data,
+        overwritedata=False,
+        overwriteindex=False,
+        overwritebench=False):
+    ### Running Sisap
     statters = []
     printl("@@@@@@@@ Running SISAP @@@@@@@@")
     for mstype in dh.MSTypeEnum.getValidTypes():
@@ -68,7 +72,12 @@ def runSisap(data):
     return statters
 
 @FailFree
-def runKD(data):
+def runKD(
+        data,
+        overwritedata=False,
+        overwriteindex=False,
+        overwritebench=False):
+
     printl("@@@@ Running KD @@@@")
     return [runkd.fullprocess(
         data,
@@ -90,18 +99,22 @@ def gendata(SD, data):
 @FailFree
 def process(SD, data):
     cfg = data.cfg
+    overwriteindex = 'overwriteindex' in cfg
+    overwritedata = 'overwritedata' in cfg
+    overwritebench = 'overwritebench' in cfg
+
     cfg.K = SD[0]
     cfg.S = SD[1]
     cfg.D = SD[2]
     data = dh.Data(cfg)
     sts = []
     if 'haslsh' in cfg:
-        data, ss = runLSH(data)
+        data, ss = runLSH(data, overwriteindex, overwritedata, overwritebench)
         sts.append(ss)
     if cfg.D <= 100 and 'haskd' in cfg:
-        sts.append(runKD(data))
+        sts.append(runKD(data, overwriteindex, overwritedata, overwritebench))
     if 'hasms' in cfg:
-        sts.append(runSisap(data))
+        sts.append(runSisap(data, overwriteindex, overwritedata, overwritebench))
     statters = []
     for ss in sts:
         if ss is None or isinstance(ss, Exception):
@@ -112,6 +125,9 @@ def process(SD, data):
 if __name__ == "__main__":
     if len(sys.argv)==1:
         sys.argv = sysarg.args(__file__)
+    overwritei = '--overwriteindex' in sys.argv
+    overwrited = '--overwritedata' in sys.argv
+    overwriteb = '--overwritebench' in sys.argv
 
     args, unknown = sysarg.getParsed(sys.argv, True)
     print(args)

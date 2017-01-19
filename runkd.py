@@ -47,10 +47,11 @@ def gendata(data, overwrite=False):
         overwrite=overwrite, printcmd=True)
 
 if __name__ == "__main__":
-    overwrited = True
-    overwritei = True
     if len(sys.argv)==1:
         sys.argv = sysarg.args(__file__)
+    overwrited = '--overwritedata' in sys.argv
+    overwritei = '--overwriteindex' in sys.argv
+    overwriteb = '--overwritebench' in sys.argv
 
     args, unknown = sysarg.getParsed(sys.argv, True)
     print(args)
@@ -59,4 +60,4 @@ if __name__ == "__main__":
     data = dh.Data(cfg)
     addLogFile(data.logfile)
 
-    fullprocess(data, overwrited, overwritei)
+    fullprocess(data, overwrited, overwriteb)

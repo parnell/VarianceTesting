@@ -6,6 +6,7 @@ home = os.path.expanduser("~")
 def args(modulename):
     a = [
         str(modulename),
+        '--overwriteindex',
         '--haskd',
         '--haslsh',
         '--hasms',
@@ -79,6 +80,13 @@ def getArgParse(args, needsquerydata=False):
         ap.add_argument('--lshS', type=int)
         ap.add_argument('--lshI', type=int)
         ap.add_argument('--lshN', type=int)
+    if '--overwriteindex' in args:
+        ap.add_argument('--overwriteindex',action='store_true')
+    if '--overwritedata' in args:
+        ap.add_argument('--overwritedata',action='store_true')
+    if '--overwritebench' in args:
+        ap.add_argument('--overwritebench',action='store_true')
+
     ap.add_argument("--datadir", required=True)
     ap.add_argument("--confdir", required=True)
     ap.add_argument("--resultdir", required=True)
