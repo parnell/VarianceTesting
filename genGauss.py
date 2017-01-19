@@ -22,7 +22,6 @@ from logger import addLogFile
     # <sizeOfQueryFiles>", file=sys.stderr)
 
 def process(data, overwrite=False):
-
     prog.genGauss(data,overwrite=overwrite,printcmd=True)
     prog.vec2bin(data, overwrite,printcmd=True)
     prog.vec2hdf5(data, overwrite,printcmd=True)

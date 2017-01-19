@@ -93,8 +93,9 @@ def gendata(SD, data):
     data = dh.Data(cfg)
     addLogFile(data.logfile)
 
+    overwritedata = 'overwritedata' in cfg
     if cfg['synthetic']:
-        genGauss.process(data)
+        genGauss.process(data, overwritedata)
 
 @FailFree
 def process(SD, data):
