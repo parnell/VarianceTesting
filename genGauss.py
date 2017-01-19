@@ -107,6 +107,7 @@ def process(data, overwrite=False):
 if __name__ == "__main__":
     if len(sys.argv)==1:
         sys.argv = sysarg.args(__file__)
+    overwritedata = '--overwritedata' in sys.argv
 
     args, unknown = sysarg.getParsed(sys.argv)
 
@@ -114,4 +115,4 @@ if __name__ == "__main__":
     data = dh.Data(cfg)
     addLogFile(data.logfile)
 
-    process(data, False)
+    process(data, overwritedata)
