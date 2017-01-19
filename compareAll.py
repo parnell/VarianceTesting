@@ -99,8 +99,8 @@ def gendata(SD, data):
 @FailFree
 def process(SD, data):
     cfg = data.cfg
-    overwriteindex = 'overwriteindex' in cfg
     overwritedata = 'overwritedata' in cfg
+    overwriteindex = 'overwriteindex' in cfg
     overwritebench = 'overwritebench' in cfg
 
     cfg.K = SD[0]
@@ -109,12 +109,12 @@ def process(SD, data):
     data = dh.Data(cfg)
     sts = []
     if 'haslsh' in cfg:
-        data, ss = runLSH(data, overwriteindex, overwritedata, overwritebench)
+        data, ss = runLSH(data, overwritedata, overwriteindex, overwritebench)
         sts.append(ss)
     if cfg.D <= 100 and 'haskd' in cfg:
-        sts.append(runKD(data, overwriteindex, overwritedata, overwritebench))
+        sts.append(runKD(data, overwritedata, overwriteindex, overwritebench))
     if 'hasms' in cfg:
-        sts.append(runSisap(data, overwriteindex, overwritedata, overwritebench))
+        sts.append(runSisap(data, overwritedata, overwriteindex, overwritebench))
     statters = []
     for ss in sts:
         if ss is None or isinstance(ss, Exception):
