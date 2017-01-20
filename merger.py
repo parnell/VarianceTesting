@@ -33,4 +33,4 @@ if __name__ == "__main__":
                 lines[key(line)] = line
 
     for line in lines.values():
-        print(line)
+        print(line, end='')
