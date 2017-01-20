@@ -43,7 +43,17 @@ class DataFormatEnum(BaseEnum):
     def format(name):
         return DataFormatEnum.fromValue(getRawExtension(name), DataFormatEnum)
 
-class MSTypeEnum(BaseEnum):
+class AlgoType(BaseEnum):
+    pass
+
+class SpatialTypeEnum(AlgoType):
+    kd = 0
+
+    @staticmethod
+    def getValidTypes():
+        return [SpatialTypeEnum.kd]
+
+class MSTypeEnum(AlgoType):
     mvp = 0
     pivots = 1
     sat = 2
@@ -69,7 +79,7 @@ class MSTypeEnum(BaseEnum):
             MSTypeEnum.iaesa,
             ]
 
-class LSHTypeEnum(BaseEnum):
+class LSHTypeEnum(AlgoType):
     KDBQ = 0
     ITQ = 1
     DBQ = 2

@@ -18,78 +18,12 @@ from sprinter import printstats
 np.set_printoptions(precision=4)
 
 @FailFree
-def runLSH(
-        data,
-        overwritedata=False,
-        overwriteindex=False,
-        overwritebench=False):
-
-    ### Running LSH
-    statters = []
-    printl("@@@@@@@@ Running LSH @@@@@@@@")
-    for lshtype in dh.LSHTypeEnum.getValidTypes():
-        printl("------- Running LSH {} -------".format(lshtype.name))
-        data.cfg['lshtype'] = lshtype
-        nd = dh.Data(data.cfg)
-        try:
-            data, st = runlsh.fullprocess(
-                nd,
-                overwritedata,
-                overwriteindex,
-                overwritebench)
-            statters.append(st)
-
-        except Exception as e:
-            traceback.print_exc()
-            stacktrace("LSH Problem")
-            printl("Error running ", lshtype, " ", str(e))
-    return data, statters
-
-@FailFree
-def runSisap(
-        data,
-        overwritedata=False,
-        overwriteindex=False,
-        overwritebench=False):
-    ### Running Sisap
-    statters = []
-    printl("@@@@@@@@ Running SISAP @@@@@@@@")
-    for mstype in dh.MSTypeEnum.getValidTypes():
-        printl("------- Running Sisap {} -------".format(mstype.name))
-        data.cfg['mstype'] = mstype
-        nd = dh.Data(data.cfg)
-        try:
-            st =runsisap.fullprocess(
-                nd,
-                overwritedata,
-                overwriteindex,
-                overwritebench)
-            statters.append(st)
-        except Exception as e:
-            traceback.print_exc()
-            stacktrace("Sisap Problem")
-            printl("Error running ", mstype, " ", str(e))
-    return statters
-
-@FailFree
-def runKD(
-        data,
-        overwritedata=False,
-        overwriteindex=False,
-        overwritebench=False):
-
-    printl("@@@@ Running KD @@@@")
-    return [runkd.fullprocess(
-        data,
-        overwritedata,
-        overwritebench)]
-
-@FailFree
 def gendata(SD, data):
     cfg = data.cfg
-    cfg.K = SD[0]
-    cfg.S = SD[1]
-    cfg.D = SD[2]
+    __ = SD[0]
+    cfg.K = SD[1]
+    cfg.S = SD[2]
+    cfg.D = SD[3]
     data = dh.Data(cfg)
     addLogFile(data.logfile)
 
@@ -103,25 +37,32 @@ def process(SD, data):
     overwritedata = 'overwritedata' in cfg
     overwriteindex = 'overwriteindex' in cfg
     overwritebench = 'overwritebench' in cfg
-
-    cfg.K = SD[0]
-    cfg.S = SD[1]
-    cfg.D = SD[2]
-    data = dh.Data(cfg)
-    sts = []
-    if 'haslsh' in cfg:
-        data, ss = runLSH(data, overwritedata, overwriteindex, overwritebench)
-        sts.append(ss)
-    if cfg.D <= 100 and 'haskd' in cfg:
-        sts.append(runKD(data, overwritedata, overwriteindex, overwritebench))
-    if 'hasms' in cfg:
-        sts.append(runSisap(data, overwritedata, overwriteindex, overwritebench))
-    statters = []
-    for ss in sts:
-        if ss is None or isinstance(ss, Exception):
-            continue
-        statters.extend(ss)
-    return statters
+    algorithm = SD[0]
+    cfg.K = SD[1]
+    cfg.S = SD[2]
+    cfg.D = SD[3]
+    st = None
+    if isinstance(algorithm, dh.MSTypeEnum):
+        cfg['mstype'] = algorithm
+        st = runsisap.fullprocess(
+            dh.Data(cfg),
+            overwritedata,
+            overwriteindex,
+            overwritebench)
+    elif isinstance(algorithm, dh.LSHTypeEnum):
+        cfg['lshtype'] = algorithm
+        data, st = runlsh.fullprocess(
+            dh.Data(cfg),
+            overwritedata,
+            overwriteindex,
+            overwritebench)
+    elif isinstance(algorithm, dh.SpatialTypeEnum):
+        cfg['spatialtype'] = algorithm
+        st = runkd.fullprocess(
+            dh.Data(cfg),
+            overwritedata,
+            overwritebench)
+    return st
 
 if __name__ == "__main__":
     if len(sys.argv)==1:
@@ -149,12 +90,22 @@ if __name__ == "__main__":
         Ks = [int(x) for x in cfg['krange'].split(',')]
     else :
         Ks = [cfg.K]
+
+    algos = []
+    if 'haslsh' in cfg:
+        algos.extend(dh.LSHTypeEnum.getValidTypes())
+    if 'hasspatial' in cfg:
+        algos.extend(dh.SpatialTypeEnum.getValidTypes())
+    if 'hasms' in cfg:
+        algos.extend(dh.MSTypeEnum.getValidTypes())
+
     SD = []
     for K in Ks:
-        for S in Ss:
-            for D in Ds:
-                SD.append((K,S,D))
-
+        for D in Ds:
+            for S in Ss:
+                for a in algos:
+                    SD.append((a,K,S,D))
+    print(SD)
     data = dh.Data(cfg)
     dh.Data.mkdirs(data.benchdir, data.confdir, data.indexdir, data.querydir)
     pmap(
@@ -164,9 +115,10 @@ if __name__ == "__main__":
     results = pmap(
         partial(process, data=data), SD, cfg['parallel']
     )
-
+    statters = []
     printl('FinishedStats')
     for r in results:
         if r is None or isinstance(r, Exception):
             continue
-        printstats(r)
+        statters.append(r)
+    printstats(statters)

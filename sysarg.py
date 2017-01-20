@@ -1,7 +1,12 @@
 import os
 import argparse
+import platform
 
-home = os.getenv('SCRATCH')
+if platform.system() == 'Darwin':
+    home = os.path.expanduser("~")
+else:
+    home = os.getenv('SCRATCH')
+
 
 def args(modulename):
     a = [
@@ -9,9 +14,9 @@ def args(modulename):
         # '--overwritedata',
         # '--overwriteindex',
         # '--overwritebench',
-        # '--haskd',
-        # '--haslsh',
-        # '--hasms',
+        '--hasspatial',
+        '--haslsh',
+        '--hasms',
         '--parallel',
         "--datadir", "%s/data/rdata" %home,
         "--confdir", "%s/data/rdata/conf" %home,
@@ -67,8 +72,8 @@ def getArgParse(args, needsquerydata=False):
         ap.add_argument("-K", type=int, required=True)
         ap.add_argument("--querying", action='store_true', required=True)
 
-    if '--haskd' in args:
-        ap.add_argument('--haskd',action='store_true')
+    if '--hasspatial' in args:
+        ap.add_argument('--hasspatial',action='store_true')
 
     if '--hasms' in args:
         ap.add_argument('--hasms',action='store_true')
