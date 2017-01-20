@@ -1,7 +1,7 @@
 import os
 import argparse
 
-home = os.path.expanduser("~")
+home = os.getenv('SCRATCH')
 
 def args(modulename):
     a = [
@@ -21,7 +21,7 @@ def args(modulename):
         '--shortname=gaussian',
         # "-i", "%s/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec" %home,
         "--query-filename=fromtopk",
-        "-K5",
+        "-K3",
         "-D10",
         "--nclus=1",
         "--variance=0.1",
