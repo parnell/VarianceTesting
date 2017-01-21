@@ -76,7 +76,8 @@ class MSTypeEnum(AlgoType):
             MSTypeEnum.mvp,
             MSTypeEnum.lcluster,
             MSTypeEnum.sat,
-            MSTypeEnum.iaesa,
+            MSTypeEnum.dyn
+            # MSTypeEnum.iaesa,
             ]
 
 class LSHTypeEnum(AlgoType):

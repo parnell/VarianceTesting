@@ -94,6 +94,7 @@ def getArgParse(args, needsquerydata=False):
     if '--overwritebench' in args:
         ap.add_argument('--overwritebench',action='store_true')
 
+    ap.add_argument('--specific-indexes', default=None)
     ap.add_argument("--datadir", required=True)
     ap.add_argument("--confdir", required=True)
     ap.add_argument("--resultdir", required=True)
