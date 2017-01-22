@@ -75,8 +75,8 @@ class MSTypeEnum(AlgoType):
         return [
             MSTypeEnum.mvp,
             MSTypeEnum.lcluster,
-            MSTypeEnum.sat,
-            MSTypeEnum.dyn
+            MSTypeEnum.sat
+            # MSTypeEnum.dyn
             # MSTypeEnum.iaesa,
             ]
 
