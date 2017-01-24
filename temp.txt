@@ -1,0 +1,19 @@
+Namespace(K=1, confdir='/Users/parnell/data/rdata/conf', datadir='/Users/parnell/data/rdata', dimensions=10, drange='20', fold=0, indexes='lcluster', krange=None, nclus=1, nfolds=1, overwritebench=True, overwriteindex=True, parallel=True, query_filename='fromtopk', query_size=10, querying=True, resultdir='/Users/parnell/data/rdata/results', shortname='gaussian', size=100000, srange='1000000', synthetic=True, variance=0.1)
+2017-01-23 19:27:31,668 - INFO : -#--------------------------------------#-
+2017-01-23 19:27:31,668 - INFO : {'overwritebench': True, 'BENCHMARKDIR_FORMAT': '{resultdirfull}/benchmarks', 'drange': '20', 'FINAL_RESULT_NAME': 'results.{fullname}_qs={Q}_f={fold}_k={K}.txt', 'kdtree': 'VarianceTesting', 'LSHRFILE_NAME': '{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.rfile.txt', 'createLSHBenchmark': 'CreateLSHBenchmark', 'gaussora': 'gaussora', 'GAUSSLSHDATA_NAME': '{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}_t={lshtype}_lM={lshM}_lL={lshL}_lS={lshS}_lI={lshI}_lN={lshN}', 'querying': True, 'CONFDIR_FORMAT': '{confdirfull}/conf', 'parallel': True, 'datadir': '/Users/parnell/data/rdata', 'nfolds': 1, 'GAUSSCONF_NAME': '{fullname}.conf.txt', 'resultdir': '/Users/parnell/data/rdata/results', 'query_filename': 'fromtopk', 'KD_BENCHMARK_NAME': '{fullname}_k={K}_qs={Q}_f={fold}.kd.bench.txt', 'DATADIRFULL_FORMAT': '{datadir}/{datatype}/{dataname}', 'srange': '1000000', 'LSH_BENCHMARK_NAME': '{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.lsh.bench.txt', 'confdir': '/Users/parnell/data/rdata/conf', 'dimensions': 10, 'QNAME': 'query_{fullname}_qs={Q}_f={fold}.{dataformat}', 'overwriteindex': True, 'K': 1, 'CONFDIRFULL_FORMAT': '{confdir}/{datatype}/{dataname}', 'lshbox': 'LSHBox', 'MS_BENCHMARK_NAME': '{fullname}_t={mstype}_k={K}_qs={Q}_f={fold}.ms.bench.txt', 'nclus': 1, 'variance': 0.1, 'GAUSSDATA_NAME': '{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}', 'vec2hdf5': 'vec2hdf5', 'K_BENCHMARK_NAME': '{fullname}_k={K}_qs={Q}_f={fold}.k.bench.txt', 'VECDATA_NAME': '{name}', 'synthetic': True, 'vec2bin': 'vec2bin', 'shortname': 'gaussian', 'krange': None, 'fold': 0, 'RESULTDIRFULL_FORMAT': '{resultdir}/{datatype}/{dataname}', 'GAUSSMSDATA_NAME': '{name}__d={dimensions}_s={size}_u={nclus}_v={var}_t={mstype}', 'QDIR_FORMAT': '{datadirfull}/query', 'TOPK_NAME': '{fullname}_k={K}_qs={Q}_f={fold}.topk.txt', 'vec2vect': 'vec2vect', 'gaussoraconf': 'gaussoraConf.pl', 'INDEXDIR_FORMAT': '{datadirfull}/indexes', 'query_size': 10, 'size': 100000, 'indexes': 'lcluster', 'LOG_NAME': '{fullname}_qs={Q}_f={fold}_k={K}.log', 'vec2msbin': 'convertcoords'}
+algos [] lcluster
+[(<MSTypeEnum.lcluster: 3>, 1, 1000000, 20)]
+2017-01-23 19:27:31,670 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:27:31,671 - INFO : func<'_vec2bin'> took: 0.0010 sec
+2017-01-23 19:27:31,672 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:27:31,672 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:27:31,673 - INFO : func<'runkbench' 1000000 20> took: 0.0010 sec
+2017-01-23 19:27:31,674 - INFO : func<'_genGauss'> took: 0.0001 sec
+2017-01-23 19:27:31,674 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:27:31,674 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:27:31,674 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:27:31,675 - INFO : func<'runkbench' 1000000 20> took: 0.0001 sec
+2017-01-23 19:27:31,675 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:27:31,678 - INFO : 
+$> build-lcluster-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=20_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_20_qmpmrb1_ 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=20_s=1000000_u=1_v=0.1_t=lcluster.build.bench.txt 
+

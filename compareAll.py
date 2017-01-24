@@ -14,6 +14,7 @@ import runsisap
 import genGauss
 from logger import printl, addLogFile, stacktrace
 from sprinter import printstats
+import dataenums
 
 np.set_printoptions(precision=4)
 
@@ -42,21 +43,21 @@ def process(SD, data):
     cfg.S = SD[2]
     cfg.D = SD[3]
     st = None
-    if isinstance(algorithm, dh.MSTypeEnum):
+    if isinstance(algorithm, dataenums.MSTypeEnum):
         cfg['mstype'] = algorithm
         st = runsisap.fullprocess(
             dh.Data(cfg),
             overwritedata,
             overwriteindex,
             overwritebench)
-    elif isinstance(algorithm, dh.LSHTypeEnum):
+    elif isinstance(algorithm, dataenums.LSHTypeEnum):
         cfg['lshtype'] = algorithm
         data, st = runlsh.fullprocess(
             dh.Data(cfg),
             overwritedata,
             overwriteindex,
             overwritebench)
-    elif isinstance(algorithm, dh.SpatialTypeEnum):
+    elif isinstance(algorithm, dataenums.SpatialTypeEnum):
         cfg['spatialtype'] = algorithm
         st = runkd.fullprocess(
             dh.Data(cfg),
@@ -93,12 +94,15 @@ if __name__ == "__main__":
 
     algos = []
     if 'haslsh' in cfg:
-        algos.extend(dh.LSHTypeEnum.getValidTypes())
+        algos.extend(dataenums.LSHTypeEnum.getValidTypes())
     if 'hasspatial' in cfg:
-        algos.extend(dh.SpatialTypeEnum.getValidTypes())
+        algos.extend(dataenums.SpatialTypeEnum.getValidTypes())
     if 'hasms' in cfg:
-        algos.extend(dh.MSTypeEnum.getValidTypes())
-
+        algos.extend(dataenums.MSTypeEnum.getValidTypes())
+    if 'indexes' in cfg and cfg['indexes'] is not None:
+        for idx in cfg['indexes'].split(','):
+            print("algos", algos, idx)
+            algos.append(dataenums.getEnumType(idx))
     SD = []
     for K in Ks:
         for D in Ds:

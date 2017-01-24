@@ -21,7 +21,7 @@ if __name__ == "__main__":
     files = []
     ks = {}
     lines = collections.OrderedDict()
-    for f in sys.argv:
+    for f in sys.argv[1:]:
         n = f.split('_')[-1]
         n = re.sub(r'\D','',n)
         ks[n] = f

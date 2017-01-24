@@ -11,6 +11,7 @@ import config
 from subprocess import call
 from statter import MSStatter
 import sprinter
+from dataenums import MSTypeEnum
 
 def fullprocess(
         data,
@@ -33,6 +34,7 @@ def gendata(data, overwritedata=False, overwriteindex=False):
 
 def process(data, overwriteindex=False, overwritebench=False):
     indextype = data.cfg['mstype']
+    indextype = MSTypeEnum.prog(indextype)
     bprog = "build-%s-vectors"  %indextype #specify the prog to use
     qprog = "query-%s-vectors"  %indextype #specify the query prog to use
 
@@ -47,8 +49,7 @@ def process(data, overwriteindex=False, overwritebench=False):
                 "0",
                 of,
                 '3', # bucket size
-                "3",
-                "6"]
+                '3','3']
 
         runordel(
             cmd,
@@ -86,12 +87,8 @@ if __name__ == "__main__":
     runcfg = config.Config(vars(args))
     rundata = dh.Data(runcfg)
 
-
     fullprocess(
         rundata,
         overwritedata,
         overwriteindex,
         overwritebench)
-
-
-

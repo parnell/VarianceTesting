@@ -14,9 +14,11 @@ def args(modulename):
         # '--overwritedata',
         # '--overwriteindex',
         # '--overwritebench',
-        '--hasspatial',
-        '--haslsh',
-        '--hasms',
+        # '--hasspatial',
+        # '--haslsh',
+        # '--hasms',
+        # '--indexes=mvp,sat,dyn,lcluster',
+        '--indexes=lcluster',
         '--parallel',
         "--datadir", "%s/data/rdata" %home,
         "--confdir", "%s/data/rdata/conf" %home,
@@ -26,13 +28,13 @@ def args(modulename):
         '--shortname=gaussian',
         # "-i", "%s/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec" %home,
         "--query-filename=fromtopk",
-        "-K3",
+        "-K1",
         "-D10",
         "--nclus=1",
         "--variance=0.1",
-        '-S1000000',
-        '--srange=2000',
-        '--drange=10',
+        '-S100000',
+        '--srange=1000000',
+        '--drange=20',
         # '--krange=1,2,3,5,10,25,50',
         '-F0',
         '--nfolds=1',
@@ -94,7 +96,7 @@ def getArgParse(args, needsquerydata=False):
     if '--overwritebench' in args:
         ap.add_argument('--overwritebench',action='store_true')
 
-    ap.add_argument('--specific-indexes', default=None)
+    ap.add_argument('--indexes', default=None)
     ap.add_argument("--datadir", required=True)
     ap.add_argument("--confdir", required=True)
     ap.add_argument("--resultdir", required=True)

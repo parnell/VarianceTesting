@@ -1,6 +1,6 @@
 from enum import Enum, IntEnum
 import os
-
+import dataenums
 def getStem(filename):
     return os.path.splitext(os.path.basename(filename))[0]
 
@@ -13,110 +13,8 @@ def getRawExtension(filename):
 def getBasename(filename):
     return os.path.basename(filename)
 
-class BaseEnum(IntEnum):
-    def __str__(self):
-        return os.path.splitext(os.path.basename(Enum.__str__(self)))[1][1:]
-
-    @staticmethod
-    def fromValue(idx, enumType):
-        if isinstance(idx, bytes):
-            idx = idx.decode('utf-8')
-
-        if isinstance(idx, str) and idx.isdigit():
-            idx = int(idx)
-        else:
-            for name, member in enumType.__members__.items():
-                if name == idx:
-                    return member
-        raise "Index " + str(idx)+" not found in "+ str(enumType) +" " + str(type(idx))
-
 def isGauss(name):
     return "gauss" in name
-
-class DataFormatEnum(BaseEnum):
-    bin = 0
-    hdf5 = 1
-    vec = 2
-    vect = 3
-
-    @staticmethod
-    def format(name):
-        return DataFormatEnum.fromValue(getRawExtension(name), DataFormatEnum)
-
-class AlgoType(BaseEnum):
-    pass
-
-class SpatialTypeEnum(AlgoType):
-    kd = 0
-
-    @staticmethod
-    def getValidTypes():
-        return [SpatialTypeEnum.kd]
-
-class MSTypeEnum(AlgoType):
-    mvp = 0
-    pivots = 1
-    sat = 2
-    lcluster = 3
-    ght = 4
-    aesa = 5
-    iaesa = 6
-    bkt = 7
-    dyn = 8
-    fqh = 9
-    fqt = 10
-
-    @staticmethod
-    def fromValue(idx):
-        return BaseEnum.fromValue(idx, MSTypeEnum)
-
-    @staticmethod
-    def getValidTypes():
-        return [
-            MSTypeEnum.mvp,
-            MSTypeEnum.lcluster,
-            MSTypeEnum.sat
-            # MSTypeEnum.dyn
-            # MSTypeEnum.iaesa,
-            ]
-
-class LSHTypeEnum(AlgoType):
-    KDBQ = 0
-    ITQ = 1
-    DBQ = 2
-    PSD = 3
-    RBS = 4
-    RHP = 5
-    SH = 6
-    TH = 7
-
-    @staticmethod
-    def fromValue(idx):
-        return BaseEnum.fromValue(idx, LSHTypeEnum)
-
-    @staticmethod
-    def getValidTypes():
-        return [
-            LSHTypeEnum.KDBQ,
-            LSHTypeEnum.ITQ,
-            LSHTypeEnum.DBQ,
-            LSHTypeEnum.PSD,
-            LSHTypeEnum.SH
-            ]
-
-
-class DataTypeEnum(BaseEnum):
-    vec = 0
-    graph = 1
-
-    @staticmethod
-    def type(name):
-        try:
-            return DataTypeEnum.fromValue(getRawExtension(name),DataTypeEnum)
-        except:
-            if "gauss" in name:
-                return DataTypeEnum.vec
-            raise Exception("data type not known")
 
 class File():
     def __init__(self, filename):
@@ -140,7 +38,7 @@ class Data():
         self.cfg = cfg
         self.dataname = cfg['shortname']
 
-        self.type = DataTypeEnum.type(self.dataname)
+        self.type = dataenums.DataTypeEnum.type(self.dataname)
         self.fullname = cfg.getFullName(self.dataname)
 
         # self.oname = os.path.abspath(dataname)

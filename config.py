@@ -1,5 +1,5 @@
 import configuration as cfg
-from datahelper import LSHTypeEnum, MSTypeEnum
+from dataenums import LSHTypeEnum, MSTypeEnum
 
 def isGauss(name):
     return "gauss" in name
