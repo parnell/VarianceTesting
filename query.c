@@ -13,7 +13,7 @@ int main (int argc, char **argv)
      Tdist r;
      struct stat sdata;
      struct tms t1,t2, start;
-     int numQueries = 0;
+     unsigned int numQueries = 0;
 
      if (argc != 2)
         { fprintf (stderr,"Usage: %s index-file\n",argv[0]);
@@ -28,7 +28,9 @@ int main (int argc, char **argv)
      numDistances = 0;
 	 times(&start);
      while (true)
-        { Obj qry;
+        {
+			long long sdist = numDistances;
+			Obj qry;
 	  int siz;
 	  bool fixed;
 
@@ -64,16 +66,18 @@ int main (int argc, char **argv)
 	       r = searchNN (S,qry,k,true);
 	       siz = k;
 	       times(&t2);
+		   long long tdist = numDistances - sdist;
 #ifdef CONT
-               fprintf (stderr,"kNNs at distance=%f\ttime=%f\n",r, difftime(t2,t1));
+               fprintf (stderr,"kNNs at distance=%f\ttime=%f\tcalcs=%ld\ttndistances=%ld\n",r, difftime(t2,t1), tdist,numDistances);
 #else
-               fprintf (stderr,"kNNs at distance=%i\ttime=%f\n",r, difftime(t2,t1));
+               fprintf (stderr,"kNNs at distance=%i\ttime=%f\tcalcs=%ld\n",r, difftime(t2,t1),tdist);
 #endif
 	     }
 	}
     times(&t2);
+    fprintf(stderr,"tdistancecalcs=%ld\tnumqueries=%ld \n", numDistances, numQueries);
      fprintf(stderr,"Total distances per query=%f\ttotaltime=%f (s)\tavgtime=%.f (s)\n",
-		numDistances/(float)numQueries, difftime(t2,start), (float) (difftime(t2,start)/(float)numQueries));
+		(float)numDistances/(float)numQueries, difftime(t2,start), (float) (difftime(t2,start)/(float)numQueries));
      fprintf (stderr,"freeing...\n");
      freeIndex (S,true);
      fprintf (stderr,"done\n");
