@@ -20,6 +20,31 @@ except:
 
 currency=False
 
+class StatType():
+
+    @staticmethod
+    def size(v):
+        return v.shape[0] if numpy and not isinstance(v,list) else len(v)
+
+    @staticmethod
+    def mean(v):
+        return v.mean() if numpy and not isinstance(v,list) else statistics.mean(v)
+
+    @staticmethod
+    def var(v):
+        try: return statistics.stdev(v) if len(v) > 1 and sum(v) != 0 else math.nan
+        except: return math.nan
+
+    @staticmethod
+    def sum(v): return sum(v)
+
+    @staticmethod
+    def min(v): return min(v)
+
+    @staticmethod
+    def max(v): return max(v)
+
+
 
 class Analyzer():
     def __init__(self, data):
@@ -138,15 +163,6 @@ class Statter():
         s = '{} :\tn={}\t'+s.format(*fmtarray)
         return s
 
-    @staticmethod
-    def mean(v):
-        return v.mean() if numpy and not isinstance(v,list) else statistics.mean(v)
-
-    @staticmethod
-    def var(v):
-        try: return statistics.stdev(v) if len(v) > 1 and sum(v) != 0 else math.nan
-        except: return math.nan
-
     def print(self, ikeys=None, icols=None, iranges=None):
         if not self.isparsed:
             self.parse()
@@ -168,13 +184,13 @@ class Statter():
                     v = v[:self.head]
                 if self.tail:
                     v = v[-self.tail:]
-                n = v.shape[0] if numpy and not isinstance(v,list) else len(v)
+
+                n = StatType.size(v)
                 if n == 0:
                     print(k,":",v)
                     continue
-                mean = Statter.mean(v)
-                var = Statter.var(v)
-                a = [n, sum(v), mean, min(v), max(v), var]
+                a = [n, StatType.sum(v), StatType.mean(v),
+                     StatType.min(v), StatType.max(v), StatType.var(v)]
                 # if currency:
                 #     a = [ locale.currency(val, grouping=True) for val in v]
                 if n > 1:

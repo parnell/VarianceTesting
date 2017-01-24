@@ -403,3 +403,149 @@ $> build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=100
 2017-01-23 19:49:37,999 - INFO : 
 $> build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_18_o1g6_s8b 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt 
 
+2017-01-23 20:30:52,027 - ERROR : Error running process build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_12_gamoqj7f 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=12_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt
+nargs= [(<MSTypeEnum.mvp: 0>, 1, 1000000, 12)]
+kwargs= {'data': <datahelper.Data object at 0x10384a4a8>}
+CalledProcessError process
+2017-01-23 20:30:52,030 - ERROR : 
+CalledProcessError in process(((<MSTypeEnum.mvp: 0>, 1, 1000000, 12),), {'data': <datahelper.Data object at 0x10384a4a8>})
+Traceback (most recent call last):
+  File "/Users/parnell/workspace/research/vtpy/formdecorator.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "compareAll.py", line 52, in process
+    overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 22, in fullprocess
+    process(data, overwriteindex, overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 59, in process
+    printcmd=True)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 54, in runordel
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 46, in runordel
+    printcmd=printcmd)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 24, in run
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 21, in run
+    processcomplete.check_returncode()
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 662, in check_returncode
+    self.stderr)
+subprocess.CalledProcessError: Command '['build-mvp-vectors', '/Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin', '0', '/Users/parnell/data/rdata/tt1000000_12_gamoqj7f', '3', '3', '3']' returned non-zero exit status -11
+2017-01-23 20:34:00,114 - ERROR : Error running process build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_14_wcaztfq4 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=14_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt
+nargs= [(<MSTypeEnum.mvp: 0>, 1, 1000000, 14)]
+kwargs= {'data': <datahelper.Data object at 0x10384ab38>}
+CalledProcessError process
+2017-01-23 20:34:00,117 - ERROR : 
+CalledProcessError in process(((<MSTypeEnum.mvp: 0>, 1, 1000000, 14),), {'data': <datahelper.Data object at 0x10384ab38>})
+Traceback (most recent call last):
+  File "/Users/parnell/workspace/research/vtpy/formdecorator.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "compareAll.py", line 52, in process
+    overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 22, in fullprocess
+    process(data, overwriteindex, overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 59, in process
+    printcmd=True)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 54, in runordel
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 46, in runordel
+    printcmd=printcmd)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 24, in run
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 21, in run
+    processcomplete.check_returncode()
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 662, in check_returncode
+    self.stderr)
+subprocess.CalledProcessError: Command '['build-mvp-vectors', '/Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.ms.bin', '0', '/Users/parnell/data/rdata/tt1000000_14_wcaztfq4', '3', '3', '3']' returned non-zero exit status -11
+2017-01-23 20:44:21,179 - ERROR : Error running process build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_16_3qrxh1bp 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=16_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt
+nargs= [(<MSTypeEnum.mvp: 0>, 1, 1000000, 16)]
+kwargs= {'data': <datahelper.Data object at 0x10383bf28>}
+CalledProcessError process
+2017-01-23 20:44:21,182 - ERROR : 
+CalledProcessError in process(((<MSTypeEnum.mvp: 0>, 1, 1000000, 16),), {'data': <datahelper.Data object at 0x10383bf28>})
+Traceback (most recent call last):
+  File "/Users/parnell/workspace/research/vtpy/formdecorator.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "compareAll.py", line 52, in process
+    overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 22, in fullprocess
+    process(data, overwriteindex, overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 59, in process
+    printcmd=True)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 54, in runordel
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 46, in runordel
+    printcmd=printcmd)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 24, in run
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 21, in run
+    processcomplete.check_returncode()
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 662, in check_returncode
+    self.stderr)
+subprocess.CalledProcessError: Command '['build-mvp-vectors', '/Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.ms.bin', '0', '/Users/parnell/data/rdata/tt1000000_16_3qrxh1bp', '3', '3', '3']' returned non-zero exit status -11
+2017-01-23 20:46:35,860 - ERROR : Error running process build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_18_o1g6_s8b 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt
+nargs= [(<MSTypeEnum.mvp: 0>, 1, 1000000, 18)]
+kwargs= {'data': <datahelper.Data object at 0x10384aa20>}
+CalledProcessError process
+2017-01-23 20:46:35,863 - ERROR : 
+CalledProcessError in process(((<MSTypeEnum.mvp: 0>, 1, 1000000, 18),), {'data': <datahelper.Data object at 0x10384aa20>})
+Traceback (most recent call last):
+  File "/Users/parnell/workspace/research/vtpy/formdecorator.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "compareAll.py", line 52, in process
+    overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 22, in fullprocess
+    process(data, overwriteindex, overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 59, in process
+    printcmd=True)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 54, in runordel
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 46, in runordel
+    printcmd=printcmd)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 24, in run
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 21, in run
+    processcomplete.check_returncode()
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 662, in check_returncode
+    self.stderr)
+subprocess.CalledProcessError: Command '['build-mvp-vectors', '/Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.ms.bin', '0', '/Users/parnell/data/rdata/tt1000000_18_o1g6_s8b', '3', '3', '3']' returned non-zero exit status -11
+2017-01-23 22:39:07,880 - ERROR : Error running process build-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_12_376tdav6 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=12_s=1000000_u=1_v=0.1_t=dyn.build.bench.txt
+nargs= [(<MSTypeEnum.dyn: 8>, 1, 1000000, 12)]
+kwargs= {'data': <datahelper.Data object at 0x10384a908>}
+CalledProcessError process
+2017-01-23 22:39:07,882 - ERROR : 
+CalledProcessError in process(((<MSTypeEnum.dyn: 8>, 1, 1000000, 12),), {'data': <datahelper.Data object at 0x10384a908>})
+Traceback (most recent call last):
+  File "/Users/parnell/workspace/research/vtpy/formdecorator.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "compareAll.py", line 52, in process
+    overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 22, in fullprocess
+    process(data, overwriteindex, overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 59, in process
+    printcmd=True)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 54, in runordel
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 46, in runordel
+    printcmd=printcmd)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 24, in run
+    raise e
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 21, in run
+    processcomplete.check_returncode()
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 662, in check_returncode
+    self.stderr)
+subprocess.CalledProcessError: Command '['build-dyn-sat-vectors', '/Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin', '0', '/Users/parnell/data/rdata/tt1000000_12_376tdav6', '3', '3', '3']' returned non-zero exit status -11
+Traceback (most recent call last):
+  File "compareAll.py", line 120, in <module>
+    partial(process, data=data), SD, cfg['parallel']
+  File "/Users/parnell/workspace/research/vtpy/mapper.py", line 17, in pmap
+    return p.map(func, arglist)
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/multiprocessing/pool.py", line 260, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/multiprocessing/pool.py", line 602, in get
+    self.wait(timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/multiprocessing/pool.py", line 599, in wait
+    self._event.wait(timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/threading.py", line 549, in wait
+    signaled = self._cond.wait(timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/threading.py", line 293, in wait
+    waiter.acquire()
+KeyboardInterrupt

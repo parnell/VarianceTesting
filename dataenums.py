@@ -47,7 +47,6 @@ class DataFormatEnum(BaseEnum):
     def format(name):
         return DataFormatEnum.fromValue(getRawExtension(name), DataFormatEnum)
 
-
 class AlgoType(BaseEnum):
     pass
 
@@ -61,6 +60,9 @@ class SpatialTypeEnum(AlgoType):
     @staticmethod
     def fromValue(idx):
         return BaseEnum.fromValue(idx, SpatialTypeEnum)
+
+    def cfgkey(self):
+        return 'spatialtype'
 
 class MSTypeEnum(AlgoType):
     mvp = 0
@@ -85,6 +87,8 @@ class MSTypeEnum(AlgoType):
     @staticmethod
     def fromValue(idx):
         return BaseEnum.fromValue(idx, MSTypeEnum)
+    def cfgkey(self):
+        return 'mstype'
 
     @staticmethod
     def getValidTypes():
@@ -119,6 +123,8 @@ class LSHTypeEnum(AlgoType):
             LSHTypeEnum.PSD,
             LSHTypeEnum.SH
             ]
+    def cfgkey(self):
+        return 'lshtype'
 
 
 class DataTypeEnum(BaseEnum):

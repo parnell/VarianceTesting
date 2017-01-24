@@ -1,6 +1,17 @@
-from enum import Enum, IntEnum
 import os
+import copy
 import dataenums
+
+class DataFactory():
+    @staticmethod
+    def fromAKSD(cfg, a,k,s,d):
+        cfg = copy.deepcopy(cfg)
+        cfg[a.cfgkey()] = a
+        cfg.K = k
+        cfg.S = s
+        cfg.D = d
+        return Data(cfg)
+
 def getStem(filename):
     return os.path.splitext(os.path.basename(filename))[0]
 

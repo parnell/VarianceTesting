@@ -19,6 +19,10 @@ def key(line):
         return ''
 
 if __name__ == "__main__":
+    '''timestamp(0) Dim(1)	Size(2)	K(3)	Var(4)	Nclus(5)
+        IdxName(6)	Cost(7)	Average(8) QueryTime(9)
+        Average Calcs(10)	Precision(11)	Recall(12)
+    '''
     files = []
     ks = {}
     lines = collections.OrderedDict()
@@ -31,6 +35,8 @@ if __name__ == "__main__":
         for line in open(ks[k]):
             m = re.search('statline',line)
             if m:
+                vals = line.split('\t')
+                cost = float(vals[7])
                 lines[key(line)] = line
 
     for line in lines.values():

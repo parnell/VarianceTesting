@@ -108,4 +108,3 @@ def getParsed(args, needsquerydata=False):
     ap = getArgParse(args, needsquerydata=needsquerydata)
     return ap.parse_known_args()
 
-

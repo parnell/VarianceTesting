@@ -38,31 +38,15 @@ def process(SD, data):
     overwritedata = 'overwritedata' in cfg
     overwriteindex = 'overwriteindex' in cfg
     overwritebench = 'overwritebench' in cfg
+    d = dh.DataFactory.fromAKSD(cfg, *SD)
     algorithm = SD[0]
-    cfg.K = SD[1]
-    cfg.S = SD[2]
-    cfg.D = SD[3]
     st = None
     if isinstance(algorithm, dataenums.MSTypeEnum):
-        cfg['mstype'] = algorithm
-        st = runsisap.fullprocess(
-            dh.Data(cfg),
-            overwritedata,
-            overwriteindex,
-            overwritebench)
+        st = runsisap.fullprocess(d,overwritedata,overwriteindex,overwritebench)
     elif isinstance(algorithm, dataenums.LSHTypeEnum):
-        cfg['lshtype'] = algorithm
-        data, st = runlsh.fullprocess(
-            dh.Data(cfg),
-            overwritedata,
-            overwriteindex,
-            overwritebench)
+        data, st = runlsh.fullprocess(d,overwritedata,overwriteindex,overwritebench)
     elif isinstance(algorithm, dataenums.SpatialTypeEnum):
-        cfg['spatialtype'] = algorithm
-        st = runkd.fullprocess(
-            dh.Data(cfg),
-            overwritedata,
-            overwritebench)
+        st = runkd.fullprocess(d,overwritedata,overwritebench)
     return st
 
 if __name__ == "__main__":

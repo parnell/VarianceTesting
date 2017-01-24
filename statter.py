@@ -1,7 +1,6 @@
 import copy
-import analyzer
 
-from analyzer import Statter
+from analyzer import StatType, FileStatter
 
 class NOStatter():
     def __init__(self, name, data):
@@ -23,7 +22,7 @@ class NOStatter():
     @property
     def querytime(self): return ''
 
-class MSStatter(analyzer.FileStatter):
+class MSStatter(FileStatter):
     def __init__(self, filename, data):
         super().__init__(filename)
         self.data = copy.deepcopy(data)
@@ -58,7 +57,7 @@ class MSStatter(analyzer.FileStatter):
     def recall(self): return 1
 
 
-class LSHStatter(analyzer.FileStatter):
+class LSHStatter(FileStatter):
     def __init__(self, filename, data):
         super().__init__(filename)
         self.data = copy.deepcopy(data)
@@ -68,22 +67,22 @@ class LSHStatter(analyzer.FileStatter):
 
     @property
     def average(self):
-        try: return self.get('avg', Statter.mean)
+        try: return self.get('avg', StatType.mean)
         except: return -1
 
     @property
     def precision(self):
-        try: return self.get('PRECISION', Statter.mean)
+        try: return self.get('PRECISION', StatType.mean)
         except: return -1
 
     @property
     def recall(self):
-        try: return self.get('RECALL', Statter.mean)
+        try: return self.get('RECALL', StatType.mean)
         except: return -1
 
     @property
     def cost(self):
-        try: return self.get('COST', Statter.mean)
+        try: return self.get('COST', StatType.mean)
         except: return -1
 
     @property
@@ -92,7 +91,7 @@ class LSHStatter(analyzer.FileStatter):
         except: return -1
 
 
-class KDStatter(analyzer.FileStatter):
+class KDStatter(FileStatter):
     def __init__(self, filename, data):
         super().__init__(filename)
         self.data = copy.deepcopy(data)
@@ -118,4 +117,3 @@ class KDStatter(analyzer.FileStatter):
     def querytime(self):
         try: return self.getf('avgquerytime')
         except: return -1
-
