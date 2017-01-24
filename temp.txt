@@ -17,3 +17,28 @@ algos [] lcluster
 2017-01-23 19:27:31,678 - INFO : 
 $> build-lcluster-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=20_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_20_qmpmrb1_ 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=20_s=1000000_u=1_v=0.1_t=lcluster.build.bench.txt 
 
+2017-01-23 19:44:56,034 - ERROR : Error of some sort((), {})
+Traceback (most recent call last):
+  File "/Users/parnell/workspace/research/vtpy/formdecorator.py", line 41, in wrapper
+    return func(*args, **kwargs)
+  File "compareAll.py", line 52, in process
+    overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 22, in fullprocess
+    process(data, overwriteindex, overwritebench)
+  File "/Users/parnell/workspace/research/vtpy/runsisap.py", line 59, in process
+    printcmd=True)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 46, in runordel
+    printcmd=printcmd)
+  File "/Users/parnell/workspace/research/vtpy/programs.py", line 19, in run
+    processcomplete = subprocess.run(cmd, stdout=stdout, **oargs)
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 698, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 1060, in communicate
+    self.wait()
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 1651, in wait
+    (pid, sts) = self._try_wait(0)
+  File "/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/subprocess.py", line 1601, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+KeyboardInterrupt
+2017-01-23 19:44:56,036 - INFO : FinishedStats
+2017-01-23 19:44:56,036 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall

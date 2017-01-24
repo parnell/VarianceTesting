@@ -1,0 +1,405 @@
+Namespace(K=1, confdir='/Users/parnell/data/rdata/conf', datadir='/Users/parnell/data/rdata', dimensions=10, drange='10,12,14,16,18,20', fold=0, indexes='mvp,sat,dyn', krange=None, nclus=1, nfolds=1, parallel=True, query_filename='fromtopk', query_size=10, querying=True, resultdir='/Users/parnell/data/rdata/results', shortname='gaussian', size=100000, srange='1000000', synthetic=True, variance=0.1)
+2017-01-23 19:48:10,612 - INFO : -#--------------------------------------#-
+2017-01-23 19:48:10,612 - INFO : {'query_size': 10, 'shortname': 'gaussian', 'TOPK_NAME': '{fullname}_k={K}_qs={Q}_f={fold}.topk.txt', 'variance': 0.1, 'RESULTDIRFULL_FORMAT': '{resultdir}/{datatype}/{dataname}', 'FINAL_RESULT_NAME': 'results.{fullname}_qs={Q}_f={fold}_k={K}.txt', 'LOG_NAME': '{fullname}_qs={Q}_f={fold}_k={K}.log', 'K_BENCHMARK_NAME': '{fullname}_k={K}_qs={Q}_f={fold}.k.bench.txt', 'MS_BENCHMARK_NAME': '{fullname}_t={mstype}_k={K}_qs={Q}_f={fold}.ms.bench.txt', 'DATADIRFULL_FORMAT': '{datadir}/{datatype}/{dataname}', 'query_filename': 'fromtopk', 'nclus': 1, 'CONFDIRFULL_FORMAT': '{confdir}/{datatype}/{dataname}', 'KD_BENCHMARK_NAME': '{fullname}_k={K}_qs={Q}_f={fold}.kd.bench.txt', 'synthetic': True, 'K': 1, 'lshbox': 'LSHBox', 'resultdir': '/Users/parnell/data/rdata/results', 'LSH_BENCHMARK_NAME': '{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.lsh.bench.txt', 'GAUSSMSDATA_NAME': '{name}__d={dimensions}_s={size}_u={nclus}_v={var}_t={mstype}', 'vec2msbin': 'convertcoords', 'GAUSSCONF_NAME': '{fullname}.conf.txt', 'GAUSSDATA_NAME': '{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}', 'GAUSSLSHDATA_NAME': '{name}__d={dimensions}_s={size}_nclus={nclus}_var={var}_t={lshtype}_lM={lshM}_lL={lshL}_lS={lshS}_lI={lshI}_lN={lshN}', 'VECDATA_NAME': '{name}', 'nfolds': 1, 'confdir': '/Users/parnell/data/rdata/conf', 'LSHRFILE_NAME': '{fullname}_t={lshtype}_k={K}_qs={Q}_f={fold}.rfile.txt', 'datadir': '/Users/parnell/data/rdata', 'size': 100000, 'gaussora': 'gaussora', 'parallel': True, 'dimensions': 10, 'vec2vect': 'vec2vect', 'CONFDIR_FORMAT': '{confdirfull}/conf', 'krange': None, 'indexes': 'mvp,sat,dyn', 'INDEXDIR_FORMAT': '{datadirfull}/indexes', 'vec2bin': 'vec2bin', 'QDIR_FORMAT': '{datadirfull}/query', 'gaussoraconf': 'gaussoraConf.pl', 'drange': '10,12,14,16,18,20', 'srange': '1000000', 'vec2hdf5': 'vec2hdf5', 'kdtree': 'VarianceTesting', 'querying': True, 'QNAME': 'query_{fullname}_qs={Q}_f={fold}.{dataformat}', 'BENCHMARKDIR_FORMAT': '{resultdirfull}/benchmarks', 'createLSHBenchmark': 'CreateLSHBenchmark', 'fold': 0}
+algos [] mvp
+algos [<MSTypeEnum.mvp: 0>] sat
+algos [<MSTypeEnum.mvp: 0>, <MSTypeEnum.sat: 2>] dyn
+[(<MSTypeEnum.mvp: 0>, 1, 1000000, 10), (<MSTypeEnum.sat: 2>, 1, 1000000, 10), (<MSTypeEnum.dyn: 8>, 1, 1000000, 10), (<MSTypeEnum.mvp: 0>, 1, 1000000, 12), (<MSTypeEnum.sat: 2>, 1, 1000000, 12), (<MSTypeEnum.dyn: 8>, 1, 1000000, 12), (<MSTypeEnum.mvp: 0>, 1, 1000000, 14), (<MSTypeEnum.sat: 2>, 1, 1000000, 14), (<MSTypeEnum.dyn: 8>, 1, 1000000, 14), (<MSTypeEnum.mvp: 0>, 1, 1000000, 16), (<MSTypeEnum.sat: 2>, 1, 1000000, 16), (<MSTypeEnum.dyn: 8>, 1, 1000000, 16), (<MSTypeEnum.mvp: 0>, 1, 1000000, 18), (<MSTypeEnum.sat: 2>, 1, 1000000, 18), (<MSTypeEnum.dyn: 8>, 1, 1000000, 18), (<MSTypeEnum.mvp: 0>, 1, 1000000, 20), (<MSTypeEnum.sat: 2>, 1, 1000000, 20), (<MSTypeEnum.dyn: 8>, 1, 1000000, 20)]
+2017-01-23 19:48:10,633 - INFO : func<'_genGauss'> took: 0.0005 sec
+2017-01-23 19:48:10,634 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:10,634 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:10,634 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:10,634 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:10,635 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:10,635 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:10,635 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:10,635 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:10,635 - INFO : func<'_genGauss'> took: 0.0024 sec
+2017-01-23 19:48:10,636 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:10,636 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:10,636 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:10,636 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:10,636 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:10,636 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:10,636 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:10,637 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:10,637 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:10,637 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:10,637 - INFO : func<'runkbench' 1000000 10> took: 0.0002 sec
+2017-01-23 19:48:10,638 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:10,638 - INFO : func<'runkbench' 1000000 10> took: 0.0002 sec
+2017-01-23 19:48:10,638 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:10,640 - INFO : func<'runkbench' 1000000 10> took: 0.0002 sec
+2017-01-23 19:48:10,640 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:10,640 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:10,641 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:10,641 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:10,641 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:10,643 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:16,013 - INFO : func<'_vec2bin'> took: 5.3770 sec
+2017-01-23 19:48:16,014 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:16,014 - INFO : func<'_vec2bin'> took: 5.3770 sec
+2017-01-23 19:48:16,015 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:16,022 - INFO : func<'_vec2bin'> took: 5.3807 sec
+2017-01-23 19:48:16,023 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:16,027 - INFO : func<'_vec2bin'> took: 5.3916 sec
+2017-01-23 19:48:16,028 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:16,346 - INFO : func<'_vec2bin'> took: 5.7105 sec
+2017-01-23 19:48:16,347 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:16,434 - INFO : func<'_vec2bin'> took: 5.7978 sec
+2017-01-23 19:48:16,435 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:16,481 - INFO : func<'_vec2bin'> took: 5.8400 sec
+2017-01-23 19:48:16,482 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:16,495 - INFO : func<'_vec2bin'> took: 5.8523 sec
+2017-01-23 19:48:16,496 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:21,348 - INFO : func<'_vec2hdf5'> took: 5.3325 sec
+2017-01-23 19:48:21,348 - INFO : 
+$> vec2vect /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vect  >  <stdout> 
+
+2017-01-23 19:48:21,356 - INFO : func<'_vec2hdf5'> took: 5.3421 sec
+2017-01-23 19:48:21,357 - INFO : 
+$> vec2vect /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vect  >  <stdout> 
+
+2017-01-23 19:48:21,371 - INFO : func<'_vec2hdf5'> took: 5.3427 sec
+2017-01-23 19:48:21,371 - INFO : 
+$> vec2vect /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vect  >  <stdout> 
+
+2017-01-23 19:48:21,678 - INFO : func<'_vec2hdf5'> took: 5.3305 sec
+2017-01-23 19:48:21,679 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:21,694 - INFO : 
+$> CreateLSHBenchmark /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.bin /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=12_s=1000000_nclus=1_var=0.1_k=1_qs=10_f=0.topk.txt 1 10 0 -V /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=12_s=1000000_nclus=1_var=0.1_qs=10_f=0.vec -M /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=12_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec -k 1  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=12_s=1000000_nclus=1_var=0.1_k=1_qs=10_f=0.k.bench.txt 
+
+2017-01-23 19:48:21,786 - INFO : func<'_vec2vect'> took: 0.4143 sec
+2017-01-23 19:48:21,787 - INFO : func<'runkbench' 1000000 12> took: 0.0002 sec
+2017-01-23 19:48:21,788 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:21,789 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:21,789 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:21,790 - INFO : 
+$> vec2vect /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.vect  >  <stdout> 
+
+2017-01-23 19:48:21,806 - INFO : func<'_vec2vect'> took: 0.4491 sec
+2017-01-23 19:48:21,807 - INFO : func<'runkbench' 1000000 12> took: 0.0002 sec
+2017-01-23 19:48:21,809 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:21,809 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:21,917 - INFO : func<'_vec2vect'> took: 0.5681 sec
+2017-01-23 19:48:21,918 - INFO : 
+$> CreateLSHBenchmark /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.bin /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=14_s=1000000_nclus=1_var=0.1_k=1_qs=10_f=0.topk.txt 1 10 0 -V /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=14_s=1000000_nclus=1_var=0.1_qs=10_f=0.vec -M /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=14_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec -k 1  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=14_s=1000000_nclus=1_var=0.1_k=1_qs=10_f=0.k.bench.txt 
+
+2017-01-23 19:48:21,996 - INFO : func<'_vec2hdf5'> took: 5.9736 sec
+2017-01-23 19:48:21,998 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:21,998 - INFO : func<'runkbench' 1000000 14> took: 0.0001 sec
+2017-01-23 19:48:22,000 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:22,001 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:22,051 - INFO : func<'_vec2hdf5'> took: 5.5685 sec
+2017-01-23 19:48:22,052 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:22,061 - INFO : 
+$> CreateLSHBenchmark /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.bin /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=16_s=1000000_nclus=1_var=0.1_k=1_qs=10_f=0.topk.txt 1 10 0 -V /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=16_s=1000000_nclus=1_var=0.1_qs=10_f=0.vec -M /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=16_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec -k 1  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=16_s=1000000_nclus=1_var=0.1_k=1_qs=10_f=0.k.bench.txt 
+
+2017-01-23 19:48:22,062 - INFO : func<'_vec2vect'> took: 0.2720 sec
+2017-01-23 19:48:22,063 - INFO : func<'runkbench' 1000000 16> took: 0.0002 sec
+2017-01-23 19:48:22,065 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:22,066 - INFO : 
+$> vec2bin /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.bin  >  <stdout> 
+
+2017-01-23 19:48:22,135 - INFO : func<'_vec2hdf5'> took: 5.7000 sec
+2017-01-23 19:48:22,136 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:22,137 - INFO : func<'runkbench' 1000000 14> took: 0.0002 sec
+2017-01-23 19:48:22,139 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:22,140 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:22,141 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:22,142 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:22,143 - INFO : func<'runkbench' 1000000 20> took: 0.0002 sec
+2017-01-23 19:48:22,144 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:22,145 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:22,146 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:22,147 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:22,148 - INFO : func<'runkbench' 1000000 20> took: 0.0002 sec
+2017-01-23 19:48:22,149 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:22,150 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:22,151 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:22,151 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:22,152 - INFO : func<'runkbench' 1000000 20> took: 0.0002 sec
+2017-01-23 19:48:22,303 - INFO : func<'_vec2hdf5'> took: 5.8064 sec
+2017-01-23 19:48:22,304 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:22,305 - INFO : func<'runkbench' 1000000 16> took: 0.0002 sec
+2017-01-23 19:48:23,393 - INFO : func<'runkbench' 1000000 12> took: 1.7131 sec
+2017-01-23 19:48:23,829 - INFO : func<'runkbench' 1000000 14> took: 1.9104 sec
+2017-01-23 19:48:24,124 - INFO : func<'runkbench' 1000000 16> took: 2.0712 sec
+2017-01-23 19:48:25,618 - INFO : func<'_vec2bin'> took: 3.8084 sec
+2017-01-23 19:48:25,619 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:25,863 - INFO : func<'_vec2bin'> took: 3.8622 sec
+2017-01-23 19:48:25,864 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:26,028 - INFO : func<'_vec2bin'> took: 3.9622 sec
+2017-01-23 19:48:26,029 - INFO : 
+$> vec2hdf5 /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.hdf5 data  >  <stdout> 
+
+2017-01-23 19:48:28,840 - INFO : func<'_vec2hdf5'> took: 3.2213 sec
+2017-01-23 19:48:28,841 - INFO : 
+$> vec2vect /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vect  >  <stdout> 
+
+2017-01-23 19:48:29,022 - INFO : func<'_vec2vect'> took: 0.1812 sec
+2017-01-23 19:48:29,024 - INFO : 
+$> CreateLSHBenchmark /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.bin /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_nclus=1_var=0.1_k=1_qs=10_f=0.topk.txt 1 10 0 -V /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=18_s=1000000_nclus=1_var=0.1_qs=10_f=0.vec -M /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=18_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec -k 1  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_nclus=1_var=0.1_k=1_qs=10_f=0.k.bench.txt 
+
+2017-01-23 19:48:29,161 - INFO : func<'_vec2hdf5'> took: 3.2970 sec
+2017-01-23 19:48:29,162 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:29,163 - INFO : func<'runkbench' 1000000 18> took: 0.0001 sec
+2017-01-23 19:48:29,297 - INFO : func<'_vec2hdf5'> took: 3.2674 sec
+2017-01-23 19:48:29,298 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:29,298 - INFO : func<'runkbench' 1000000 18> took: 0.0001 sec
+2017-01-23 19:48:30,720 - INFO : func<'runkbench' 1000000 18> took: 1.6966 sec
+2017-01-23 19:48:30,760 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:30,760 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:30,760 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:30,760 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:30,761 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:30,761 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:30,761 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:30,761 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:30,761 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:30,762 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:30,762 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:30,760 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:30,762 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:30,762 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:30,762 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:30,762 - INFO : func<'_genGauss'> took: 0.0004 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2hdf5'> took: 0.0004 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:30,763 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:30,764 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:30,764 - INFO : func<'runkbench' 1000000 10> took: 0.0002 sec
+2017-01-23 19:48:30,764 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:30,764 - INFO : func<'runkbench' 1000000 10> took: 0.0002 sec
+2017-01-23 19:48:30,764 - INFO : func<'runkbench' 1000000 12> took: 0.0003 sec
+2017-01-23 19:48:30,764 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:30,764 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:30,765 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:30,765 - INFO : func<'runkbench' 1000000 12> took: 0.0002 sec
+2017-01-23 19:48:30,765 - INFO : func<'_vec2msbin'> took: 0.0002 sec
+2017-01-23 19:48:30,765 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:30,765 - INFO : func<'runkbench' 1000000 12> took: 0.0002 sec
+2017-01-23 19:48:30,765 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:30,765 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:30,765 - INFO : 
+$> convertcoords /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin  >  <stdout> 
+
+2017-01-23 19:48:30,765 - INFO : 
+$> convertcoords /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin  >  <stdout> 
+
+2017-01-23 19:48:30,766 - INFO : func<'runkbench' 1000000 10> took: 0.0002 sec
+2017-01-23 19:48:30,766 - INFO : 
+$> convertcoords /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin  >  <stdout> 
+
+2017-01-23 19:48:30,766 - INFO : func<'runkbench' 1000000 14> took: 0.0002 sec
+2017-01-23 19:48:30,766 - INFO : func<'runkbench' 1000000 14> took: 0.0002 sec
+2017-01-23 19:48:30,766 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:30,767 - INFO : 
+$> convertcoords /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.ms.bin  >  <stdout> 
+
+2017-01-23 19:48:30,767 - INFO : 
+$> convertcoords /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.ms.bin  >  <stdout> 
+
+2017-01-23 19:48:30,767 - INFO : 
+$> build-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=10_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_10_hocynjtn 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=10_s=1000000_u=1_v=0.1_t=sat.build.bench.txt 
+
+2017-01-23 19:48:30,768 - INFO : 
+$> build-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=10_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_10_5v3a2b95 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=10_s=1000000_u=1_v=0.1_t=dyn.build.bench.txt 
+
+(time query-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=10_s=1000000_u=1_v=0.1_t=mvp.idx.ms) < /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=10_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec 1<&-  2> /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=10_s=1000000_nclus=1_var=0.1_t=mvp_k=1_qs=10_f=0.ms.bench.txt 
+2017-01-23 19:48:31,232 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:31,233 - INFO : statline	10	1000000	1	0.1	1	MVP	0.042845101562000006	0.0	42845.101562	1	1
+2017-01-23 19:48:31,234 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:31,235 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:31,236 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:31,236 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:31,237 - INFO : func<'runkbench' 1000000 14> took: 0.0002 sec
+2017-01-23 19:48:31,238 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:31,240 - INFO : 
+$> build-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_14_8507nxpe 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=14_s=1000000_u=1_v=0.1_t=dyn.build.bench.txt 
+
+2017-01-23 19:48:31,268 - INFO : renaming idx
+$> mv /Users/parnell/data/rdata/tt1000000_14_8507nxpe /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=14_s=1000000_u=1_v=0.1_t=dyn.idx.ms
+(time query-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=14_s=1000000_u=1_v=0.1_t=dyn.idx.ms) < /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=14_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec 1<&-  2> /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=14_s=1000000_nclus=1_var=0.1_t=dyn_k=1_qs=10_f=0.ms.bench.txt 
+2017-01-23 19:48:31,308 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:31,309 - INFO : statline	14	1000000	1	0.1	1	DYN	0.005931	0.0	5931.0	1	1
+2017-01-23 19:48:31,311 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:31,311 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:31,312 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:31,312 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:31,313 - INFO : func<'runkbench' 1000000 16> took: 0.0002 sec
+2017-01-23 19:48:31,314 - INFO : 
+$> convertcoords /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.ms.bin  >  <stdout> 
+
+2017-01-23 19:48:36,791 - INFO : renaming idx
+$> mv /Users/parnell/data/rdata/tt1000000_10_hocynjtn /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=10_s=1000000_u=1_v=0.1_t=sat.idx.ms
+2017-01-23 19:48:37,353 - INFO : renaming idx
+$> mv /Users/parnell/data/rdata/tt1000000_10_5v3a2b95 /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=10_s=1000000_u=1_v=0.1_t=dyn.idx.ms
+(time query-sat-vectors /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=10_s=1000000_u=1_v=0.1_t=sat.idx.ms) < /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=10_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec 1<&-  2> /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=10_s=1000000_nclus=1_var=0.1_t=sat_k=1_qs=10_f=0.ms.bench.txt 
+2017-01-23 19:48:37,816 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:37,817 - INFO : statline	10	1000000	1	0.1	1	SAT	0.175277296875	0.0	175277.296875	1	1
+2017-01-23 19:48:37,819 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:37,819 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:37,820 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:37,820 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:37,821 - INFO : func<'runkbench' 1000000 16> took: 0.0002 sec
+2017-01-23 19:48:37,822 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:37,823 - INFO : 
+$> build-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_16_ol56esq7 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=16_s=1000000_u=1_v=0.1_t=sat.build.bench.txt 
+
+2017-01-23 19:48:38,335 - INFO : renaming idx
+$> mv /Users/parnell/data/rdata/tt1000000_16_ol56esq7 /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=16_s=1000000_u=1_v=0.1_t=sat.idx.ms
+(time query-sat-vectors /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=16_s=1000000_u=1_v=0.1_t=sat.idx.ms) < /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=16_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec 1<&-  2> /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=16_s=1000000_nclus=1_var=0.1_t=sat_k=1_qs=10_f=0.ms.bench.txt 
+2017-01-23 19:48:38,495 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:38,496 - INFO : statline	16	1000000	1	0.1	1	SAT	0.044175	0.0	44175.0	1	1
+2017-01-23 19:48:38,497 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:38,498 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:38,498 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:38,499 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:38,500 - INFO : func<'runkbench' 1000000 16> took: 0.0002 sec
+2017-01-23 19:48:38,500 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:38,501 - INFO : 
+$> build-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_16_z83_jptd 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=16_s=1000000_u=1_v=0.1_t=dyn.build.bench.txt 
+
+(time query-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=10_s=1000000_u=1_v=0.1_t=dyn.idx.ms) < /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=10_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec 1<&-  2> /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=10_s=1000000_nclus=1_var=0.1_t=dyn_k=1_qs=10_f=0.ms.bench.txt 
+2017-01-23 19:48:38,704 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:38,705 - INFO : statline	10	1000000	1	0.1	1	DYN	0.068227898438	0.0	68227.898438	1	1
+2017-01-23 19:48:38,707 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:38,708 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:38,708 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:38,709 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:38,709 - INFO : func<'runkbench' 1000000 18> took: 0.0002 sec
+2017-01-23 19:48:38,710 - INFO : 
+$> convertcoords /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.vec /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.ms.bin  >  <stdout> 
+
+2017-01-23 19:48:38,944 - INFO : renaming idx
+$> mv /Users/parnell/data/rdata/tt1000000_16_z83_jptd /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=16_s=1000000_u=1_v=0.1_t=dyn.idx.ms
+(time query-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=16_s=1000000_u=1_v=0.1_t=dyn.idx.ms) < /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=16_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec 1<&-  2> /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=16_s=1000000_nclus=1_var=0.1_t=dyn_k=1_qs=10_f=0.ms.bench.txt 
+2017-01-23 19:48:39,302 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:39,302 - INFO : statline	16	1000000	1	0.1	1	DYN	0.05938	0.0	59380.0	1	1
+2017-01-23 19:48:39,304 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:39,305 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:39,305 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:39,306 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:39,307 - INFO : func<'runkbench' 1000000 18> took: 0.0002 sec
+2017-01-23 19:48:39,307 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:39,309 - INFO : 
+$> build-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_18_5htfxret 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_u=1_v=0.1_t=sat.build.bench.txt 
+
+2017-01-23 19:48:39,369 - INFO : renaming idx
+$> mv /Users/parnell/data/rdata/tt1000000_18_5htfxret /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=18_s=1000000_u=1_v=0.1_t=sat.idx.ms
+(time query-sat-vectors /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=18_s=1000000_u=1_v=0.1_t=sat.idx.ms) < /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=18_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec 1<&-  2> /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_nclus=1_var=0.1_t=sat_k=1_qs=10_f=0.ms.bench.txt 
+2017-01-23 19:48:39,409 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:39,410 - INFO : statline	18	1000000	1	0.1	1	SAT	0.007401299805	0.0	7401.299805	1	1
+2017-01-23 19:48:39,412 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:39,413 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:39,414 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:39,414 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:39,415 - INFO : func<'runkbench' 1000000 18> took: 0.0002 sec
+2017-01-23 19:48:39,416 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:39,418 - INFO : 
+$> build-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_18_mk7qhk7h 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_u=1_v=0.1_t=dyn.build.bench.txt 
+
+2017-01-23 19:48:39,472 - INFO : renaming idx
+$> mv /Users/parnell/data/rdata/tt1000000_18_mk7qhk7h /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=18_s=1000000_u=1_v=0.1_t=dyn.idx.ms
+(time query-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/indexes/gaussian__d=18_s=1000000_u=1_v=0.1_t=dyn.idx.ms) < /Users/parnell/data/rdata/vec/gaussian/query/query_gaussian__d=18_s=1000000_nclus=1_var=0.1_qs=10_f=0.msvec 1<&-  2> /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_nclus=1_var=0.1_t=dyn_k=1_qs=10_f=0.ms.bench.txt 
+2017-01-23 19:48:39,519 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:39,519 - INFO : statline	18	1000000	1	0.1	1	DYN	0.008991	0.0	8991.0	1	1
+2017-01-23 19:48:39,521 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:39,521 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:39,522 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:39,522 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:39,523 - INFO : func<'runkbench' 1000000 20> took: 0.0001 sec
+2017-01-23 19:48:39,523 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:39,527 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:39,528 - INFO : statline	20	1000000	1	0.1	1	MVP	1.4599999999999999e-05	0.0	14.6	1	1
+2017-01-23 19:48:39,529 - INFO : func<'_genGauss'> took: 0.0003 sec
+2017-01-23 19:48:39,530 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:39,530 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:39,531 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:39,532 - INFO : func<'runkbench' 1000000 20> took: 0.0002 sec
+2017-01-23 19:48:39,532 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:39,535 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:39,536 - INFO : statline	20	1000000	1	0.1	1	SAT	0.000190399994	0.0	190.399994	1	1
+2017-01-23 19:48:39,537 - INFO : func<'_genGauss'> took: 0.0002 sec
+2017-01-23 19:48:39,538 - INFO : func<'_vec2bin'> took: 0.0000 sec
+2017-01-23 19:48:39,538 - INFO : func<'_vec2hdf5'> took: 0.0000 sec
+2017-01-23 19:48:39,539 - INFO : func<'_vec2vect'> took: 0.0000 sec
+2017-01-23 19:48:39,540 - INFO : func<'runkbench' 1000000 20> took: 0.0002 sec
+2017-01-23 19:48:39,540 - INFO : func<'_vec2msbin'> took: 0.0000 sec
+2017-01-23 19:48:39,543 - INFO : headerline	Dim	Size	K	Var	NClus	IdxName	Cost	Average QueryTime	Average Calcs	Precision	Recall
+2017-01-23 19:48:39,544 - INFO : statline	20	1000000	1	0.1	1	DYN	0.001705699951	0.0	1705.699951	1	1
+2017-01-23 19:49:20,404 - INFO : func<'_vec2msbin'> took: 49.6369 sec
+2017-01-23 19:49:20,406 - INFO : 
+$> build-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_14_n0ndjxd6 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=14_s=1000000_u=1_v=0.1_t=sat.build.bench.txt 
+
+2017-01-23 19:49:20,411 - INFO : func<'_vec2msbin'> took: 49.6442 sec
+2017-01-23 19:49:20,414 - INFO : 
+$> build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=14_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_14_wcaztfq4 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=14_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt 
+
+2017-01-23 19:49:24,430 - INFO : func<'_vec2msbin'> took: 53.6650 sec
+2017-01-23 19:49:24,430 - INFO : func<'_vec2msbin'> took: 53.6647 sec
+2017-01-23 19:49:24,434 - INFO : 
+$> build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_12_gamoqj7f 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=12_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt 
+
+2017-01-23 19:49:24,434 - INFO : 
+$> build-dyn-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_12_376tdav6 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=12_s=1000000_u=1_v=0.1_t=dyn.build.bench.txt 
+
+2017-01-23 19:49:24,447 - INFO : func<'_vec2msbin'> took: 53.6816 sec
+2017-01-23 19:49:24,451 - INFO : 
+$> build-sat-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=12_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_12_9d5u9nvl 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=12_s=1000000_u=1_v=0.1_t=sat.build.bench.txt 
+
+2017-01-23 19:49:25,178 - INFO : func<'_vec2msbin'> took: 53.8640 sec
+2017-01-23 19:49:25,181 - INFO : 
+$> build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=16_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_16_3qrxh1bp 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=16_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt 
+
+2017-01-23 19:49:37,994 - INFO : func<'_vec2msbin'> took: 59.2838 sec
+2017-01-23 19:49:37,999 - INFO : 
+$> build-mvp-vectors /Users/parnell/data/rdata/vec/gaussian/gaussian__d=18_s=1000000_nclus=1_var=0.1.ms.bin 0 /Users/parnell/data/rdata/tt1000000_18_o1g6_s8b 3 3 3  >  /Users/parnell/data/rdata/results/vec/gaussian/benchmarks/gaussian__d=18_s=1000000_u=1_v=0.1_t=mvp.build.bench.txt 
+

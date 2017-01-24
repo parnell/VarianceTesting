@@ -90,9 +90,9 @@ class MSTypeEnum(AlgoType):
     def getValidTypes():
         return [
             MSTypeEnum.mvp,
-            MSTypeEnum.lcluster,
-            MSTypeEnum.sat
-            # MSTypeEnum.dyn
+            # MSTypeEnum.lcluster,
+            MSTypeEnum.sat,
+            MSTypeEnum.dyn
             # MSTypeEnum.iaesa,
             ]
 
