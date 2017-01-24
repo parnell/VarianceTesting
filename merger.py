@@ -30,6 +30,7 @@ if __name__ == "__main__":
         n = f.split('_')[-1]
         n = re.sub(r'\D','',n)
         ks[n] = f
+    bad = []
     for k in sorted(ks):
         # print(k,ks[k])
         for line in open(ks[k]):
@@ -37,7 +38,14 @@ if __name__ == "__main__":
             if m:
                 vals = line.split('\t')
                 cost = float(vals[7])
-                lines[key(line)] = line
+                if cost > 0:
+                    lines[key(line)] = line
+                else:
+                    bad.append(line)
 
+    for line in bad:
+        print('bad', line, end='')
+    print("#########################################\n\n\n\n")
     for line in lines.values():
         print(line, end='')
+
