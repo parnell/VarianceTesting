@@ -11,15 +11,15 @@ else:
 def args(modulename):
     a = [
         str(modulename),
-        # '--overwritedata',
+        '--overwritedata',
         # '--overwriteindex',
         # '--overwritebench',
         # '--hasspatial',
         # '--haslsh',
         # '--hasms',
-        '--indexes=mvp,sat,dyn',
+        # '--indexes=mvp,sat,dyn',
         # '--indexes=lcluster',
-        '--parallel',
+        # '--parallel',
         "--datadir", "%s/data/rdata" %home,
         "--confdir", "%s/data/rdata/conf" %home,
         "--resultdir", "%s/data/rdata/results" %home,

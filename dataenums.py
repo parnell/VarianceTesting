@@ -16,8 +16,9 @@ class BaseEnum(IntEnum):
         if isinstance(idx, str) and idx.isdigit():
             idx = int(idx)
         else:
+            lidx = idx.lower()
             for name, member in enumType.__members__.items():
-                if name == idx:
+                if name.lower() == lidx:
                     return member
         raise "Index " + str(idx)+" not found in "+ str(enumType) +" " + str(type(idx))
 
