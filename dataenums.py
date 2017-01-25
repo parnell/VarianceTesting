@@ -20,7 +20,7 @@ class BaseEnum(IntEnum):
             for name, member in enumType.__members__.items():
                 if name.lower() == lidx:
                     return member
-        raise "Index " + str(idx)+" not found in "+ str(enumType) +" " + str(type(idx))
+        raise Exception("Index " + str(idx)+" not found in "+ str(enumType) +" " + str(type(idx)))
 
 def getEnumType(val):
     try:

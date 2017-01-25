@@ -17,7 +17,7 @@ def args(modulename):
         # '--hasspatial',
         # '--haslsh',
         # '--hasms',
-        # '--indexes=mvp,sat,dyn',
+        '--indexes=psd,kdbq',
         # '--indexes=lcluster',
         # '--parallel',
         "--datadir", "%s/data/rdata" %home,
