@@ -13,11 +13,16 @@ def args(modulename):
         str(modulename),
         '--overwritedata',
         # '--overwriteindex',
-        # '--overwritebench',
+        '--overwritebench',
         # '--hasspatial',
         # '--haslsh',
-        # '--hasms',
-        '--indexes=psd,kdbq',
+        '--hasms',
+        # '--addspatial',
+        # '--addlsh',
+        # '--addms',
+        # '--indexes=psd,kdbq',
+        '--indexes=mvp,prunedmvp',
+        '--prune_threshold=2.0',
         # '--indexes=lcluster',
         # '--parallel',
         "--datadir", "%s/data/rdata" %home,
@@ -28,14 +33,17 @@ def args(modulename):
         '--shortname=gaussian',
         # "-i", "%s/data/gaussian__nclus=1_dim=2_var=0.1_size=10000.vec" %home,
         "--query-filename=fromtopk",
-        "-K1",
-        "-D10",
+        "-K3",
+        "-D18",
         "--nclus=1",
         "--variance=0.1",
-        '-S100000',
-        '--srange=1000000',
-        '--drange=10,12,14,16,18,20',
-        # '--krange=1,2,3,5,10,25,50',
+        '-S10000',
+        # '--srange=1000,10000',
+        # '--srange=1000,10000,100000,1000000',
+        '--srange=10000,100000',
+        # '--drange=2,5,10,12,14,16,18,20',
+        '--drange=10,20',
+        # '--krange=2,3,5,10',
         '-F0',
         '--nfolds=1',
         "-Q10",
@@ -46,7 +54,7 @@ def args(modulename):
         '--lshN=8',
         '--lshT=1',
         '--lshtype=SH',
-        '--mstype=mvp'
+        '--mstype=prunedmvp'
         ]
     return a
 
@@ -79,7 +87,8 @@ def getArgParse(args, needsquerydata=False):
 
     if '--hasms' in args:
         ap.add_argument('--hasms',action='store_true')
-        ap.add_argument('--mstype', required=True)
+        ap.add_argument('--prune_threshold', type=float)
+        ap.add_argument('--mstype')
 
     if '--haslsh' in args:
         ap.add_argument('--haslsh',action='store_true')

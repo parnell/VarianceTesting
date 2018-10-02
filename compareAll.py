@@ -42,6 +42,7 @@ def process(SD, data):
     algorithm = SD[0]
     st = None
     if isinstance(algorithm, dataenums.MSTypeEnum):
+        d.cfg['mstype'] = dataenums.MSTypeEnum.fromValue(str(algorithm))
         st = runsisap.fullprocess(d,overwritedata,overwriteindex,overwritebench)
     elif isinstance(algorithm, dataenums.LSHTypeEnum):
         data, st = runlsh.fullprocess(d,overwritedata,overwriteindex,overwritebench)
@@ -77,15 +78,14 @@ if __name__ == "__main__":
         Ks = [cfg.K]
 
     algos = []
-    if 'haslsh' in cfg:
+    if 'addlsh' in cfg:
         algos.extend(dataenums.LSHTypeEnum.getValidTypes())
-    if 'hasspatial' in cfg:
+    if 'addspatial' in cfg:
         algos.extend(dataenums.SpatialTypeEnum.getValidTypes())
-    if 'hasms' in cfg:
+    if 'addms' in cfg:
         algos.extend(dataenums.MSTypeEnum.getValidTypes())
     if 'indexes' in cfg and cfg['indexes'] is not None:
         for idx in cfg['indexes'].split(','):
-            print("algos", algos, idx)
             algos.append(dataenums.getEnumType(idx))
     SD = []
     for K in Ks:

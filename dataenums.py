@@ -77,17 +77,21 @@ class MSTypeEnum(AlgoType):
     dyn = 8
     fqh = 9
     fqt = 10
+    prunedmvp = 11
 
     @staticmethod
     def prog(name):
         if str(name) == str(MSTypeEnum.dyn.name):
             return 'dyn-sat'
+        if str(name) == str(MSTypeEnum.prunedmvp):
+            return 'mvp'
         else:
             return name
 
     @staticmethod
     def fromValue(idx):
         return BaseEnum.fromValue(idx, MSTypeEnum)
+
     def cfgkey(self):
         return 'mstype'
 
@@ -95,6 +99,7 @@ class MSTypeEnum(AlgoType):
     def getValidTypes():
         return [
             MSTypeEnum.mvp,
+            MSTypeEnum.prunedmvp,
             # MSTypeEnum.lcluster,
             MSTypeEnum.sat,
             MSTypeEnum.dyn
